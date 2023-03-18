@@ -181,7 +181,7 @@ pub(crate) fn money_transfer_process_instruction_v1(
         // existed in a previous state.
         if !db_contains_key(coin_roots_db, &serialize(&input.merkle_root))? {
             msg!("[TransferV1] Error: Merkle root not found in previous state (input {})", i);
-            return Err(MoneyError::TransferMerkleRootNotFound.into())
+            return Err(MoneyError::MerkleRootNotFound.into())
         }
 
         // The nullifiers should not already exist. It is the double-spend protection.

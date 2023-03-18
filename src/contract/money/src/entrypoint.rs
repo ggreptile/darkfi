@@ -27,10 +27,17 @@ use darkfi_sdk::{
 use darkfi_serial::{deserialize, serialize, Encodable, WriteExt};
 
 use crate::{
-    model::{MoneyFreezeUpdateV1, MoneyMintUpdateV1, MoneyTransferUpdateV1},
+    model::{MoneyFeeUpdateV1, MoneyFreezeUpdateV1, MoneyMintUpdateV1, MoneyTransferUpdateV1},
     MoneyFunction, MONEY_CONTRACT_COINS_TREE, MONEY_CONTRACT_COIN_MERKLE_TREE,
     MONEY_CONTRACT_COIN_ROOTS_TREE, MONEY_CONTRACT_DB_VERSION, MONEY_CONTRACT_FAUCET_PUBKEYS,
-    MONEY_CONTRACT_INFO_TREE, MONEY_CONTRACT_NULLIFIERS_TREE, MONEY_CONTRACT_TOKEN_FREEZE_TREE,
+    MONEY_CONTRACT_INFO_TREE, MONEY_CONTRACT_NULLIFIERS_TREE, MONEY_CONTRACT_PAID_FEES,
+    MONEY_CONTRACT_TOKEN_FREEZE_TREE,
+};
+
+/// `Money::Fee` functions
+mod fee_v1;
+use fee_v1::{
+    money_fee_get_metadata_v1, money_fee_process_instruction_v1, money_fee_process_update_v1,
 };
 
 /// `Money::Transfer` functions
@@ -129,6 +136,9 @@ fn init_contract(cid: ContractId, ix: &[u8]) -> ContractResult {
             coin_tree.encode(&mut coin_tree_data)?;
 
             db_set(info_db, &serialize(&MONEY_CONTRACT_COIN_MERKLE_TREE), &coin_tree_data)?;
+
+            db_set(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES), &serialize(&0_u64))?;
+
             info_db
         }
     };
@@ -180,6 +190,11 @@ fn get_metadata(cid: ContractId, ix: &[u8]) -> ContractResult {
             let metadata = money_freeze_get_metadata_v1(cid, call_idx, calls)?;
             Ok(set_return_data(&metadata)?)
         }
+
+        MoneyFunction::FeeV1 => {
+            let metadata = money_fee_get_metadata_v1(cid, call_idx, calls)?;
+            Ok(set_return_data(&metadata)?)
+        }
     }
 }
 
@@ -218,6 +233,11 @@ fn process_instruction(cid: ContractId, ix: &[u8]) -> ContractResult {
             let update_data = money_freeze_process_instruction_v1(cid, call_idx, calls)?;
             Ok(set_return_data(&update_data)?)
         }
+
+        MoneyFunction::FeeV1 => {
+            let update_data = money_fee_process_instruction_v1(cid, call_idx, calls)?;
+            Ok(set_return_data(&update_data)?)
+        }
     }
 }
 
@@ -247,6 +267,11 @@ fn process_update(cid: ContractId, update_data: &[u8]) -> ContractResult {
         MoneyFunction::FreezeV1 => {
             let update: MoneyFreezeUpdateV1 = deserialize(&update_data[1..])?;
             Ok(money_freeze_process_update_v1(cid, update)?)
+        }
+
+        MoneyFunction::FeeV1 => {
+            let update: MoneyFeeUpdateV1 = deserialize(&update_data[1..])?;
+            Ok(money_fee_process_update_v1(cid, update)?)
         }
     }
 }

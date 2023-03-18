@@ -36,7 +36,22 @@ pub enum MoneyError {
     TransferClearInputUnauthorised,
 
     #[error("Merkle root not found in previous state")]
-    TransferMerkleRootNotFound,
+    MerkleRootNotFound,
+
+    #[error("Invalid value commit for fee input")]
+    FeeInvalidValueCommit,
+
+    #[error("Invalid token commit for fee input")]
+    FeeInvalidTokenCommit,
+
+    #[error("Missing values in fee params")]
+    FeeMissingValues,
+
+    #[error("Missing blinds in fee params")]
+    FeeMissingBlinds,
+
+    #[error("Missing inputs in fee params")]
+    FeeMissingInputs,
 
     #[error("Duplicate nullifier found")]
     DuplicateNullifier,
@@ -73,6 +88,15 @@ pub enum MoneyError {
 
     #[error("Token mint is frozen")]
     MintFrozen,
+
+    #[error("Call index is nonzero")]
+    CallIdxNonZero,
+
+    #[error("Missing faucet keys from db")]
+    MissingFaucetKeys,
+
+    #[error("Internal error")]
+    InternalError,
 }
 
 impl From<MoneyError> for ContractError {
@@ -83,7 +107,7 @@ impl From<MoneyError> for ContractError {
             MoneyError::TransferMissingFaucetKeys => Self::Custom(3),
             MoneyError::TransferClearInputNonNativeToken => Self::Custom(4),
             MoneyError::TransferClearInputUnauthorised => Self::Custom(5),
-            MoneyError::TransferMerkleRootNotFound => Self::Custom(6),
+            MoneyError::MerkleRootNotFound => Self::Custom(6),
             MoneyError::DuplicateNullifier => Self::Custom(7),
             MoneyError::SpendHookOutOfBounds => Self::Custom(8),
             MoneyError::SpendHookMismatch => Self::Custom(9),
@@ -96,6 +120,14 @@ impl From<MoneyError> for ContractError {
             MoneyError::SwapMerkleRootNotFound => Self::Custom(16),
             MoneyError::TokenIdDoesNotDeriveFromMint => Self::Custom(17),
             MoneyError::MintFrozen => Self::Custom(18),
+            MoneyError::FeeInvalidValueCommit => Self::Custom(19),
+            MoneyError::FeeInvalidTokenCommit => Self::Custom(20),
+            MoneyError::FeeMissingValues => Self::Custom(21),
+            MoneyError::FeeMissingBlinds => Self::Custom(22),
+            MoneyError::FeeMissingInputs => Self::Custom(23),
+            MoneyError::CallIdxNonZero => Self::Custom(37),
+            MoneyError::MissingFaucetKeys => Self::Custom(38),
+            MoneyError::InternalError => Self::Custom(39),
         }
     }
 }

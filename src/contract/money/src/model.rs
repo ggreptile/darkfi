@@ -123,3 +123,25 @@ pub struct MoneyFreezeUpdateV1 {
     /// Mint authority public key
     pub signature_public: PublicKey,
 }
+
+/// Parameters for `Money::Fee`
+#[derive(Clone, Debug, SerialEncodable, SerialDecodable)]
+pub struct MoneyFeeParamsV1 {
+    /// Inputs that are being burnt
+    pub inputs: Vec<Input>,
+    /// Values respective to `inputs`
+    pub values: Vec<u64>,
+    /// Value blinds respective to `inputs`
+    pub value_blinds: Vec<pallas::Scalar>,
+    /// Token blinds respective to `inputs`
+    pub token_blinds: Vec<pallas::Scalar>,
+}
+
+/// State update for `Money::Fee`
+#[derive(Clone, Debug, SerialEncodable, SerialDecodable)]
+pub struct MoneyFeeUpdateV1 {
+    /// Newly revealed nullifiers
+    pub nullifiers: Vec<Nullifier>,
+    /// Value sum of all inputs
+    pub fee_sum: u64,
+}

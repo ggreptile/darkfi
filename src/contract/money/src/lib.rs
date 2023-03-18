@@ -28,7 +28,7 @@ pub enum MoneyFunction {
     OtcSwapV1 = 0x01,
     MintV1 = 0x02,
     FreezeV1 = 0x03,
-    //Fee = 0x04,
+    FeeV1 = 0x04,
     //Stake = 0x05,
     //Unstake = 0x06,
 }
@@ -42,7 +42,7 @@ impl TryFrom<u8> for MoneyFunction {
             0x01 => Ok(Self::OtcSwapV1),
             0x02 => Ok(Self::MintV1),
             0x03 => Ok(Self::FreezeV1),
-            //0x04 => Ok(Self::Fee),
+            0x04 => Ok(Self::FeeV1),
             //0x05 => Ok(Self::Stake),
             //0x06 => Ok(Self::Unstake),
             _ => Err(ContractError::InvalidFunction),
@@ -75,6 +75,7 @@ pub const MONEY_CONTRACT_TOKEN_FREEZE_TREE: &str = "token_freezes";
 pub const MONEY_CONTRACT_DB_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const MONEY_CONTRACT_COIN_MERKLE_TREE: &str = "coin_tree";
 pub const MONEY_CONTRACT_FAUCET_PUBKEYS: &str = "faucet_pubkeys";
+pub const MONEY_CONTRACT_PAID_FEES: &str = "paid_fees";
 
 /// zkas mint circuit namespace
 pub const MONEY_CONTRACT_ZKAS_MINT_NS_V1: &str = "Mint_V1";
