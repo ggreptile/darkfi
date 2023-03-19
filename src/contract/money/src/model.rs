@@ -129,12 +129,14 @@ pub struct MoneyFreezeUpdateV1 {
 pub struct MoneyFeeParamsV1 {
     /// Inputs that are being burnt
     pub inputs: Vec<Input>,
-    /// Values respective to `inputs`
-    pub values: Vec<u64>,
-    /// Value blinds respective to `inputs`
-    pub value_blinds: Vec<pallas::Scalar>,
-    /// Token blinds respective to `inputs`
-    pub token_blinds: Vec<pallas::Scalar>,
+    /// Outputs that are being minted (fee extra returned to payer)
+    pub outputs: Vec<Output>,
+    /// Paid fee
+    pub fee_value: u64,
+    /// Value blind for the fee
+    pub fee_value_blind: pallas::Scalar,
+    /// Revealed token blind used to enforce token type
+    pub token_blind: pallas::Scalar,
 }
 
 /// State update for `Money::Fee`
@@ -142,6 +144,8 @@ pub struct MoneyFeeParamsV1 {
 pub struct MoneyFeeUpdateV1 {
     /// Newly revealed nullifiers
     pub nullifiers: Vec<Nullifier>,
-    /// Value sum of all inputs
-    pub fee_sum: u64,
+    /// Newly created coins
+    pub coins: Vec<Coin>,
+    /// The paid fee
+    pub fee_value: u64,
 }

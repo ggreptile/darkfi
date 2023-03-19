@@ -53,6 +53,9 @@ pub enum MoneyError {
     #[error("Missing inputs in fee params")]
     FeeMissingInputs,
 
+    #[error("Incorrect fee")]
+    IncorrectFee,
+
     #[error("Duplicate nullifier found")]
     DuplicateNullifier,
 
@@ -125,6 +128,7 @@ impl From<MoneyError> for ContractError {
             MoneyError::FeeMissingValues => Self::Custom(21),
             MoneyError::FeeMissingBlinds => Self::Custom(22),
             MoneyError::FeeMissingInputs => Self::Custom(23),
+            MoneyError::IncorrectFee => Self::Custom(24),
             MoneyError::CallIdxNonZero => Self::Custom(37),
             MoneyError::MissingFaucetKeys => Self::Custom(38),
             MoneyError::InternalError => Self::Custom(39),
