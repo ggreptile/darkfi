@@ -31,7 +31,7 @@ use darkfi::{
     Result,
 };
 use darkfi_sdk::{
-    crypto::{Keypair, MerkleTree, PublicKey, DARK_TOKEN_ID, MONEY_CONTRACT_ID},
+    crypto::{Coin, Keypair, MerkleTree, Nullifier, PublicKey, DARK_TOKEN_ID, MONEY_CONTRACT_ID},
     pasta::pallas,
     ContractCall,
 };
@@ -41,8 +41,8 @@ use rand::rngs::OsRng;
 
 use darkfi_money_contract::{
     client::{
-        freeze_v1::FreezeCallBuilder, mint_v1::MintCallBuilder, transfer_v1::TransferCallBuilder,
-        OwnCoin,
+        fee_v1::FeeCallBuilder, freeze_v1::FreezeCallBuilder, mint_v1::MintCallBuilder,
+        transfer_v1::TransferCallBuilder, MoneyNote, OwnCoin,
     },
     model::{MoneyFreezeParamsV1, MoneyMintParamsV1, MoneyTransferParamsV1},
     MoneyFunction, MONEY_CONTRACT_ZKAS_BURN_NS_V1, MONEY_CONTRACT_ZKAS_MINT_NS_V1,
@@ -57,8 +57,8 @@ pub fn init_logger() {
     // We check this error so we can execute same file tests in parallel,
     // otherwise second one fails to init logger here.
     if let Err(_) = simplelog::TermLogger::init(
-        simplelog::LevelFilter::Info,
-        //simplelog::LevelFilter::Debug,
+        //simplelog::LevelFilter::Info,
+        simplelog::LevelFilter::Debug,
         //simplelog::LevelFilter::Trace,
         cfg.build(),
         simplelog::TerminalMode::Mixed,
@@ -164,6 +164,10 @@ impl MoneyTestHarness {
         let (mint_pk, mint_zkbin) = self.proving_keys.get(&MONEY_CONTRACT_ZKAS_MINT_NS_V1).unwrap();
         let (burn_pk, burn_zkbin) = self.proving_keys.get(&MONEY_CONTRACT_ZKAS_BURN_NS_V1).unwrap();
 
+        // Transaction data
+        let mut calls = vec![];
+        let mut proofs = vec![];
+
         let builder = TransferCallBuilder {
             keypair: self.faucet.keypair,
             recipient,
@@ -184,17 +188,62 @@ impl MoneyTestHarness {
             clear_input: true,
         };
 
-        let debris = builder.build()?;
+        let transfer_debris = builder.build()?;
 
+        // First the actual contract call
         let mut data = vec![MoneyFunction::TransferV1 as u8];
-        debris.params.encode(&mut data)?;
-        let calls = vec![ContractCall { contract_id: *MONEY_CONTRACT_ID, data }];
-        let proofs = vec![debris.proofs];
-        let mut tx = Transaction { calls, proofs, signatures: vec![] };
-        let sigs = tx.create_sigs(&mut OsRng, &debris.signature_secrets)?;
-        tx.signatures = vec![sigs];
+        transfer_debris.params.encode(&mut data)?;
+        calls.push(ContractCall { contract_id: *MONEY_CONTRACT_ID, data });
+        proofs.push(transfer_debris.proofs);
 
-        Ok((tx, debris.params))
+        // Then fee. Faucet can use anything random, so we create a dummy OwnCoin
+        let dummy_oc = OwnCoin {
+            coin: Coin::from(pallas::Base::random(&mut OsRng)),
+            note: MoneyNote {
+                serial: pallas::Base::random(&mut OsRng),
+                value: 10000,
+                token_id: *DARK_TOKEN_ID,
+                spend_hook: pallas::Base::zero(),
+                user_data: pallas::Base::zero(),
+                coin_blind: pallas::Base::random(&mut OsRng),
+                value_blind: pallas::Scalar::random(&mut OsRng),
+                token_blind: pallas::Scalar::random(&mut OsRng),
+                memo: vec![],
+            },
+            secret: self.faucet.keypair.secret,
+            nullifier: Nullifier::from(pallas::Base::random(&mut OsRng)),
+            leaf_position: 1.into(),
+        };
+
+        let builder = FeeCallBuilder {
+            keypair: self.faucet.keypair,
+            value: 10000,
+            change_spend_hook: pallas::Base::zero(),
+            change_user_data: pallas::Base::zero(),
+            change_user_data_blind: pallas::Base::random(&mut OsRng),
+            coins: vec![dummy_oc],
+            tree: self.faucet.merkle_tree.clone(),
+            mint_zkbin: mint_zkbin.clone(),
+            mint_pk: mint_pk.clone(),
+            burn_zkbin: burn_zkbin.clone(),
+            burn_pk: burn_pk.clone(),
+        };
+
+        let fee_debris = builder.build(true)?;
+
+        let mut data = vec![MoneyFunction::FeeV1 as u8];
+        fee_debris.params.encode(&mut data)?;
+        calls.insert(0, ContractCall { contract_id: *MONEY_CONTRACT_ID, data });
+        proofs.insert(0, fee_debris.proofs);
+
+        // Now combine into a transaction and sign
+        let mut tx = Transaction { calls, proofs, signatures: vec![] };
+        let sigs = tx.create_sigs(&mut OsRng, &fee_debris.signature_secrets)?;
+        tx.signatures.push(sigs);
+        let sigs = tx.create_sigs(&mut OsRng, &transfer_debris.signature_secrets)?;
+        tx.signatures.push(sigs);
+
+        Ok((tx, transfer_debris.params))
     }
 
     pub fn mint_token(
