@@ -30,7 +30,7 @@ use wasmer::{
 };
 use wasmer_compiler_singlepass::Singlepass;
 use wasmer_middlewares::{
-    metering::{get_remaining_points, MeteringPoints},
+    metering::{get_remaining_points, set_remaining_points, MeteringPoints},
     Metering,
 };
 
@@ -433,6 +433,22 @@ impl Runtime {
         let logs = self.ctx.as_ref(&self.store).logs.borrow();
         for msg in logs.iter() {
             debug!(target: "runtime::vm_runtime", "Contract log: {}", msg);
+        }
+    }
+
+    /// Resets the gas used in this runtime instance
+    pub fn reset_gas(&mut self) {
+        set_remaining_points(&mut self.store, &self.instance, GAS_LIMIT);
+    }
+
+    /// Return how much gas was used in the current state of Runtime.
+    /// If the gas was exhausted, returns an error.
+    pub fn gas_used(&mut self) -> Result<u64> {
+        let remaining_points = get_remaining_points(&mut self.store, &self.instance);
+
+        match remaining_points {
+            MeteringPoints::Exhausted => Err(Error::ContractGasExhausted),
+            MeteringPoints::Remaining(r) => Ok(r),
         }
     }
 

@@ -373,6 +373,10 @@ pub enum Error {
     #[error("contract execution error")]
     ContractExecError(u64),
 
+    #[cfg(feature = "wasm-runtime")]
+    #[error("Contract Gas Exhausted")]
+    ContractGasExhausted,
+
     // ====================
     // Miscellaneous errors
     // ====================

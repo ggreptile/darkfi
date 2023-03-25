@@ -37,6 +37,7 @@ use serde_json::json;
 
 use super::{
     constants,
+    fee::Fee,
     lead_coin::LeadCoin,
     state::{ConsensusState, Fork, SlotCheckpoint, StateCheckpoint},
     BlockInfo, BlockProposal, Header, LeadInfo, LeadProof,
@@ -966,8 +967,12 @@ impl ValidatorState {
         &self,
         blockchain_overlay: BlockchainOverlayPtr,
         tx: &Transaction,
-    ) -> Result<()> {
+    ) -> Result<Fee> {
+        // Calculated fee for this transaction
+        let mut fee = Fee::default();
+        // wasm runtimes instantiated for this transaction
         let mut runtimes = HashMap::new();
+
         let tx_hash = blake3::hash(&serialize(tx));
         info!(target: "consensus::validator", "Verifying transaction {}", tx_hash);
 
@@ -1050,6 +1055,14 @@ impl ValidatorState {
             info!(target: "consensus::validator", "Successfully executed \"exec\" call");
             updates.push(state_update);
 
+            // We ran ::metadata and ::exec for a single call. We fetch the gas used
+            // here, note it down in the `Fee` struct, and then reset it in the runtime
+            // so in case the same contract/runtime is called again, it can use the full
+            // gas again. If this call fails, that means the gas was exhausted, although
+            // that should also happen on ::exec or ::metadata as well. Redundancy is ok.
+            fee.gas_used += runtime.gas_used()?;
+            runtime.reset_gas();
+
             // At this point we're done with the call and move on to the next one.
         }
 
@@ -1061,6 +1074,9 @@ impl ValidatorState {
             error!(target: "consensus::validator", "Incorrect number of signatures in tx {}", tx_hash);
             return Err(Error::InvalidSignature)
         }
+
+        // Note down how many signatures we have to verify
+        fee.signatures = tx.signatures.len();
 
         match tx.verify_sigs(sig_table) {
             Ok(()) => {
@@ -1089,17 +1105,19 @@ impl ValidatorState {
         info!(target: "consensus::validator", "Performing state updates");
         for (call, update) in tx.calls.iter().zip(updates.iter()) {
             // Retrieve already initiated runtime and apply update
-            // TODO: Sum up the gas costs of previous calls during execution
-            //       and verification and these.
             let runtime = runtimes.get_mut(&call.contract_id.to_string()).unwrap();
             info!(target: "consensus::validator", "Executing \"apply\" call");
             runtime.apply(update)?;
-            info!(target: "consensus::validator", "State update applied successfully")
+            info!(target: "consensus::validator", "State update applied successfully");
+
+            // Here we do the same gas dance again.
+            fee.gas_used += runtime.gas_used()?;
+            runtime.reset_gas();
         }
 
         info!(target: "consensus::validator", "Transaction {} verified successfully", tx_hash);
 
-        Ok(())
+        Ok(fee)
     }
 
     /// Validate a set of [`Transaction`] in sequence and apply them if all are valid.

@@ -57,6 +57,9 @@ pub use lead_coin::LeadCoin;
 pub mod types;
 pub use types::Float10;
 
+/// Transaction fee infra
+pub mod fee;
+
 /// Utility functions
 pub mod utils;
 
