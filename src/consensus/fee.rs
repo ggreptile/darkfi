@@ -16,6 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use crate::{tx::Transaction, Result};
+
 /// Deterministically calculated fee for a single network transaction.
 #[derive(Debug, Clone, Copy)]
 pub struct Fee {
@@ -30,5 +32,11 @@ pub struct Fee {
 impl Default for Fee {
     fn default() -> Self {
         Self { gas_used: 0, signatures: 0 }
+    }
+}
+
+impl Fee {
+    pub fn calculate(_tx: &Transaction) -> Result<u64> {
+        Ok(10000)
     }
 }

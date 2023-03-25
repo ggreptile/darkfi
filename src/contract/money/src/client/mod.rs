@@ -32,6 +32,9 @@ use darkfi_sdk::{
 };
 use darkfi_serial::{SerialDecodable, SerialEncodable};
 
+/// `Money::FeeV1` API
+pub mod fee_v1;
+
 /// `Money::TransferV1` API
 pub mod transfer_v1;
 

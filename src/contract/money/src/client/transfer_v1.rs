@@ -486,7 +486,7 @@ pub fn create_transfer_mint_proof(
     Ok((proof, public_inputs))
 }
 
-fn compute_remainder_blind(
+pub(crate) fn compute_remainder_blind(
     clear_inputs: &[ClearInput],
     input_blinds: &[pallas::Scalar],
     output_blinds: &[pallas::Scalar],
