@@ -25,7 +25,8 @@ use darkfi::{
 };
 use darkfi_sdk::{
     crypto::{
-        note::AeadEncryptedNote, pasta_prelude::*, Keypair, MerkleTree, SecretKey, DARK_TOKEN_ID,
+        note::AeadEncryptedNote, pasta_prelude::*, Keypair, MerkleNode, MerkleTree, SecretKey,
+        DARK_TOKEN_ID,
     },
     incrementalmerkletree::Tree,
     pasta::pallas,
@@ -76,7 +77,7 @@ pub struct FeeCallBuilder {
 }
 
 impl FeeCallBuilder {
-    pub fn build(&self) -> Result<FeeCallDebris> {
+    pub fn build(&self, dummy: bool) -> Result<FeeCallDebris> {
         debug!("Building Money::FeeV1 contract call");
         assert!(self.value != 0);
 
@@ -101,7 +102,14 @@ impl FeeCallBuilder {
 
             let leaf_position = coin.leaf_position;
             let root = self.tree.root(0).unwrap();
-            let merkle_path = self.tree.authentication_path(leaf_position, &root).unwrap();
+
+            // If doing a dummy input, we have to skip the inclusion proof
+            let merkle_path = if dummy {
+                vec![MerkleNode::from(pallas::Base::zero()); 32]
+            } else {
+                self.tree.authentication_path(leaf_position, &root).unwrap()
+            };
+
             inputs_value += coin.note.value;
 
             let input = TransactionBuilderInputInfo {
@@ -132,26 +140,28 @@ impl FeeCallBuilder {
         assert!(!inputs.is_empty());
         debug!("Finished building inputs");
 
-        // Create a public blind for the fee value and the token
-        let fee_value_blind = pallas::Scalar::random(&mut OsRng);
+        // Create a public blind for the fee the token
         let token_blind = pallas::Scalar::random(&mut OsRng);
 
         let mut params = MoneyFeeParamsV1 {
             inputs: vec![],
             outputs: vec![],
             fee_value: self.value,
-            fee_value_blind,
+            fee_value_blind: pallas::Scalar::zero(),
             token_blind,
         };
 
         let mut input_blinds = vec![];
-        let mut output_blinds = vec![fee_value_blind];
+        let mut output_blinds = vec![];
 
         for (i, input) in inputs.iter().enumerate() {
             let value_blind = pallas::Scalar::random(&mut OsRng);
             input_blinds.push(value_blind);
 
-            let signature_secret = SecretKey::random(&mut OsRng);
+            // Also in the case of a dummy input, we use the given keypair.
+            let signature_secret =
+                if dummy { self.keypair.secret } else { SecretKey::random(&mut OsRng) };
+
             signature_secrets.push(signature_secret);
 
             info!("Creating fee burn proof for input {}", i);
@@ -179,13 +189,7 @@ impl FeeCallBuilder {
         }
 
         for (i, output) in outputs.iter().enumerate() {
-            // TODO: Is this really necessary, or should we just have a single output?
-            let value_blind = if i == outputs.len() - 1 {
-                compute_remainder_blind(&[], &input_blinds, &output_blinds)
-            } else {
-                pallas::Scalar::random(&mut OsRng)
-            };
-
+            let value_blind = pallas::Scalar::random(&mut OsRng);
             output_blinds.push(value_blind);
 
             let serial = pallas::Base::random(&mut OsRng);
@@ -228,6 +232,10 @@ impl FeeCallBuilder {
                 note: encrypted_note,
             });
         }
+
+        // With the current info we have, now we can also calculate the remainder
+        // blind for the fee:
+        params.fee_value_blind = compute_remainder_blind(&[], &input_blinds, &output_blinds);
 
         // Now we should have all the params, zk proofs, and signature secrets.
         // We return it and let the caller deal with it.
