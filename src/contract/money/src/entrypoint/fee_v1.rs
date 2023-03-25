@@ -118,7 +118,7 @@ pub(crate) fn money_fee_process_instruction_v1(
     let self_ = &calls[call_idx as usize];
     let params: MoneyFeeParamsV1 = deserialize(&self_.data[1..])?;
 
-    if params.inputs.len() < 1 {
+    if params.inputs.is_empty() {
         msg!("[FeeV1] Error: No inputs in the call");
         return Err(MoneyError::FeeMissingInputs.into())
     }
@@ -230,8 +230,8 @@ pub(crate) fn money_fee_process_update_v1(
     let coin_roots_db = db_lookup(cid, MONEY_CONTRACT_COIN_ROOTS_TREE)?;
 
     msg!("[FeeV1] Adding new nullifiers to the set");
-    for nullifier in update.nullifiers {
-        db_set(nullifiers_db, &serialize(&nullifier), &[])?;
+    for nullifier in &update.nullifiers {
+        db_set(nullifiers_db, &serialize(nullifier), &[])?;
     }
 
     msg!("[FeeV1] Adding new coins to the set");
@@ -243,15 +243,19 @@ pub(crate) fn money_fee_process_update_v1(
     let coins: Vec<_> = update.coins.iter().map(|x| MerkleNode::from(x.inner())).collect();
     merkle_add(info_db, coin_roots_db, &serialize(&MONEY_CONTRACT_COIN_MERKLE_TREE), &coins)?;
 
-    let Some(current_fees) = db_get(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES))? else {
-        msg!("[FeeV1] Error: Did not find PAID_FEES in contract db");
-        return Err(MoneyError::InternalError.into())
-    };
-    let current_fees: u64 = deserialize(&current_fees)?;
+    // We have this guard since we allow faucets to make dummy inputs.
+    if !update.nullifiers.is_empty() {
+        let Some(current_fees) = db_get(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES))? else {
+            msg!("[FeeV1] Error: Did not find PAID_FEES in contract db");
+            return Err(MoneyError::InternalError.into())
+        };
 
-    let update_fees = update.fee_value + current_fees;
-    msg!("[FeeV1] Paid fee {} (total {})", update.fee_value, update_fees);
-    db_set(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES), &serialize(&update_fees))?;
+        let current_fees: u64 = deserialize(&current_fees)?;
+
+        let update_fees = update.fee_value + current_fees;
+        msg!("[FeeV1] Paid fee {} (total {})", update.fee_value, update_fees);
+        db_set(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES), &serialize(&update_fees))?;
+    }
 
     Ok(())
 }

@@ -368,7 +368,8 @@ pub(crate) fn db_get(ctx: FunctionEnvMut<Env>, ptr: WasmPtr<u8>, len: u32) -> i6
 
     if env.contract_section != ContractSection::Deploy &&
         env.contract_section != ContractSection::Exec &&
-        env.contract_section != ContractSection::Metadata
+        env.contract_section != ContractSection::Metadata &&
+        env.contract_section != ContractSection::Update
     {
         error!(target: "runtime::db::db_get()", "db_get called in unauthorized section");
         return CALLER_ACCESS_DENIED.into()
