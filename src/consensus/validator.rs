@@ -980,8 +980,6 @@ impl ValidatorState {
         let mut zkp_table = vec![];
         // Table of public keys used for signature verification
         let mut sig_table = vec![];
-        // State updates produced by contract execution
-        let mut updates = vec![];
         // Map of zk proof verifying keys for the current transaction
         let mut verifying_keys: HashMap<[u8; 32], HashMap<String, VerifyingKey>> = HashMap::new();
 
@@ -1051,12 +1049,14 @@ impl ValidatorState {
             // runtime and the same payload.
             info!(target: "consensus::validator", "Executing \"exec\" call");
             let state_update = runtime.exec(&payload)?;
-
             info!(target: "consensus::validator", "Successfully executed \"exec\" call");
-            updates.push(state_update);
 
-            // We ran ::metadata and ::exec for a single call. We fetch the gas used
-            // here, note it down in the `Fee` struct, and then reset it in the runtime
+            info!(target: "consensus::validator", "Executing \"apply\" call");
+            runtime.apply(&state_update)?;
+            info!(target: "consensus::validator", "Successfully executed \"apply\" call");
+
+            // We ran ::metadata, ::exec, and ::apply for a single call. We fetch the gas
+            // used here, note it down in the `Fee` struct, and then reset in the runtime
             // so in case the same contract/runtime is called again, it can use the full
             // gas again. If this call fails, that means the gas was exhausted, although
             // that should also happen on ::exec or ::metadata as well. Redundancy is ok.
@@ -1098,22 +1098,6 @@ impl ValidatorState {
                 return Err(e)
             }
         };
-
-        // After the verifications stage passes we can apply the state updates.
-        assert!(tx.calls.len() == updates.len());
-
-        info!(target: "consensus::validator", "Performing state updates");
-        for (call, update) in tx.calls.iter().zip(updates.iter()) {
-            // Retrieve already initiated runtime and apply update
-            let runtime = runtimes.get_mut(&call.contract_id.to_string()).unwrap();
-            info!(target: "consensus::validator", "Executing \"apply\" call");
-            runtime.apply(update)?;
-            info!(target: "consensus::validator", "State update applied successfully");
-
-            // Here we do the same gas dance again.
-            fee.gas_used += runtime.gas_used()?;
-            runtime.reset_gas();
-        }
 
         info!(target: "consensus::validator", "Transaction {} verified successfully", tx_hash);
 
