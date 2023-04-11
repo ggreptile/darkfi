@@ -967,6 +967,7 @@ impl ValidatorState {
         &self,
         blockchain_overlay: BlockchainOverlayPtr,
         tx: &Transaction,
+        verifying_keys: &mut HashMap<[u8; 32], HashMap<String, VerifyingKey>>,
     ) -> Result<Fee> {
         // Calculated fee for this transaction
         let mut fee = Fee::default();
@@ -980,13 +981,6 @@ impl ValidatorState {
         let mut zkp_table = vec![];
         // Table of public keys used for signature verification
         let mut sig_table = vec![];
-        // Map of zk proof verifying keys for the current transaction
-        let mut verifying_keys: HashMap<[u8; 32], HashMap<String, VerifyingKey>> = HashMap::new();
-
-        // Initialize the map
-        for call in tx.calls.iter() {
-            verifying_keys.insert(call.contract_id.to_bytes(), HashMap::new());
-        }
 
         // Iterate over all calls to get the metadata
         for (idx, call) in tx.calls.iter().enumerate() {
@@ -1029,6 +1023,9 @@ impl ValidatorState {
             for (zkas_ns, _) in &zkp_pub {
                 let inner_vk_map = verifying_keys.get_mut(&call.contract_id.to_bytes()).unwrap();
 
+                // TODO: This will be a problem in case of ::deploy, unless we force a different
+                // namespace and disable updating existing circuits. Might be a smart idea to do
+                // so in order to have to care less about being able to verify historical txs.
                 if inner_vk_map.contains_key(zkas_ns.as_str()) {
                     continue
                 }
@@ -1118,8 +1115,19 @@ impl ValidatorState {
         let mut erroneous_txs = vec![];
         let blockchain_overlay = BlockchainOverlay::new(&self.blockchain)?;
 
+        // Map of zk proof verifying keys for the current transaction batch
+        let mut vks: HashMap<[u8; 32], HashMap<String, VerifyingKey>> = HashMap::new();
+
+        // Initialize the map
         for tx in txs {
-            if let Err(e) = self.verify_transaction(blockchain_overlay.clone(), tx).await {
+            for call in &tx.calls {
+                vks.insert(call.contract_id.to_bytes(), HashMap::new());
+            }
+        }
+
+        for tx in txs {
+            if let Err(e) = self.verify_transaction(blockchain_overlay.clone(), tx, &mut vks).await
+            {
                 warn!(target: "consensus::validator", "Transaction verification failed: {}", e);
                 erroneous_txs.push(tx.clone());
             }
