@@ -109,12 +109,12 @@ impl<F: WithSmallOrderMulGroup<3> + Ord> ConditionalSelectChip<F> {
 
                 let cond = cond.copy_advice(|| "copy cond", &mut region, config.advices[3], 0)?;
 
-                let selected =
-                    if cond.value().copied().to_field() == Value::known(F::ONE).to_field() {
-                        a.value().copied()
-                    } else {
-                        b.value().copied()
-                    };
+                let selected = cond
+                    .value()
+                    .to_field()
+                    .zip(a.value())
+                    .zip(b.value())
+                    .map(|((cond, a), b)| if cond == F::ONE.into() { a } else { b });
 
                 let cell =
                     region.assign_advice(|| "select result", config.advices[2], 0, || selected)?;
