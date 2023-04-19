@@ -46,11 +46,6 @@ pub use token_id::{TokenId, DARK_TOKEN_ID};
 pub mod merkle_node;
 pub use merkle_node::{MerkleNode, MerkleTree};
 
-pub mod merkle_prelude {
-    pub use incrementalmerkletree::{Hashable, Tree};
-}
-pub use incrementalmerkletree::Position as MerklePosition;
-
 /// Note encryption
 pub mod note;
 
@@ -70,9 +65,6 @@ pub mod mimc_vdf;
 
 /// Sparse Merkle Tree implementation
 pub mod smt;
-
-pub use incrementalmerkletree;
-pub use pasta_curves::{pallas, vesta};
 
 /// Convenience module to import all the pasta traits.
 /// You still have to import the curves.

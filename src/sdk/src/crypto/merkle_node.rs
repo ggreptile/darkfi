@@ -19,9 +19,9 @@
 use core::{fmt, str::FromStr};
 use std::{io, iter};
 
+use bridgetree::{BridgeTree, Hashable, Level};
 use darkfi_serial::{SerialDecodable, SerialEncodable};
 use halo2_gadgets::sinsemilla::primitives::HashDomain;
-use incrementalmerkletree::{bridgetree::BridgeTree, Altitude, Hashable};
 use lazy_static::lazy_static;
 use pasta_curves::{
     group::ff::{PrimeField, PrimeFieldBits},
@@ -137,7 +137,7 @@ impl Hashable for MerkleNode {
     ///       above the the leaves, i.e. layer = 31, l = 0
     ///     - when hashing to the final root, we produce the anchor
     ///       with layer = 0, l = 31.
-    fn combine(altitude: Altitude, left: &Self, right: &Self) -> Self {
+    fn combine(altitude: Level, left: &Self, right: &Self) -> Self {
         // MerkleCRH Sinsemilla hash domain.
         let domain = HashDomain::new(MERKLE_CRH_PERSONALIZATION);
 
@@ -153,7 +153,7 @@ impl Hashable for MerkleNode {
         )
     }
 
-    fn empty_root(altitude: Altitude) -> Self {
+    fn empty_root(altitude: Level) -> Self {
         EMPTY_ROOTS[<usize>::from(altitude)]
     }
 }
@@ -163,7 +163,6 @@ mod tests {
     use super::*;
 
     use halo2_proofs::arithmetic::Field;
-    use incrementalmerkletree::Tree;
     use pasta_curves::pallas;
     use rand::rngs::OsRng;
 
