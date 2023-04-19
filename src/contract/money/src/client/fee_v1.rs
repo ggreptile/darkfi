@@ -27,7 +27,6 @@ use darkfi_sdk::{
     crypto::{
         note::AeadEncryptedNote, pasta_prelude::*, Keypair, MerkleTree, SecretKey, DARK_TOKEN_ID,
     },
-    incrementalmerkletree::Tree,
     pasta::pallas,
 };
 use log::{debug, error, info};
@@ -107,15 +106,16 @@ impl FeeCallBuilder {
             let (leaf_position, merkle_path) = if dummy {
                 // In the case of dummy inputs, we will just provide a Merkle path to the
                 // latest leaf appended into the tree.
-                scoped_tree.witness();
+                scoped_tree.mark();
                 let leaf_position = scoped_tree.current_position().unwrap();
-                let merkle_path = scoped_tree.authentication_path(leaf_position, &root).unwrap();
-                scoped_tree.remove_witness(leaf_position);
+                let merkle_path = scoped_tree.witness(leaf_position, &root).unwrap();
+                scoped_tree.remove_mark(leaf_position);
                 (leaf_position, merkle_path)
             } else {
                 // Otherwise we provide an actual respective path.
+                let root = scoped_tree.root(0).unwrap();
                 let leaf_position = coin.leaf_position;
-                let merkle_path = scoped_tree.authentication_path(leaf_position, &root).unwrap();
+                let merkle_path = scoped_tree.witness(leaf_position, &root).unwrap();
                 (leaf_position, merkle_path)
             };
 

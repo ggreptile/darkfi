@@ -213,6 +213,7 @@ pub(crate) fn money_fee_process_instruction_v1(
         coins: new_coins,
         fee_value: params.fee_value,
     };
+
     let mut update_data = vec![];
     update_data.write_u8(MoneyFunction::FeeV1 as u8)?;
     update.encode(&mut update_data)?;
@@ -240,8 +241,10 @@ pub(crate) fn money_fee_process_update_v1(
     }
 
     msg!("[FeeV1] Adding new coins to the Merkle tree");
-    let coins: Vec<_> = update.coins.iter().map(|x| MerkleNode::from(x.inner())).collect();
-    merkle_add(info_db, coin_roots_db, &serialize(&MONEY_CONTRACT_COIN_MERKLE_TREE), &coins)?;
+    if !update.coins.is_empty() {
+        let coins: Vec<_> = update.coins.iter().map(|x| MerkleNode::from(x.inner())).collect();
+        merkle_add(info_db, coin_roots_db, &serialize(&MONEY_CONTRACT_COIN_MERKLE_TREE), &coins)?;
+    }
 
     // We have this guard since we allow faucets to make dummy inputs.
     if !update.nullifiers.is_empty() {
@@ -253,7 +256,7 @@ pub(crate) fn money_fee_process_update_v1(
         let current_fees: u64 = deserialize(&current_fees)?;
 
         let update_fees = update.fee_value + current_fees;
-        msg!("[FeeV1] Paid fee {} (total {})", update.fee_value, update_fees);
+        msg!("[FeeV1] Paid fee {} (total network fees: {})", update.fee_value, update_fees);
         db_set(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES), &serialize(&update_fees))?;
     }
 

@@ -30,10 +30,7 @@
 //! TODO: Malicious cases
 
 use darkfi::Result;
-use darkfi_sdk::{
-    crypto::{poseidon_hash, Keypair, MerkleNode, Nullifier},
-    incrementalmerkletree::Tree,
-};
+use darkfi_sdk::crypto::{poseidon_hash, Keypair, MerkleNode, Nullifier};
 use log::info;
 use rand::rngs::OsRng;
 
