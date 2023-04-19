@@ -17,13 +17,13 @@
  */
 
 use darkfi_sdk::{
+    bridgetree::BridgeTree,
     crypto::{
         pedersen::{pedersen_commitment_base, pedersen_commitment_u64},
         poseidon_hash,
         util::mod_r_p,
         MerkleNode, SecretKey,
     },
-    incrementalmerkletree::{bridgetree::BridgeTree, Tree},
     pasta::{arithmetic::CurveAffine, group::Curve, pallas},
 };
 use darkfi_serial::{SerialDecodable, SerialEncodable};
@@ -123,11 +123,10 @@ impl LeadCoin {
         let coin1_commitment_base = poseidon_hash(c1_base_msg);
         // Append the element to the Merkle tree
         coin_commitment_tree.append(&MerkleNode::from(coin1_commitment_base));
-        let coin1_commitment_pos = coin_commitment_tree.witness().unwrap();
+        let coin1_commitment_pos = coin_commitment_tree.mark().unwrap();
         let coin1_commitment_root = coin_commitment_tree.root(0).unwrap();
-        let coin1_commitment_merkle_path = coin_commitment_tree
-            .authentication_path(coin1_commitment_pos, &coin1_commitment_root)
-            .unwrap();
+        let coin1_commitment_merkle_path =
+            coin_commitment_tree.witness(coin1_commitment_pos, &coin1_commitment_root).unwrap();
 
         Self {
             value,
@@ -309,10 +308,10 @@ impl LeadCoin {
         let derived_c1_cm_msg = [*derived_c1_cm_coord.x(), *derived_c1_cm_coord.y()];
         let derived_c1_cm_base = poseidon_hash(derived_c1_cm_msg);
         coin_commitment_tree.append(&MerkleNode::from(derived_c1_cm_base));
-        let leaf_pos = coin_commitment_tree.witness().unwrap();
+        let leaf_pos = coin_commitment_tree.mark().unwrap();
         let commitment_root = coin_commitment_tree.root(0).unwrap();
         let commitment_merkle_path =
-            coin_commitment_tree.authentication_path(leaf_pos, &commitment_root).unwrap();
+            coin_commitment_tree.witness(leaf_pos, &commitment_root).unwrap();
         LeadCoin {
             value: self.value + constants::REWARD,
             slot: self.slot,
@@ -499,9 +498,9 @@ impl LeadCoinSecrets {
 
             let node = MerkleNode::from(secret_key.inner());
             tree.append(&node);
-            let leaf_pos = tree.witness().unwrap();
+            let leaf_pos = tree.mark().unwrap();
             let root = tree.root(0).unwrap();
-            let path = tree.authentication_path(leaf_pos, &root).unwrap();
+            let path = tree.witness(leaf_pos, &root).unwrap();
 
             root_sks.push(root);
             path_sks.push(path);

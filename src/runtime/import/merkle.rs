@@ -19,8 +19,8 @@
 use std::io::Cursor;
 
 use darkfi_sdk::{
+    bridgetree::BridgeTree,
     crypto::{constants::MERKLE_DEPTH, MerkleNode},
-    incrementalmerkletree::{bridgetree::BridgeTree, Tree},
 };
 use darkfi_serial::{serialize, Decodable, Encodable, WriteExt};
 use log::{debug, error};

@@ -20,13 +20,13 @@ use std::{collections::HashMap, io::Cursor};
 
 use async_std::sync::{Arc, RwLock};
 use darkfi_sdk::{
+    bridgetree::BridgeTree,
     crypto::{
         constants::MERKLE_DEPTH,
         contract_id::{DAO_CONTRACT_ID, MONEY_CONTRACT_ID},
         schnorr::{SchnorrPublic, SchnorrSecret},
         MerkleNode, PublicKey, SecretKey,
     },
-    incrementalmerkletree::{bridgetree::BridgeTree, Tree},
     pasta::{group::ff::PrimeField, pallas},
 };
 use darkfi_serial::{serialize, Decodable, Encodable, WriteExt};

@@ -19,8 +19,8 @@
 use std::fmt;
 
 use darkfi_sdk::{
+    bridgetree::BridgeTree,
     crypto::{constants::MERKLE_DEPTH, MerkleNode},
-    incrementalmerkletree::{bridgetree::BridgeTree, Tree},
     pasta::pallas,
 };
 use darkfi_serial::{serialize, SerialDecodable, SerialEncodable};
