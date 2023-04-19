@@ -111,9 +111,10 @@ impl<F: WithSmallOrderMulGroup<3> + Ord> ConditionalSelectChip<F> {
 
                 let selected = cond
                     .value()
+                    .cloned()
                     .to_field()
-                    .zip(a.value())
-                    .zip(b.value())
+                    .zip(a.value().cloned())
+                    .zip(b.value().cloned())
                     .map(|((cond, a), b)| if cond == F::ONE.into() { a } else { b });
 
                 let cell =

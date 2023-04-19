@@ -25,8 +25,7 @@ use darkfi::{
 };
 use darkfi_sdk::{
     crypto::{
-        note::AeadEncryptedNote, pasta_prelude::*, Keypair, MerkleNode, MerkleTree, SecretKey,
-        DARK_TOKEN_ID,
+        note::AeadEncryptedNote, pasta_prelude::*, Keypair, MerkleTree, SecretKey, DARK_TOKEN_ID,
     },
     incrementalmerkletree::Tree,
     pasta::pallas,
@@ -95,19 +94,29 @@ impl FeeCallBuilder {
         debug!("Building anonymous inputs");
         let mut inputs_value = 0;
 
+        // Clone the Merkle tree as mutable for potential changes in the
+        // scope of this function
+        let mut scoped_tree = self.tree.clone();
+        let root = scoped_tree.root(0).unwrap();
+
         for coin in self.coins.iter() {
             if inputs_value >= self.value {
                 break
             }
 
-            let leaf_position = coin.leaf_position;
-            let root = self.tree.root(0).unwrap();
-
-            // If doing a dummy input, we have to skip the inclusion proof
-            let merkle_path = if dummy {
-                vec![MerkleNode::from(pallas::Base::zero()); 32]
+            let (leaf_position, merkle_path) = if dummy {
+                // In the case of dummy inputs, we will just provide a Merkle path to the
+                // latest leaf appended into the tree.
+                scoped_tree.witness();
+                let leaf_position = scoped_tree.current_position().unwrap();
+                let merkle_path = scoped_tree.authentication_path(leaf_position, &root).unwrap();
+                scoped_tree.remove_witness(leaf_position);
+                (leaf_position, merkle_path)
             } else {
-                self.tree.authentication_path(leaf_position, &root).unwrap()
+                // Otherwise we provide an actual respective path.
+                let leaf_position = coin.leaf_position;
+                let merkle_path = scoped_tree.authentication_path(leaf_position, &root).unwrap();
+                (leaf_position, merkle_path)
             };
 
             inputs_value += coin.note.value;
@@ -158,10 +167,7 @@ impl FeeCallBuilder {
             let value_blind = pallas::Scalar::random(&mut OsRng);
             input_blinds.push(value_blind);
 
-            // Also in the case of a dummy input, we use the given keypair.
-            let signature_secret =
-                if dummy { self.keypair.secret } else { SecretKey::random(&mut OsRng) };
-
+            let signature_secret = SecretKey::random(&mut OsRng);
             signature_secrets.push(signature_secret);
 
             info!("Creating fee burn proof for input {}", i);
