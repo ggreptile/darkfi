@@ -27,7 +27,7 @@ crypto_box = "0.8.2"
 rand = "0.8.5"
 
 # Misc
-clap = {version = "4.2.2", features = ["derive"]}
+clap = {version = "4.2.3", features = ["derive"]}
 log = "0.4.17"
 simplelog = "0.12.1"
 ctrlc = { version = "3.2.5", features = ["termination"] }
