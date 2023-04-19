@@ -18,86 +18,39 @@
 
 use std::io::{Error, ErrorKind, Read, Write};
 
-use incrementalmerkletree::Hashable;
-
 use crate::{Decodable, Encodable};
 
-impl Encodable for incrementalmerkletree::Position {
+impl Encodable for bridgetree::Position {
     fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
         u64::from(*self).encode(&mut s)
     }
 }
 
-impl Decodable for incrementalmerkletree::Position {
+impl Decodable for bridgetree::Position {
     fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
         let dec: u64 = Decodable::decode(&mut d)?;
         Ok(Self::try_from(dec).unwrap())
     }
 }
 
-impl<T: Encodable + Ord> Encodable for incrementalmerkletree::bridgetree::Leaf<T> {
+impl Encodable for bridgetree::Address {
     fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
         let mut len = 0;
-
-        match self {
-            incrementalmerkletree::bridgetree::Leaf::Left(a) => {
-                len += false.encode(&mut s)?;
-                len += a.encode(&mut s)?;
-            }
-
-            incrementalmerkletree::bridgetree::Leaf::Right(a, b) => {
-                len += true.encode(&mut s)?;
-                len += a.encode(&mut s)?;
-                len += b.encode(&mut s)?;
-            }
-        }
-
+        len += u8::from(self.level()).encode(&mut s)?;
+        len += self.index().encode(&mut s)?;
         Ok(len)
     }
 }
 
-impl<T: Decodable + Ord> Decodable for incrementalmerkletree::bridgetree::Leaf<T> {
+impl Decodable for bridgetree::Address {
     fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
-        let side: bool = Decodable::decode(&mut d)?;
-
-        match side {
-            false => {
-                let a: T = Decodable::decode(&mut d)?;
-                Ok(Self::Left(a))
-            }
-            true => {
-                let a: T = Decodable::decode(&mut d)?;
-                let b: T = Decodable::decode(&mut d)?;
-                Ok(Self::Right(a, b))
-            }
-        }
+        let level: u8 = Decodable::decode(&mut d)?;
+        let index = Decodable::decode(&mut d)?;
+        Ok(Self::from_parts(level.into(), index))
     }
 }
 
-impl Encodable for incrementalmerkletree::bridgetree::Checkpoint {
-    fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
-        let mut len = 0;
-        len += self.bridges_len().encode(&mut s)?;
-        len += self.is_witnessed().encode(&mut s)?;
-        len += self.witnessed().encode(&mut s)?;
-        len += self.forgotten().encode(&mut s)?;
-        Ok(len)
-    }
-}
-
-impl Decodable for incrementalmerkletree::bridgetree::Checkpoint {
-    fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
-        let bridges_len = Decodable::decode(&mut d)?;
-        let is_witnessed = Decodable::decode(&mut d)?;
-        let witnessed = Decodable::decode(&mut d)?;
-        let forgotten = Decodable::decode(&mut d)?;
-        Ok(Self::from_parts(bridges_len, is_witnessed, witnessed, forgotten))
-    }
-}
-
-impl<T: Encodable + Ord + Clone> Encodable
-    for incrementalmerkletree::bridgetree::NonEmptyFrontier<T>
-{
+impl<H: Encodable + Ord + Clone> Encodable for bridgetree::NonEmptyFrontier<H> {
     fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
         let mut len = 0;
         len += self.position().encode(&mut s)?;
@@ -107,9 +60,7 @@ impl<T: Encodable + Ord + Clone> Encodable
     }
 }
 
-impl<T: Decodable + Ord + Clone> Decodable
-    for incrementalmerkletree::bridgetree::NonEmptyFrontier<T>
-{
+impl<H: Decodable + Ord + Clone> Decodable for bridgetree::NonEmptyFrontier<H> {
     fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
         let position = Decodable::decode(&mut d)?;
         let leaf = Decodable::decode(&mut d)?;
@@ -122,60 +73,62 @@ impl<T: Decodable + Ord + Clone> Decodable
     }
 }
 
-impl<T: Encodable + Ord + Clone> Encodable for incrementalmerkletree::bridgetree::AuthFragment<T> {
-    fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
-        let mut len = 0;
-        len += self.position().encode(&mut s)?;
-        len += self.altitudes_observed().encode(&mut s)?;
-        len += self.values().to_vec().encode(&mut s)?;
-        Ok(len)
-    }
-}
-
-impl<T: Decodable + Ord + Clone> Decodable for incrementalmerkletree::bridgetree::AuthFragment<T> {
-    fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
-        let position = Decodable::decode(&mut d)?;
-        let altitudes_observed = Decodable::decode(&mut d)?;
-        let values = Decodable::decode(&mut d)?;
-        Ok(Self::from_parts(position, altitudes_observed, values))
-    }
-}
-
-impl<T: Encodable + Ord + Clone> Encodable for incrementalmerkletree::bridgetree::MerkleBridge<T> {
+impl<H: Encodable + Ord + Clone> Encodable for bridgetree::MerkleBridge<H> {
     fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
         let mut len = 0;
         len += self.prior_position().encode(&mut s)?;
-        len += self.auth_fragments().encode(&mut s)?;
+        len += self.tracking().encode(&mut s)?;
+        len += self.ommers().encode(&mut s)?;
         len += self.frontier().encode(&mut s)?;
         Ok(len)
     }
 }
 
-impl<T: Decodable + Ord + Clone> Decodable for incrementalmerkletree::bridgetree::MerkleBridge<T> {
+impl<H: Decodable + Ord + Clone> Decodable for bridgetree::MerkleBridge<H> {
     fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
         let prior_position = Decodable::decode(&mut d)?;
-        let auth_fragments = Decodable::decode(&mut d)?;
+        let tracking = Decodable::decode(&mut d)?;
+        let ommers = Decodable::decode(&mut d)?;
         let frontier = Decodable::decode(&mut d)?;
-        Ok(Self::from_parts(prior_position, auth_fragments, frontier))
+        Ok(Self::from_parts(prior_position, tracking, ommers, frontier))
     }
 }
 
-impl<T: Encodable + Ord + Clone, const V: u8> Encodable
-    for incrementalmerkletree::bridgetree::BridgeTree<T, V>
-{
+impl Encodable for bridgetree::Checkpoint {
+    fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
+        let mut len = 0;
+        len += self.bridges_len().encode(&mut s)?;
+        len += self.is_marked().encode(&mut s)?;
+        len += self.marked().encode(&mut s)?;
+        len += self.forgotten().encode(&mut s)?;
+        Ok(len)
+    }
+}
+
+impl Decodable for bridgetree::Checkpoint {
+    fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
+        let bridges_len = Decodable::decode(&mut d)?;
+        let is_marked = Decodable::decode(&mut d)?;
+        let marked = Decodable::decode(&mut d)?;
+        let forgotten = Decodable::decode(&mut d)?;
+        Ok(Self::from_parts(bridges_len, is_marked, marked, forgotten))
+    }
+}
+
+impl<H: Encodable + Ord + Clone, const DEPTH: u8> Encodable for bridgetree::BridgeTree<H, DEPTH> {
     fn encode<S: Write>(&self, mut s: S) -> Result<usize, Error> {
         let mut len = 0;
         len += self.prior_bridges().to_vec().encode(&mut s)?;
         len += self.current_bridge().encode(&mut s)?;
-        len += self.witnessed_indices().encode(&mut s)?;
+        len += self.marked_indices().encode(&mut s)?;
         len += self.checkpoints().to_vec().encode(&mut s)?;
         len += self.max_checkpoints().encode(&mut s)?;
         Ok(len)
     }
 }
 
-impl<T: Decodable + Ord + Clone + Hashable, const V: u8> Decodable
-    for incrementalmerkletree::bridgetree::BridgeTree<T, V>
+impl<H: Decodable + Ord + Clone + bridgetree::Hashable, const DEPTH: u8> Decodable
+    for bridgetree::BridgeTree<H, DEPTH>
 {
     fn decode<D: Read>(mut d: D) -> Result<Self, Error> {
         let prior_bridges = Decodable::decode(&mut d)?;
@@ -193,7 +146,7 @@ impl<T: Decodable + Ord + Clone + Hashable, const V: u8> Decodable
 #[cfg(test)]
 mod tests {
     use crate::{deserialize, serialize, SerialDecodable, SerialEncodable};
-    use incrementalmerkletree::{bridgetree::BridgeTree, Altitude, Hashable, Tree};
+    use bridgetree::{BridgeTree, Hashable, Level};
 
     #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, SerialEncodable, SerialDecodable)]
     struct Node(String);
@@ -203,7 +156,7 @@ mod tests {
             Self("_".to_string())
         }
 
-        fn combine(_: Altitude, a: &Self, b: &Self) -> Self {
+        fn combine(_: Level, a: &Self, b: &Self) -> Self {
             Self(a.0.to_string() + &b.0)
         }
     }
@@ -216,7 +169,7 @@ mod tests {
         let mut tree: BridgeTree<Node, DEPTH> = BridgeTree::new(100);
         for i in 0..100 {
             tree.append(&Node(format!("test{}", i)));
-            tree.witness();
+            tree.mark();
             tree.checkpoint();
         }
         let serial_tree = serialize(&tree);
@@ -231,7 +184,7 @@ mod tests {
         let mut tree3: BridgeTree<Node, DEPTH> = BridgeTree::new(100);
         for i in 0..2_i32.pow(DEPTH as u32) {
             tree3.append(&Node(format!("test{}", i)));
-            tree3.witness();
+            tree3.mark();
             tree3.checkpoint();
         }
         let serial_tree3 = serialize(&tree3);
