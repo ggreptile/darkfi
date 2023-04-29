@@ -17,10 +17,11 @@
  */
 
 use darkfi_sdk::{
-    crypto::{ContractId, MerkleTree, PublicKey},
+    crypto::{pasta_prelude::*, ContractId, MerkleNode, MerkleTree, PublicKey},
     db::{db_init, db_lookup, db_set, zkas_db_set},
     error::{ContractError, ContractResult},
     msg,
+    pasta::pallas,
     util::set_return_data,
     ContractCall,
 };
@@ -129,14 +130,15 @@ fn init_contract(cid: ContractId, ix: &[u8]) -> ContractResult {
             let info_db = db_init(cid, MONEY_CONTRACT_INFO_TREE)?;
 
             // Create the incrementalmerkletree for seen coins
-            let coin_tree = MerkleTree::new(100);
-            let mut coin_tree_data = vec![];
+            let mut coin_tree = MerkleTree::new(100);
+            // We instantiate the tree with one fake coin, used for dummy inputs.
+            coin_tree.append(&MerkleNode::from(pallas::Base::ZERO));
 
+            let mut coin_tree_data = vec![];
             coin_tree_data.write_u32(0)?;
             coin_tree.encode(&mut coin_tree_data)?;
 
             db_set(info_db, &serialize(&MONEY_CONTRACT_COIN_MERKLE_TREE), &coin_tree_data)?;
-
             db_set(info_db, &serialize(&MONEY_CONTRACT_PAID_FEES), &serialize(&0_u64))?;
 
             info_db

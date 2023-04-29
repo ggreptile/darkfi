@@ -150,7 +150,6 @@ pub(crate) fn money_fee_process_instruction_v1(
     msg!("[FeeV1] Iterating over inputs");
     for (i, input) in params.inputs.iter().enumerate() {
         // The faucet can give any dummy input
-        // TODO: Fix replay vuln
         if faucet_pubkeys.contains(&input.signature_public) {
             msg!("[FeeV1] Transaction is from a faucet, skip fee");
             valcom_total += input.value_commit;

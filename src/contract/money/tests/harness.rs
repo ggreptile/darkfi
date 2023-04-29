@@ -31,7 +31,10 @@ use darkfi::{
     Result,
 };
 use darkfi_sdk::{
-    crypto::{Coin, Keypair, MerkleTree, Nullifier, PublicKey, DARK_TOKEN_ID, MONEY_CONTRACT_ID},
+    crypto::{
+        Coin, Keypair, MerkleNode, MerkleTree, Nullifier, PublicKey, DARK_TOKEN_ID,
+        MONEY_CONTRACT_ID,
+    },
     pasta::pallas,
     ContractCall,
 };
@@ -95,7 +98,9 @@ impl Wallet {
         )
         .await?;
 
-        let merkle_tree = MerkleTree::new(100);
+        let mut merkle_tree = MerkleTree::new(100);
+        merkle_tree.append(&MerkleNode::from(pallas::Base::ZERO));
+        let _ = merkle_tree.mark().unwrap();
 
         let coins = vec![];
         let spent_coins = vec![];

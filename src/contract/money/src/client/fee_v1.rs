@@ -93,11 +93,6 @@ impl FeeCallBuilder {
         debug!("Building anonymous inputs");
         let mut inputs_value = 0;
 
-        // Clone the Merkle tree as mutable for potential changes in the
-        // scope of this function
-        let mut scoped_tree = self.tree.clone();
-        let root = scoped_tree.root(0).unwrap();
-
         for coin in self.coins.iter() {
             if inputs_value >= self.value {
                 break
@@ -105,17 +100,16 @@ impl FeeCallBuilder {
 
             let (leaf_position, merkle_path) = if dummy {
                 // In the case of dummy inputs, we will just provide a Merkle path to the
-                // latest leaf appended into the tree.
-                scoped_tree.mark();
-                let leaf_position = scoped_tree.current_position().unwrap();
-                let merkle_path = scoped_tree.witness(leaf_position, &root).unwrap();
-                scoped_tree.remove_mark(leaf_position);
+                // first leaf appended into the tree (dummy zero coin)
+                let root = self.tree.root(0).unwrap();
+                let leaf_position = 0.into();
+                let merkle_path = self.tree.witness(leaf_position, &root).unwrap();
                 (leaf_position, merkle_path)
             } else {
                 // Otherwise we provide an actual respective path.
-                let root = scoped_tree.root(0).unwrap();
+                let root = self.tree.root(0).unwrap();
                 let leaf_position = coin.leaf_position;
-                let merkle_path = scoped_tree.witness(leaf_position, &root).unwrap();
+                let merkle_path = self.tree.witness(leaf_position, &root).unwrap();
                 (leaf_position, merkle_path)
             };
 

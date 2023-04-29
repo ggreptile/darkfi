@@ -18,7 +18,9 @@
 use std::collections::HashMap;
 
 use anyhow::{anyhow, Result};
-use darkfi::{rpc::jsonrpc::JsonRequest, tx::Transaction, wallet::walletdb::QueryType};
+use darkfi::{
+    rpc::jsonrpc::JsonRequest, tx::Transaction, wallet::walletdb::QueryType, zk::halo2::Field,
+};
 use darkfi_money_contract::{
     client::{
         MoneyNote, OwnCoin, MONEY_ALIASES_COL_ALIAS, MONEY_ALIASES_COL_TOKEN_ID,
@@ -440,7 +442,10 @@ impl Drk {
     /// Reset the Money Merkle tree in the wallet
     pub async fn reset_money_tree(&self) -> Result<()> {
         eprintln!("Resetting Money Merkle tree");
-        let tree = MerkleTree::new(100);
+        let mut tree = MerkleTree::new(100);
+        // Append a fake coin to the initial tree
+        tree.append(&MerkleNode::from(pallas::Base::ZERO));
+        let _ = tree.mark().unwrap();
         self.put_money_tree(&tree).await?;
         eprintln!("Successfully reset Money Merkle tree");
 

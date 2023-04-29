@@ -44,11 +44,11 @@ use darkfi_money_contract::{
     MONEY_CONTRACT_ZKAS_BURN_NS_V1, MONEY_CONTRACT_ZKAS_MINT_NS_V1,
 };
 use darkfi_sdk::{
+    bridgetree::BridgeTree,
     crypto::{
         constants::MERKLE_DEPTH, contract_id::MONEY_CONTRACT_ID, Keypair, MerkleNode, PublicKey,
         DARK_TOKEN_ID,
     },
-    incrementalmerkletree::bridgetree::BridgeTree,
     pasta::{group::ff::PrimeField, pallas},
     tx::ContractCall,
 };
@@ -307,7 +307,9 @@ impl Faucetd {
                 deserialize(t.get(MONEY_TREE_COL_TREE))?
             }
             Err(_) => {
-                let tree = BridgeTree::<MerkleNode, MERKLE_DEPTH>::new(100);
+                let mut tree = BridgeTree::<MerkleNode, MERKLE_DEPTH>::new(100);
+                tree.append(&MerkleNode::from(pallas::Base::ZERO));
+                let _ = tree.mark().unwrap();
                 let tree_bytes = serialize(&tree);
                 let query = format!(
                     "DELETE FROM {}; INSERT INTO {} ({}) VALUES (?1)",
