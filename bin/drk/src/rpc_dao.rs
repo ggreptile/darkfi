@@ -38,7 +38,6 @@ use darkfi_sdk::{
         pedersen_commitment_u64, Keypair, PublicKey, SecretKey, TokenId, DAO_CONTRACT_ID,
         MONEY_CONTRACT_ID,
     },
-    incrementalmerkletree::Tree,
     pasta::pallas,
     ContractCall,
 };
@@ -180,7 +179,7 @@ impl Drk {
         let money_merkle_tree = self.get_money_tree().await?;
         let root = money_merkle_tree.root(0).unwrap();
         let gov_coin_merkle_path =
-            money_merkle_tree.authentication_path(gov_coin.leaf_position, &root).unwrap();
+            money_merkle_tree.witness(gov_coin.leaf_position, &root).unwrap();
 
         // Fetch the daos Merkle tree
         let (daos_tree, _) = self.get_dao_trees().await?;
@@ -196,7 +195,7 @@ impl Drk {
         let (dao_merkle_path, dao_merkle_root) = {
             let root = daos_tree.root(0).unwrap();
             let leaf_pos = dao.leaf_position.unwrap();
-            let dao_merkle_path = daos_tree.authentication_path(leaf_pos, &root).unwrap();
+            let dao_merkle_path = daos_tree.witness(leaf_pos, &root).unwrap();
             (dao_merkle_path, root)
         };
 
@@ -292,7 +291,7 @@ impl Drk {
 
             let root = money_tree.root(0).unwrap();
             let leaf_position = coin.leaf_position;
-            let merkle_path = money_tree.authentication_path(coin.leaf_position, &root).unwrap();
+            let merkle_path = money_tree.witness(coin.leaf_position, &root).unwrap();
 
             let input = DaoVoteInput {
                 secret: coin.secret,
@@ -432,7 +431,7 @@ impl Drk {
             xfer_inputs.push(money_client::TransferInput {
                 leaf_position: coin.leaf_position,
                 merkle_path: money_merkle_tree
-                    .authentication_path(coin.leaf_position, &money_merkle_root)
+                    .witness(coin.leaf_position, &money_merkle_root)
                     .unwrap(),
                 secret: dao.secret_key,
                 note: coin.note.clone(),

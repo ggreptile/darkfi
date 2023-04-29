@@ -44,10 +44,10 @@ use darkfi_dao_contract::{
     DaoFunction,
 };
 use darkfi_sdk::{
+    bridgetree,
     crypto::{
         poseidon_hash, MerkleNode, MerkleTree, PublicKey, SecretKey, TokenId, DAO_CONTRACT_ID,
     },
-    incrementalmerkletree::{Position, Tree},
     pasta::pallas,
 };
 use darkfi_serial::{deserialize, serialize, SerialDecodable, SerialEncodable};
@@ -122,7 +122,7 @@ pub struct Dao {
     /// DAO bulla blind
     pub bulla_blind: pallas::Base,
     /// Leaf position of the DAO in the Merkle tree of DAOs
-    pub leaf_position: Option<Position>,
+    pub leaf_position: Option<bridgetree::Position>,
     /// The transaction hash where the DAO was deployed
     pub tx_hash: Option<blake3::Hash>,
     /// The call index in the transaction where the DAO was deployed
@@ -200,7 +200,7 @@ pub struct DaoProposal {
     /// Proposal's bulla blind
     pub bulla_blind: pallas::Base,
     /// Leaf position of this proposal in the Merkle tree of proposals
-    pub leaf_position: Option<Position>,
+    pub leaf_position: Option<bridgetree::Position>,
     /// Transaction hash where this proposal was proposed
     pub tx_hash: Option<blake3::Hash>,
     /// call index in the transaction where this proposal was proposed
@@ -981,7 +981,7 @@ impl Drk {
                             new_bulla.0
                         );
                         // We have this DAO imported in our wallet. Add the metadata:
-                        dao.leaf_position = daos_tree.witness();
+                        dao.leaf_position = daos_tree.mark();
                         dao.tx_hash = new_bulla.1;
                         dao.call_index = Some(new_bulla.2);
                         daos_to_confirm.push(dao.clone());
@@ -1016,7 +1016,7 @@ impl Drk {
                             amount: note.proposal.amount,
                             token_id: note.proposal.token_id,
                             bulla_blind: note.proposal.blind,
-                            leaf_position: proposals_tree.witness(),
+                            leaf_position: proposals_tree.mark(),
                             tx_hash: proposal.1,
                             call_index: Some(proposal.2),
                             vote_id: None,
