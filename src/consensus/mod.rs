@@ -39,6 +39,8 @@ pub use state::SlotCheckpoint;
 pub mod validator;
 pub use validator::{ValidatorState, ValidatorStatePtr};
 
+pub mod validator2;
+
 /// P2P net protocols
 pub mod proto;
 

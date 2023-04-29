@@ -100,11 +100,12 @@ impl ConsensusState {
         genesis_data: blake3::Hash,
         initial_distribution: u64,
         single_node: bool,
-    ) -> Self {
+    ) -> Result<Self> {
         let genesis_block = Block::genesis_block(genesis_ts, genesis_data).blockhash();
         let time_keeper =
             TimeKeeper::new(genesis_ts, constants::EPOCH_LENGTH as u64, constants::SLOT_TIME);
-        Self {
+
+        Ok(Self {
             wallet,
             blockchain,
             bootstrap_ts,
@@ -125,7 +126,7 @@ impl ConsensusState {
             coins: vec![],
             coins_tree: BridgeTree::<MerkleNode, MERKLE_DEPTH>::new(constants::EPOCH_LENGTH * 100),
             nullifiers: vec![],
-        }
+        })
     }
 
     /// Finds the last slot a proposal or block was generated.

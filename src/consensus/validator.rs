@@ -132,7 +132,7 @@ impl ValidatorState {
             genesis_data,
             initial_distribution,
             single_node,
-        );
+        )?;
 
         // -----NATIVE WASM CONTRACTS-----
         // This is the current place where native contracts are being deployed.
@@ -1086,7 +1086,7 @@ impl ValidatorState {
         };
 
         info!(target: "consensus::validator", "Verifying ZK proofs for transaction {}", tx_hash);
-        match tx.verify_zkps(verifying_keys.clone(), zkp_table).await {
+        match tx.verify_zkps(verifying_keys, zkp_table).await {
             Ok(()) => {
                 info!(target: "consensus::validator", "ZK proof verification for tx {} successful", tx_hash)
             }
