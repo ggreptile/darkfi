@@ -164,9 +164,6 @@ impl ValidatorState {
             return Err(TxVerifyFailed::MissingFee.into())
         }
 
-        // WASM runtimes instantiated for this transaction
-        let mut runtimes = HashMap::new();
-
         // Tracker for the gas used
         let mut fee = Fee::default();
 
@@ -185,21 +182,14 @@ impl ValidatorState {
             tx.calls.encode(&mut payload)?; // Actual call data
 
             info!(target: "consensus::validator", "Instantiating WASM runtime");
-            let runtime_key = call.contract_id.to_bytes();
-            if !runtimes.contains_key(&runtime_key) {
-                let wasm = self.blockchain.wasm_bincode.get(call.contract_id)?;
+            let wasm = self.blockchain.wasm_bincode.get(call.contract_id)?;
 
-                let r = Runtime::new(
-                    &wasm,
-                    blockchain_overlay.clone(),
-                    call.contract_id,
-                    self.consensus.time_keeper.clone(),
-                )?;
-
-                runtimes.insert(runtime_key, r);
-            }
-
-            let runtime = runtimes.get_mut(&runtime_key).unwrap();
+            let runtime = Runtime::new(
+                &wasm,
+                blockchain_overlay.clone(),
+                call.contract_id,
+                self.consensus.time_keeper.clone(),
+            )?;
 
             info!(target: "consensus::validator", "Executing \"metadata\" call");
             let metadata = runtime.metadata(&payload)?;
@@ -249,12 +239,10 @@ impl ValidatorState {
             info!(target: "consensus::validator", "Successfully executed \"apply\" call");
 
             // We ran ::metadata, ::exec, and ::apply for a single call. We fetch the gas
-            // used here, note it down in the `Fee` struct, and then reset in the runtime
-            // so in case the same contract/runtime is called again, it can use the full
-            // gas again. If this call fails, that means the gas was exhausted, although
-            // that should also happen on ::exec or ::metadata as well. Redundancy is ok.
+            // used here, and note it down in the `Fee` struct. If this call fails, that
+            // means the gas was exhausted, although that should also happen on ::exec or
+            // ::metadata as well. Redundancy is ok.
             fee.gas_used += runtime.gas_used()?;
-            runtime.reset_gas();
 
             // At this point we're done with the call and move on to the next one.
         }
