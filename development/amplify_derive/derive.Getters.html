@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Derives getter methods for structures. The return type and naming of the methods depends on the provided attribute arguments."><title>Getters in amplify_derive - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="amplify_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc derive"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../amplify_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../amplify_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In amplify_derive</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Derive Macro <a href="index.html">amplify_derive</a>::<wbr><a class="derive" href="#">Getters</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/amplify_derive/lib.rs.html#625-630">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>#[derive(Getters)]
+{
+    // Attributes available to this derive:
+    #[getter]
+}
+</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Derives getter methods for structures. The return type and naming of the
+methods depends on the provided attribute arguments.</p>
+<h2 id="attribute-getter"><a href="#attribute-getter">Attribute <code>#[getter(...)]</code></a></h2>
+<p>Macro is provided with <code>#[getter]</code> attribute, which may be used on both
+type and field level. See following sections describing its arguments</p>
+<h3 id="arguments"><a href="#arguments">Arguments</a></h3><h4 id="method-derivation-arguments"><a href="#method-derivation-arguments">Method derivation arguments</a></h4>
+<p>Method derivation arguments define which forms of methods should be derived.
+Applicable both at the type level, where it defines a set of derived methods
+for all fields (unless they are overrided on the field level) – or on the
+field level, where it overrides/replaces the default set of methods with a
+new one.</p>
+<p>Attribute takes a list of arguments in form of verbatim literals:</p>
+<ul>
+<li><code>as_copy</code>: derives methods returning copy of the field value. Will error
+at compile time on types which does not implement <code>Copy</code></li>
+<li><code>as_clone</code>: derives methods returning cloned value; will conflict with
+<code>as_copy</code>. Errors at compile time on types which does not implement
+<code>Clone</code>.</li>
+<li><code>as_ref</code>: derives method returning reference. If provided together with
+either <code>as_copy</code> or <code>as_clone</code>, method name returning reference is
+suffixed with <code>_ref</code>; otherwise the base name is used (see below)</li>
+<li><code>as_mut</code>: derives method returning mutable reference. Method name is
+suffixed with <code>_mut</code></li>
+<li><code>all</code>: equivalent to <code>as_clone, as_ref, as_mut</code></li>
+</ul>
+<p><strong>Can be used</strong>: at type and field level</p>
+<p><strong>Defaults to</strong>: <code>as_ref</code></p>
+<h4 id="getterskip"><a href="#getterskip"><code>#[getter(skip)]</code></a></h4>
+<p>Skips derivation of a all gettter methods for this field</p>
+<h4 id="getterprefix--"><a href="#getterprefix--"><code>#[getter(prefix = &quot;...&quot;)]</code></a></h4>
+<p>Defines prefix added to all derived getter method names.</p>
+<p><strong>Defaults to</strong>: none (no prefix added)</p>
+<p><strong>Can be used</strong>: at type level</p>
+<h4 id="getterbase_name--"><a href="#getterbase_name--"><code>#[getter(base_name = &quot;...&quot;)]</code></a></h4>
+<p>Defines base name for the getter method. Base name is prefixed with prefix
+from a type-level getter <code>prefix</code> attribute (if the one is specified) and
+suffix, which is method-specific (see <code>methods</code> argument description above).</p>
+<p><strong>Defaults to</strong>: field name</p>
+<p><strong>Can be used</strong>: at field level</p>
+<h2 id="errors"><a href="#errors">Errors</a></h2>
+<p>Enums and units are not supported; attempt to derive <code>Getters</code> on them will
+result in a compile-time error.</p>
+<p>Deriving getters on unit structs and structs with unnamed fields (tupe
+structs) is not supported (since it’s meaningless), and results in a error.</p>
+<p>Additionally to these two cases, macro errors on argument inconsistencies,
+as described in the argument-specific sections.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Basic use:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Getters, Default)]
+</span><span class="kw">struct </span>One {
+    vec: Vec&lt;u8&gt;,
+    defaults: String,
+    <span class="attr">#[getter(as_copy)]
+    </span><span class="kw">pub </span>flag: bool,
+    <span class="attr">#[getter(as_copy)]
+    </span><span class="kw">pub</span>(<span class="self">self</span>) field: u8,
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>one = One::default();
+<span class="macro">assert_eq!</span>(one.vec(), <span class="kw-2">&amp;</span>Vec::&lt;u8&gt;::default());
+<span class="macro">assert_eq!</span>(one.defaults(), <span class="string">&quot;&quot;</span>);
+<span class="macro">assert_eq!</span>(one.flag(), <span class="bool-val">false</span>);
+<span class="macro">assert_eq!</span>(one.field(), <span class="number">0</span>);</code></pre></div>
+<p>Important, that field-level arguments to override struct-level arguments:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Getters, Default)]
+#[getter(as_copy)]
+</span><span class="kw">struct </span>Other {
+    <span class="attr">#[getter(as_ref)]
+    </span>vec: Vec&lt;u8&gt;,
+    <span class="attr">#[getter(as_clone)]
+    </span>defaults: String,
+    <span class="kw">pub </span>flag: bool,
+    <span class="kw">pub</span>(<span class="self">self</span>) field: u8,
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>other = Other::default();
+<span class="macro">assert_eq!</span>(other.vec(), <span class="kw-2">&amp;</span>Vec::&lt;u8&gt;::default());
+<span class="macro">assert_eq!</span>(other.defaults(), String::from(<span class="string">&quot;&quot;</span>));</code></pre></div>
+<p>Advanced use: please pay attention that <code>as_mut</code> on a struct level is not
+removed by the use of <code>as_copy</code> at field level.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Getters, Default)]
+#[getter(as_mut, prefix = <span class="string">&quot;get_&quot;</span>)]
+</span><span class="kw">struct </span>One {
+    <span class="doccomment">/// Contains byte representation of the data
+    </span><span class="attr">#[getter(all, base_name = <span class="string">&quot;bytes&quot;</span>)]
+    </span>vec: Vec&lt;u8&gt;,
+
+    defaults: String,
+
+    <span class="attr">#[getter(as_copy)]
+    </span><span class="kw">pub </span>flag: bool,
+
+    <span class="attr">#[getter(skip)]
+    </span><span class="kw">pub</span>(<span class="self">self</span>) field: u8,
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>one = One::default();
+<span class="macro">assert_eq!</span>(one.get_bytes_ref(), <span class="kw-2">&amp;</span>Vec::&lt;u8&gt;::default());
+<span class="kw-2">*</span>one.get_bytes_mut() = <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];
+<span class="macro">assert_eq!</span>(one.get_defaults(), <span class="string">&quot;&quot;</span>);
+<span class="macro">assert_eq!</span>(one.get_defaults_mut(), <span class="string">&quot;&quot;</span>);
+<span class="macro">assert_eq!</span>(one.get_bytes(), <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]);
+<span class="macro">assert_eq!</span>(one.get_flag(), bool::default());
+<span class="macro">assert_eq!</span>(one.get_flag_mut(), <span class="kw-2">&amp;mut </span>bool::default());
+<span class="kw">let </span>flag = one.get_flag_mut();
+<span class="kw-2">*</span>flag = <span class="bool-val">true</span>;
+<span class="macro">assert_eq!</span>(one.get_flag(), <span class="bool-val">true</span>);
+<span class="macro">assert_eq!</span>(one.flag, one.get_flag());
+<span class="comment">// method does not exist: assert_eq!(one.get_field(), u8::default());</span></code></pre></div>
+<p>this will end up in the following generated code:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">impl </span>One {
+    <span class="attr">#[doc = <span class="string">&quot;Method cloning [`One::vec`] field.\n&quot;</span>]
+    #[doc = <span class="string">&quot; Contains byte representation of the data&quot;</span>]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; { <span class="self">self</span>.vec.clone() }
+
+    <span class="attr">#[doc = <span class="string">&quot;Method borrowing [`One::vec`] field.\n&quot;</span>]
+    #[doc = <span class="string">&quot; Contains byte representation of the data&quot;</span>]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_bytes_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;u8&gt; { <span class="kw-2">&amp;</span><span class="self">self</span>.vec }
+
+    <span class="attr">#[doc = <span class="string">&quot;Method returning mutable borrow of [`One::vec`] field.\n&quot;</span>]
+    #[doc = <span class="string">&quot; Contains byte representation of the data&quot;</span>]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_bytes_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>Vec&lt;u8&gt; { <span class="kw-2">&amp;mut </span><span class="self">self</span>.vec }
+
+    <span class="attr">#[doc = <span class="string">&quot;Method returning copy of [`One::flag`] field.\n&quot;</span>]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_flag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool { <span class="self">self</span>.flag }
+
+    <span class="attr">#[doc = <span class="string">&quot;Method returning mutable borrow of [`One::flag`] field.\n&quot;</span>]
+    #[inline]
+    </span><span class="kw">pub fn </span>get_flag_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>bool { <span class="kw-2">&amp;mut </span><span class="self">self</span>.flag }
+}</code></pre></div>
+</div></details></section></div></main></body></html>

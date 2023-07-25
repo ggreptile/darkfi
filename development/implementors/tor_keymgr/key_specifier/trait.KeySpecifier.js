@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"tor_hsclient":[["impl <a class=\"trait\" href=\"tor_keymgr/key_specifier/trait.KeySpecifier.html\" title=\"trait tor_keymgr::key_specifier::KeySpecifier\">KeySpecifier</a> for <a class=\"struct\" href=\"tor_hsclient/struct.HsClientSecretKeySpecifier.html\" title=\"struct tor_hsclient::HsClientSecretKeySpecifier\">HsClientSecretKeySpecifier</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

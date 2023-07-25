@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["DirBlockage","DocId","DocSource","Error","Timeliness"],"mod":["authority","config"],"struct":["DirBootstrapEvents","DirBootstrapStatus","DirMgr","DirMgrStore","DocumentText","DownloadSchedule","DownloadScheduleBuilder","FallbackDir","FallbackDirBuilder"],"trait":["DirProvider"],"type":["Result"]};

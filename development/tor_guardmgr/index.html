@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-guardmgr"><title>tor_guardmgr - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_guardmgr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_guardmgr/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_guardmgr/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_guardmgr</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.9.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_guardmgr</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_guardmgr/lib.rs.html#1-2023">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-guardmgr"><a href="#tor-guardmgr">tor-guardmgr</a></h2>
+<p>Guard node selection for Tor network clients.</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>This crate is part of
+<a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>, a project to
+implement <a href="https://www.torproject.org/">Tor</a> in Rust.</p>
+<p>“Guard nodes” are mechanism that Tor clients uses to limit the
+impact of hostile relays. Approximately: each client chooses a
+small set of relays to use as its “guards”.  Later, when the
+client picks its paths through network, rather than choosing a
+different first hop randomly for every path, it chooses the best
+“guard” as the first hop.</p>
+<p>This crate provides <a href="struct.GuardMgr.html" title="struct tor_guardmgr::GuardMgr"><code>GuardMgr</code></a>, an object that manages a set of
+guard nodes, and helps the <code>tor-circmgr</code> crate know when to use
+them.</p>
+<p>Guard nodes are persistent across multiple process invocations.</p>
+<p>More Arti users won’t need to use this crate directly.</p>
+<h3 id="motivation"><a href="#motivation">Motivation</a></h3>
+<p>What’s the point?  By restricting their first hops to a small set,
+clients increase their odds against traffic-correlation attacks.
+Since we assume that an adversary who controls both ends of a
+circuit can correlate its traffic, choosing many circuits with
+random entry points will eventually cause a client to eventually
+pick an attacker-controlled circuit, with probability approaching
+1 over time.  If entry nodes are restricted to a small set,
+however, then the client has a chance of never picking an
+attacker-controlled circuit.</p>
+<p>(The actual argument is a little more complicated here, and it
+relies on the assumption that, since the attacker knows
+statistics, exposing <em>any</em> of your traffic is nearly as bad as
+exposing <em>all</em> of your traffic.)</p>
+<h3 id="complications"><a href="#complications">Complications</a></h3>
+<p>The real algorithm for selecting and using guards can get more
+complicated because of a variety of factors.</p>
+<ul>
+<li>
+<p>In reality, we can’t just “pick a few guards at random” and use
+them forever: relays can appear and disappear, relays can go
+offline and come back online, and so on.  What’s more, keeping
+guards for too long can make targeted attacks against those
+guards more attractive.</p>
+</li>
+<li>
+<p>Further, we may have particular restrictions on where we can
+connect. (For example, we might be restricted to ports 80 and
+443, but only when we’re on a commuter train’s wifi network.)</p>
+</li>
+<li>
+<p>We need to resist attacks from local networks that block all but a
+small set of guard relays, to force us to choose those.</p>
+</li>
+<li>
+<p>We need to give good, reliable performance while using the
+guards that we prefer.</p>
+</li>
+</ul>
+<p>These needs complicate our API somewhat.  Instead of simply asking
+the <code>GuardMgr</code> for a guard, the circuit-management code needs to
+be able to tell the <code>GuardMgr</code> that a given guard has failed (or
+succeeded), and that it needs a different guard in the future (or
+not).</p>
+<p>Further, the <code>GuardMgr</code> code needs to be able to hand out
+<em>provisional guards</em>, in effect saying “You can try building a
+circuit with this guard, but please don’t actually <em>use</em> that
+circuit unless I tell you it’s safe.”</p>
+<p>For details on the exact algorithm, see <code>guard-spec.txt</code> (link
+below) and comments and internal documentation in this crate.</p>
+<h3 id="limitations"><a href="#limitations">Limitations</a></h3>
+<ul>
+<li>Our circuit blocking algorithm is simplified from the one that Tor uses.
+See comments in <code>GuardSet::circ_usability_status</code> for more information.
+See also <a href="https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/proposals/337-simpler-guard-usability.md">proposal 337</a>.</li>
+</ul>
+<h3 id="references"><a href="#references">References</a></h3>
+<p>Guard nodes were first proposes (as “helper nodes”) in “Defending
+Anonymous Communications Against Passive Logging Attacks” by
+Matthew Wright, Micah Adler, Brian N. Levine, and Clay Shields in
+the Proceedings of the 2003 IEEE Symposium on Security and
+Privacy.  (See <a href="https://www.freehaven.net/anonbib/#wright03">https://www.freehaven.net/anonbib/#wright03</a>)</p>
+<p>Tor’s current guard selection algorithm is described in Tor’s
+<a href="https://gitlab.torproject.org/tpo/core/torspec/-/raw/main/guard-spec.txt"><code>guard-spec.txt</code></a>
+document.</p>
+<h3 id="compile-time-features"><a href="#compile-time-features">Compile-time features</a></h3>
+<ul>
+<li>
+<p><code>bridge-client</code>: Build with support for bridges. (Bridges are relays
+that are not listed in the Tor network directory, which can be
+used for anti-censorship purposes.)</p>
+</li>
+<li>
+<p><code>pt-client</code>: Build with support for guards that can be contacted
+using pluggable transports. (A pluggable transport is an alternative
+mechanism for contacting a Tor relay, for censorship avoidance.)</p>
+</li>
+<li>
+<p><code>full</code>: Enable all features above.</p>
+</li>
+</ul>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="bridge/index.html" title="mod tor_guardmgr::bridge">bridge</a></div><div class="desc docblock-short">Bridges (stub module, bridges disabled in cargo features)</div></li><li><div class="item-name"><a class="mod" href="fallback/index.html" title="mod tor_guardmgr::fallback">fallback</a></div><div class="desc docblock-short">List of directories that ships with Tor, for initial directory
+operations.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.ClockSkewEvents.html" title="struct tor_guardmgr::ClockSkewEvents">ClockSkewEvents</a></div><div class="desc docblock-short">A stream of <a href="struct.SkewEstimate.html" title="struct tor_guardmgr::SkewEstimate"><code>SkewEstimate</code></a> events.</div></li><li><div class="item-name"><a class="struct" href="struct.FirstHop.html" title="struct tor_guardmgr::FirstHop">FirstHop</a></div><div class="desc docblock-short">Representation of a guard or fallback, as returned by <a href="struct.GuardMgr.html#method.select_guard" title="method tor_guardmgr::GuardMgr::select_guard"><code>GuardMgr::select_guard()</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.FirstHopId.html" title="struct tor_guardmgr::FirstHopId">FirstHopId</a></div><div class="desc docblock-short">A unique cryptographic identifier for a selected guard or fallback
+directory.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardFilter.html" title="struct tor_guardmgr::GuardFilter">GuardFilter</a></div><div class="desc docblock-short">An object specifying which relays are eligible to be guards.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardMgr.html" title="struct tor_guardmgr::GuardMgr">GuardMgr</a></div><div class="desc docblock-short">A “guard manager” that selects and remembers a persistent set of
+guard nodes.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardMonitor.html" title="struct tor_guardmgr::GuardMonitor">GuardMonitor</a></div><div class="desc docblock-short">An object used to tell the <a href="struct.GuardMgr.html" title="struct tor_guardmgr::GuardMgr"><code>GuardMgr</code></a> about the result of
+trying to build a circuit through a guard.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardRestrictionListBuilder.html" title="struct tor_guardmgr::GuardRestrictionListBuilder">GuardRestrictionListBuilder</a></div><div class="desc docblock-short">Wrapper struct to help derive_builder find the right types and methods</div></li><li><div class="item-name"><a class="struct" href="struct.GuardUsable.html" title="struct tor_guardmgr::GuardUsable">GuardUsable</a></div><div class="desc docblock-short">A future used to see if we have “permission” to use a guard.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardUsage.html" title="struct tor_guardmgr::GuardUsage">GuardUsage</a></div><div class="desc docblock-short">A set of parameters describing how a single guard should be selected.</div></li><li><div class="item-name"><a class="struct" href="struct.GuardUsageBuilder.html" title="struct tor_guardmgr::GuardUsageBuilder">GuardUsageBuilder</a></div><div class="desc docblock-short">Builder for <a href="struct.GuardUsage.html"><code>GuardUsage</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.SkewEstimate.html" title="struct tor_guardmgr::SkewEstimate">SkewEstimate</a></div><div class="desc docblock-short">An estimate of how skewed our clock is, plus a summary of why we think so.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.ExternalActivity.html" title="enum tor_guardmgr::ExternalActivity">ExternalActivity</a></div><div class="desc docblock-short">An activity that can succeed or fail, and whose success or failure can be
+attributed to a guard.</div></li><li><div class="item-name"><a class="enum" href="enum.GuardMgrConfigError.html" title="enum tor_guardmgr::GuardMgrConfigError">GuardMgrConfigError</a></div><div class="desc docblock-short">An error encountered while configuring or reconfiguring a guard manager</div></li><li><div class="item-name"><a class="enum" href="enum.GuardMgrError.html" title="enum tor_guardmgr::GuardMgrError">GuardMgrError</a></div><div class="desc docblock-short">An error caused while creating or updating a guard manager.</div></li><li><div class="item-name"><a class="enum" href="enum.GuardRestriction.html" title="enum tor_guardmgr::GuardRestriction">GuardRestriction</a></div><div class="desc docblock-short">A restriction that applies to a single request for a guard.</div></li><li><div class="item-name"><a class="enum" href="enum.GuardStatus.html" title="enum tor_guardmgr::GuardStatus">GuardStatus</a></div><div class="desc docblock-short">A message that we can get back from the circuit manager who asked
+for a guard.</div></li><li><div class="item-name"><a class="enum" href="enum.GuardUsageKind.html" title="enum tor_guardmgr::GuardUsageKind">GuardUsageKind</a></div><div class="desc docblock-short">The purpose for which we plan to use a guard.</div></li><li><div class="item-name"><a class="enum" href="enum.PickGuardError.html" title="enum tor_guardmgr::PickGuardError">PickGuardError</a></div><div class="desc docblock-short">A error caused by a failure to pick a guard.</div></li><li><div class="item-name"><a class="enum" href="enum.RetireCircuits.html" title="enum tor_guardmgr::RetireCircuits">RetireCircuits</a></div><div class="desc docblock-short">A description of which circuits to retire because of a configuration change.</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.GuardMgrConfig.html" title="trait tor_guardmgr::GuardMgrConfig">GuardMgrConfig</a></div><div class="desc docblock-short">Configuration for a guard manager</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.GuardRestrictionList.html" title="type tor_guardmgr::GuardRestrictionList">GuardRestrictionList</a></div><div class="desc docblock-short">List of socket restrictions, as configured</div></li></ul></section></div></main></body></html>

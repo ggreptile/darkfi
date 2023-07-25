@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This library offers a variety of weak hash tables:"><title>weak_table - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="weak_table" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../weak_table/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../weak_table/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate weak_table</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.3.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">weak_table</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/weak_table/lib.rs.html#1-265">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This library offers a variety of weak hash tables:</p>
+<ul>
+<li>
+<p>For a hash map where the keys are held by weak pointers and compared by key value, see
+<a href="struct.WeakKeyHashMap.html"><code>WeakKeyHashMap</code></a>.</p>
+</li>
+<li>
+<p>For a hash map where the keys are held by weak pointers and compared by pointer, see
+<a href="struct.PtrWeakKeyHashMap.html"><code>PtrWeakKeyHashMap</code></a>.</p>
+</li>
+<li>
+<p>For a hash map where the values are held by weak pointers, see
+<a href="struct.WeakValueHashMap.html"><code>WeakValueHashMap</code></a>.</p>
+</li>
+<li>
+<p>For a hash map where the keys and values are both held by weak pointers and the keys are
+compared by value, see
+<a href="struct.WeakWeakHashMap.html"><code>WeakWeakHashMap</code></a>.</p>
+</li>
+<li>
+<p>For a hash map where the keys and values are both held by weak pointers and the keys are
+compared by pointer, see
+<a href="struct.PtrWeakWeakHashMap.html"><code>PtrWeakWeakHashMap</code></a>.</p>
+</li>
+<li>
+<p>For a hash set where the elements are held by weak pointers and compared by element value, see
+<a href="struct.WeakHashSet.html"><code>WeakHashSet</code></a>.</p>
+</li>
+<li>
+<p>For a hash set where the elements are held by weak pointers and compared by pointer, see
+<a href="struct.PtrWeakHashSet.html"><code>PtrWeakHashSet</code></a>.</p>
+</li>
+</ul>
+<p>To add support for your own weak pointers, see
+<a href="traits/">the traits <code>WeakElement</code> and <code>WeakKey</code></a>.</p>
+<h3 id="rust-version-support"><a href="#rust-version-support">Rust version support</a></h3>
+<p>This crate supports Rust version 1.46 and later.</p>
+<h3 id="asymptotic-complexity"><a href="#asymptotic-complexity">Asymptotic complexity</a></h3>
+<p>Most operations have documented asymptotic time complexities. When time complexities are
+given in big-<em>O</em> notation, the following parameters are used consistently:</p>
+<ul>
+<li>
+<p><em>n</em>: the <em>capacity</em> of the map or set being accessed or constructed</p>
+</li>
+<li>
+<p><em>m</em>: the <em>capacity</em> of a second map/set involved in a submap/subset operation</p>
+</li>
+<li>
+<p><em>p</em>: the length of the probe sequence for the key in question</p>
+</li>
+</ul>
+<p>Note that <em>p</em> ∈ <em>O</em>(<em>n</em>), but we expect it to be <em>O</em>(1).</p>
+<h2 id="crate-features"><a href="#crate-features">Crate features</a></h2>
+<p><code>weak-table</code> is built with the <code>std</code> feature, which enables
+functionality dependent on the <code>std</code> library, enabled by default.
+Optionally, the following dependency may be enabled:</p>
+<ul>
+<li><code>ahash</code>: use <code>ahash</code>’s hasher rather than the <code>std</code> hasher</li>
+</ul>
+<p>If the <code>std</code> feature is disabled (for no_std) then the <code>ahash</code> dependency <strong>must</strong> be enabled.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Here we create a weak hash table mapping strings to integers.
+Note that after dropping <code>one</code>, the key <code>&quot;one&quot;</code> is no longer present in the map.
+This is because the map holds the strings as <code>std::sync::Weak&lt;str&gt;</code>s.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>weak_table::WeakKeyHashMap;
+<span class="kw">use </span>std::sync::{Arc, Weak};
+
+<span class="kw">let </span><span class="kw-2">mut </span>table = &lt;WeakKeyHashMap&lt;Weak&lt;str&gt;, u32&gt;&gt;::new();
+<span class="kw">let </span>one = Arc::&lt;str&gt;::from(<span class="string">&quot;one&quot;</span>);
+<span class="kw">let </span>two = Arc::&lt;str&gt;::from(<span class="string">&quot;two&quot;</span>);
+
+table.insert(one.clone(), <span class="number">1</span>);
+
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;one&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">1</span>) );
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;two&quot;</span>), <span class="prelude-val">None </span>);
+
+table.insert(two.clone(), <span class="number">2</span>);
+<span class="kw-2">*</span>table.get_mut(<span class="kw-2">&amp;</span>one).unwrap() += <span class="number">10</span>;
+
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;one&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">11</span>) );
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;two&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">2</span>) );
+
+drop(one);
+
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;one&quot;</span>), <span class="prelude-val">None </span>);
+<span class="macro">assert_eq!</span>( table.get(<span class="string">&quot;two&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">2</span>) );</code></pre></div>
+<p>Here we use a weak hash set to implement a simple string interning facility:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>weak_table::WeakHashSet;
+<span class="kw">use </span>std::ops::Deref;
+<span class="kw">use </span>std::rc::{Rc, Weak};
+
+<span class="attr">#[derive(Clone, Debug)]
+</span><span class="kw">pub struct </span>Symbol(Rc&lt;str&gt;);
+
+<span class="kw">impl </span>PartialEq <span class="kw">for </span>Symbol {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Symbol) -&gt; bool {
+        Rc::ptr_eq(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="kw-2">&amp;</span>other.<span class="number">0</span>)
+    }
+}
+
+<span class="kw">impl </span>Eq <span class="kw">for </span>Symbol {}
+
+<span class="kw">impl </span>Deref <span class="kw">for </span>Symbol {
+    <span class="kw">type </span>Target = str;
+    <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
+}
+
+<span class="attr">#[derive(Debug, Default)]
+</span><span class="kw">pub struct </span>SymbolTable(WeakHashSet&lt;Weak&lt;str&gt;&gt;);
+
+<span class="kw">impl </span>SymbolTable {
+    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::default()
+    }
+
+    <span class="kw">pub fn </span>intern(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; Symbol {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(rc) = <span class="self">self</span>.<span class="number">0</span>.get(name) {
+            Symbol(rc)
+        } <span class="kw">else </span>{
+            <span class="kw">let </span>rc = Rc::&lt;str&gt;::from(name);
+            <span class="self">self</span>.<span class="number">0</span>.insert(Rc::clone(<span class="kw-2">&amp;</span>rc));
+            Symbol(rc)
+        }
+    }
+}
+
+<span class="attr">#[test]
+</span><span class="kw">fn </span>interning() {
+    <span class="kw">let </span><span class="kw-2">mut </span>tab = SymbolTable::new();
+
+    <span class="kw">let </span>a0 = tab.intern(<span class="string">&quot;a&quot;</span>);
+    <span class="kw">let </span>a1 = tab.intern(<span class="string">&quot;a&quot;</span>);
+    <span class="kw">let </span>b  = tab.intern(<span class="string">&quot;b&quot;</span>);
+
+    <span class="macro">assert_eq!</span>(a0, a1);
+    <span class="macro">assert_ne!</span>(a0, b);
+}</code></pre></div>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="ptr_weak_hash_set/index.html" title="mod weak_table::ptr_weak_hash_set">ptr_weak_hash_set</a></div><div class="desc docblock-short">A hash set where the elements are held by weak pointers and compared by pointer.</div></li><li><div class="item-name"><a class="mod" href="ptr_weak_key_hash_map/index.html" title="mod weak_table::ptr_weak_key_hash_map">ptr_weak_key_hash_map</a></div><div class="desc docblock-short">A hash map where the keys are held by weak pointers and compared by pointer.</div></li><li><div class="item-name"><a class="mod" href="ptr_weak_weak_hash_map/index.html" title="mod weak_table::ptr_weak_weak_hash_map">ptr_weak_weak_hash_map</a></div><div class="desc docblock-short">A hash map where the keys and values are both held by weak pointers, and keys are compared by
+pointer.</div></li><li><div class="item-name"><a class="mod" href="traits/index.html" title="mod weak_table::traits">traits</a></div><div class="desc docblock-short">Traits for describing strong and weak pointers and their use as elements and keys.</div></li><li><div class="item-name"><a class="mod" href="weak_hash_set/index.html" title="mod weak_table::weak_hash_set">weak_hash_set</a></div><div class="desc docblock-short">A hash set where the elements are held by weak pointers and compared by value.</div></li><li><div class="item-name"><a class="mod" href="weak_key_hash_map/index.html" title="mod weak_table::weak_key_hash_map">weak_key_hash_map</a></div><div class="desc docblock-short">A hash map where the keys are held by weak pointers and compared by key value.</div></li><li><div class="item-name"><a class="mod" href="weak_value_hash_map/index.html" title="mod weak_table::weak_value_hash_map">weak_value_hash_map</a></div><div class="desc docblock-short">A hash map where the values are held by weak pointers.</div></li><li><div class="item-name"><a class="mod" href="weak_weak_hash_map/index.html" title="mod weak_table::weak_weak_hash_map">weak_weak_hash_map</a></div><div class="desc docblock-short">A hash map where the keys and values are both held by weak pointers, and keys are compared by
+value.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.PtrWeakHashSet.html" title="struct weak_table::PtrWeakHashSet">PtrWeakHashSet</a></div><div class="desc docblock-short">A hash set with weak elements, hashed on element pointer.</div></li><li><div class="item-name"><a class="struct" href="struct.PtrWeakKeyHashMap.html" title="struct weak_table::PtrWeakKeyHashMap">PtrWeakKeyHashMap</a></div><div class="desc docblock-short">A hash map with weak keys, hashed on key pointer.</div></li><li><div class="item-name"><a class="struct" href="struct.PtrWeakWeakHashMap.html" title="struct weak_table::PtrWeakWeakHashMap">PtrWeakWeakHashMap</a></div><div class="desc docblock-short">A hash map with weak keys and weak values, hashed on key pointer.</div></li><li><div class="item-name"><a class="struct" href="struct.WeakHashSet.html" title="struct weak_table::WeakHashSet">WeakHashSet</a></div><div class="desc docblock-short">A hash set with weak elements, hashed on element value.</div></li><li><div class="item-name"><a class="struct" href="struct.WeakKeyHashMap.html" title="struct weak_table::WeakKeyHashMap">WeakKeyHashMap</a></div><div class="desc docblock-short">A hash map with weak keys, hashed on key value.</div></li><li><div class="item-name"><a class="struct" href="struct.WeakValueHashMap.html" title="struct weak_table::WeakValueHashMap">WeakValueHashMap</a></div><div class="desc docblock-short">A hash map with weak values.</div></li><li><div class="item-name"><a class="struct" href="struct.WeakWeakHashMap.html" title="struct weak_table::WeakWeakHashMap">WeakWeakHashMap</a></div><div class="desc docblock-short">A hash map with weak keys and weak values, hashed on key value.</div></li></ul></section></div></main></body></html>

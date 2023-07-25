@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_stake_burn_proof"],"struct":["MoneyStakeBurnRevealed","MoneyStakeCallBuilder","MoneyStakeCallDebris","TransactionBuilderInputInfo"]};

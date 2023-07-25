@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error","SocksAddr","SocksAuth","SocksVersion"],"struct":["Action","SocksClientHandshake","SocksCmd","SocksReply","SocksRequest","SocksStatus","Truncated"],"type":["Result","TResult"]};

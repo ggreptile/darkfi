@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"derive":["StructOpt"],"mod":["clap","lazy_static"],"trait":["StructOpt"]};

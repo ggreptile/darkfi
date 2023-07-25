@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="RustCrypto: `crypto_box`"><title>crypto_box - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="crypto_box" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../crypto_box/index.html"><img src="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../crypto_box/index.html"><img src="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg" alt="logo"></a><h2 class="location"><a href="#">Crate crypto_box</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.9.0-rc.1</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#reexports">Re-exports</a></li><li><a href="#structs">Structs</a></li><li><a href="#constants">Constants</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">crypto_box</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/crypto_box/lib.rs.html#1-391">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="rustcrypto-crypto_box"><a href="#rustcrypto-crypto_box">RustCrypto: <code>crypto_box</code></a></h2>
+<p><a href="https://crates.io/crates/crypto_box"><img src="https://img.shields.io/crates/v/crypto_box.svg" alt="crate" /></a>
+<a href="https://docs.rs/crypto_box/"><img src="https://docs.rs/crypto_box/badge.svg" alt="Docs" /></a>
+<img src="https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg" alt="Apache2/MIT licensed" />
+<img src="https://img.shields.io/badge/rustc-1.60+-blue.svg" alt="Rust Version" />
+<a href="https://rustcrypto.zulipchat.com/#narrow/stream/260038-AEADs"><img src="https://img.shields.io/badge/zulip-join_chat-blue.svg" alt="Project Chat" /></a>
+<a href="https://github.com/RustCrypto/nacl-compat/actions/workflows/crypto_box.yml"><img src="https://github.com/RustCrypto/nacl-compat/actions/workflows/crypto_box.yml/badge.svg" alt="Build Status" /></a></p>
+<p>Pure Rust implementation of <a href="https://nacl.cr.yp.to/">NaCl</a>’s <a href="https://nacl.cr.yp.to/box.html"><code>crypto_box</code></a> primitive, providing
+public-key authenticated encryption which combines the <a href="https://cr.yp.to/ecdh.html">X25519</a> Diffie-Hellman
+function and the <a href="https://github.com/RustCrypto/AEADs/tree/master/xsalsa20poly1305">XSalsa20Poly1305</a> authenticated encryption cipher into an
+Elliptic Curve Integrated Encryption Scheme (<a href="https://en.wikipedia.org/wiki/Integrated_Encryption_Scheme">ECIES</a>).</p>
+<p><a href="https://docs.rs/crypto_box/">Documentation</a></p>
+<h3 id="about"><a href="#about">About</a></h3>
+<p>Imagine Alice wants something valuable shipped to her. Because it’s
+valuable, she wants to make sure it arrives securely (i.e. hasn’t been
+opened or tampered with) and that it’s not a forgery (i.e. it’s actually
+from the sender she’s expecting it to be from and nobody’s pulling the old
+switcheroo).</p>
+<p>One way she can do this is by providing the sender (let’s call him Bob)
+with a high-security box of her choosing. She provides Bob with this box,
+and something else: a padlock, but a padlock without a key. Alice is
+keeping that key all to herself. Bob can put items in the box then put the
+padlock onto it, but once the padlock snaps shut, the box cannot be opened
+by anyone who doesn’t have Alice’s private key.</p>
+<p>Here’s the twist though, Bob also puts a padlock onto the box. This padlock
+uses a key Bob has published to the world, such that if you have one of
+Bob’s keys, you know a box came from him because Bob’s keys will open Bob’s
+padlocks (let’s imagine a world where padlocks cannot be forged even if you
+know the key). Bob then sends the box to Alice.</p>
+<p>In order for Alice to open the box, she needs two keys: her private key
+that opens her own padlock, and Bob’s well-known key. If Bob’s key doesn’t
+open the second padlock then Alice knows that this is not the box she was
+expecting from Bob, it’s a forgery.</p>
+<h3 id="security-notes"><a href="#security-notes">Security Notes</a></h3>
+<p>This crate has received one <a href="https://cure53.de/pentest-report_rust-libs_2022.pdf">security audit by Cure53</a> (version
+0.7.1), with no significant findings. We would like to thank <a href="https://threema.ch/">Threema</a>
+for funding the audit.</p>
+<h3 id="license"><a href="#license">License</a></h3>
+<p>Licensed under either of:</p>
+<ul>
+<li><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></li>
+<li><a href="http://opensource.org/licenses/MIT">MIT license</a></li>
+</ul>
+<p>at your option.</p>
+<h4 id="contribution"><a href="#contribution">Contribution</a></h4>
+<p>Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.</p>
+<h3 id="usage"><a href="#usage">Usage</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>crypto_box::{
+    aead::{Aead, AeadCore, OsRng},
+    SalsaBox, PublicKey, SecretKey
+};
+
+<span class="comment">//
+// Encryption
+//
+
+// Generate a random secret key.
+// NOTE: The secret key bytes can be accessed by calling `secret_key.as_bytes()`
+</span><span class="kw">let </span>alice_secret_key = SecretKey::generate(<span class="kw-2">&amp;mut </span>OsRng);
+
+<span class="comment">// Get the public key for the secret key we just generated
+</span><span class="kw">let </span>alice_public_key_bytes = alice_secret_key.public_key().as_bytes().clone();
+
+<span class="comment">// Obtain your recipient&#39;s public key.
+</span><span class="kw">let </span>bob_public_key = PublicKey::from([
+   <span class="number">0xe8</span>, <span class="number">0x98</span>, <span class="number">0xc</span>, <span class="number">0x86</span>, <span class="number">0xe0</span>, <span class="number">0x32</span>, <span class="number">0xf1</span>, <span class="number">0xeb</span>,
+   <span class="number">0x29</span>, <span class="number">0x75</span>, <span class="number">0x5</span>, <span class="number">0x2e</span>, <span class="number">0x8d</span>, <span class="number">0x65</span>, <span class="number">0xbd</span>, <span class="number">0xdd</span>,
+   <span class="number">0x15</span>, <span class="number">0xc3</span>, <span class="number">0xb5</span>, <span class="number">0x96</span>, <span class="number">0x41</span>, <span class="number">0x17</span>, <span class="number">0x4e</span>, <span class="number">0xc9</span>,
+   <span class="number">0x67</span>, <span class="number">0x8a</span>, <span class="number">0x53</span>, <span class="number">0x78</span>, <span class="number">0x9d</span>, <span class="number">0x92</span>, <span class="number">0xc7</span>, <span class="number">0x54</span>,
+]);
+
+<span class="comment">// Create a `SalsaBox` by performing Diffie-Hellman key agreement between
+// the two keys.
+</span><span class="kw">let </span>alice_box = SalsaBox::new(<span class="kw-2">&amp;</span>bob_public_key, <span class="kw-2">&amp;</span>alice_secret_key);
+
+<span class="comment">// Get a random nonce to encrypt the message under
+</span><span class="kw">let </span>nonce = SalsaBox::generate_nonce(<span class="kw-2">&amp;mut </span>OsRng);
+
+<span class="comment">// Message to encrypt
+</span><span class="kw">let </span>plaintext = <span class="string">b&quot;Top secret message we&#39;re encrypting&quot;</span>;
+
+<span class="comment">// Encrypt the message using the box
+</span><span class="kw">let </span>ciphertext = alice_box.encrypt(<span class="kw-2">&amp;</span>nonce, <span class="kw-2">&amp;</span>plaintext[..])<span class="question-mark">?</span>;
+
+<span class="comment">//
+// Decryption
+//
+
+// Either side can encrypt or decrypt messages under the Diffie-Hellman key
+// they agree upon. The example below shows Bob&#39;s side.
+</span><span class="kw">let </span>bob_secret_key = SecretKey::from([
+    <span class="number">0xb5</span>, <span class="number">0x81</span>, <span class="number">0xfb</span>, <span class="number">0x5a</span>, <span class="number">0xe1</span>, <span class="number">0x82</span>, <span class="number">0xa1</span>, <span class="number">0x6f</span>,
+    <span class="number">0x60</span>, <span class="number">0x3f</span>, <span class="number">0x39</span>, <span class="number">0x27</span>, <span class="number">0xd</span>, <span class="number">0x4e</span>, <span class="number">0x3b</span>, <span class="number">0x95</span>,
+    <span class="number">0xbc</span>, <span class="number">0x0</span>, <span class="number">0x83</span>, <span class="number">0x10</span>, <span class="number">0xb7</span>, <span class="number">0x27</span>, <span class="number">0xa1</span>, <span class="number">0x1d</span>,
+    <span class="number">0xd4</span>, <span class="number">0xe7</span>, <span class="number">0x84</span>, <span class="number">0xa0</span>, <span class="number">0x4</span>, <span class="number">0x4d</span>, <span class="number">0x46</span>, <span class="number">0x1b
+</span>]);
+
+<span class="comment">// Deserialize Alice&#39;s public key from bytes
+</span><span class="kw">let </span>alice_public_key = PublicKey::from(alice_public_key_bytes);
+
+<span class="comment">// Bob can compute the same `SalsaBox` as Alice by performing the
+// key agreement operation.
+</span><span class="kw">let </span>bob_box = SalsaBox::new(<span class="kw-2">&amp;</span>alice_public_key, <span class="kw-2">&amp;</span>bob_secret_key);
+
+<span class="comment">// Decrypt the message, using the same randomly generated nonce
+</span><span class="kw">let </span>decrypted_plaintext = bob_box.decrypt(<span class="kw-2">&amp;</span>nonce, <span class="kw-2">&amp;</span>ciphertext[..])<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>plaintext[..], <span class="kw-2">&amp;</span>decrypted_plaintext[..]);</code></pre></div>
+<h3 id="choosing-chachabox-vs-salsabox"><a href="#choosing-chachabox-vs-salsabox">Choosing <code>ChaChaBox</code> vs <code>SalsaBox</code></a></h3>
+<p>The <code>crypto_box</code> construction was originally specified using <a href="type.SalsaBox.html" title="type crypto_box::SalsaBox"><code>SalsaBox</code></a>.</p>
+<p>However, the newer <a href="type.ChaChaBox.html" title="type crypto_box::ChaChaBox"><code>ChaChaBox</code></a> construction is also available, which
+provides better security and performance.</p>
+<p>To use it, enable the <code>chacha20</code> feature.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>crypto_box::{
+    aead::{Aead, AeadCore, Payload, OsRng},
+    ChaChaBox, PublicKey, SecretKey
+};
+
+<span class="kw">let </span>alice_secret_key = SecretKey::generate(<span class="kw-2">&amp;mut </span>OsRng);
+<span class="kw">let </span>alice_public_key_bytes = alice_secret_key.public_key().as_bytes().clone();
+<span class="kw">let </span>bob_public_key = PublicKey::from([
+   <span class="number">0xe8</span>, <span class="number">0x98</span>, <span class="number">0xc</span>, <span class="number">0x86</span>, <span class="number">0xe0</span>, <span class="number">0x32</span>, <span class="number">0xf1</span>, <span class="number">0xeb</span>,
+   <span class="number">0x29</span>, <span class="number">0x75</span>, <span class="number">0x5</span>, <span class="number">0x2e</span>, <span class="number">0x8d</span>, <span class="number">0x65</span>, <span class="number">0xbd</span>, <span class="number">0xdd</span>,
+   <span class="number">0x15</span>, <span class="number">0xc3</span>, <span class="number">0xb5</span>, <span class="number">0x96</span>, <span class="number">0x41</span>, <span class="number">0x17</span>, <span class="number">0x4e</span>, <span class="number">0xc9</span>,
+   <span class="number">0x67</span>, <span class="number">0x8a</span>, <span class="number">0x53</span>, <span class="number">0x78</span>, <span class="number">0x9d</span>, <span class="number">0x92</span>, <span class="number">0xc7</span>, <span class="number">0x54</span>,
+]);
+<span class="kw">let </span>alice_box = ChaChaBox::new(<span class="kw-2">&amp;</span>bob_public_key, <span class="kw-2">&amp;</span>alice_secret_key);
+<span class="kw">let </span>nonce = ChaChaBox::generate_nonce(<span class="kw-2">&amp;mut </span>OsRng);
+
+<span class="comment">// Message to encrypt
+</span><span class="kw">let </span>plaintext = <span class="string">b&quot;Top secret message we&#39;re encrypting&quot;</span>.as_ref();
+
+<span class="comment">// Encrypt the message using the box
+</span><span class="kw">let </span>ciphertext = alice_box.encrypt(<span class="kw-2">&amp;</span>nonce, plaintext).unwrap();
+
+<span class="comment">//
+// Decryption
+//
+
+</span><span class="kw">let </span>bob_secret_key = SecretKey::from([
+    <span class="number">0xb5</span>, <span class="number">0x81</span>, <span class="number">0xfb</span>, <span class="number">0x5a</span>, <span class="number">0xe1</span>, <span class="number">0x82</span>, <span class="number">0xa1</span>, <span class="number">0x6f</span>,
+    <span class="number">0x60</span>, <span class="number">0x3f</span>, <span class="number">0x39</span>, <span class="number">0x27</span>, <span class="number">0xd</span>, <span class="number">0x4e</span>, <span class="number">0x3b</span>, <span class="number">0x95</span>,
+    <span class="number">0xbc</span>, <span class="number">0x0</span>, <span class="number">0x83</span>, <span class="number">0x10</span>, <span class="number">0xb7</span>, <span class="number">0x27</span>, <span class="number">0xa1</span>, <span class="number">0x1d</span>,
+    <span class="number">0xd4</span>, <span class="number">0xe7</span>, <span class="number">0x84</span>, <span class="number">0xa0</span>, <span class="number">0x4</span>, <span class="number">0x4d</span>, <span class="number">0x46</span>, <span class="number">0x1b
+</span>]);
+<span class="kw">let </span>alice_public_key = PublicKey::from(alice_public_key_bytes);
+<span class="kw">let </span>bob_box = ChaChaBox::new(<span class="kw-2">&amp;</span>alice_public_key, <span class="kw-2">&amp;</span>bob_secret_key);
+
+<span class="comment">// Decrypt the message, using the same randomly generated nonce
+</span><span class="kw">let </span>decrypted_plaintext = bob_box.decrypt(<span class="kw-2">&amp;</span>nonce, ciphertext.as_slice()).unwrap();
+
+<span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>plaintext[..], <span class="kw-2">&amp;</span>decrypted_plaintext[..]);</code></pre></div>
+<h3 id="in-place-usage-eliminates-alloc-requirement"><a href="#in-place-usage-eliminates-alloc-requirement">In-place Usage (eliminates <code>alloc</code> requirement)</a></h3>
+<p>This crate has an optional <code>alloc</code> feature which can be disabled in e.g.
+microcontroller environments that don’t have a heap.</p>
+<p>The <a href="../aead/trait.AeadInPlace.html#method.encrypt_in_place" title="method aead::AeadInPlace::encrypt_in_place"><code>AeadInPlace::encrypt_in_place</code></a> and <a href="../aead/trait.AeadInPlace.html#method.decrypt_in_place" title="method aead::AeadInPlace::decrypt_in_place"><code>AeadInPlace::decrypt_in_place</code></a>
+methods accept any type that impls the <a href="../aead/trait.Buffer.html" title="trait aead::Buffer"><code>aead::Buffer</code></a> trait which
+contains the plaintext for encryption or ciphertext for decryption.</p>
+<p>Note that if you enable the <code>heapless</code> feature of this crate,
+you will receive an impl of <code>aead::Buffer</code> for <a href="https://docs.rs/heapless/latest/heapless/struct.Vec.html"><code>heapless::Vec</code></a>
+(re-exported from the <code>aead</code> crate as <code>aead::heapless::Vec</code>),
+which can then be passed as the <code>buffer</code> parameter to the in-place encrypt
+and decrypt methods.</p>
+<p>A <code>heapless</code> usage example can be found in the documentation for the
+<code>xsalsa20poly1305</code> crate:</p>
+<p><a href="https://docs.rs/xsalsa20poly1305/latest/xsalsa20poly1305/#in-place-usage-eliminates-alloc-requirement">https://docs.rs/xsalsa20poly1305/latest/xsalsa20poly1305/#in-place-usage-eliminates-alloc-requirement</a></p>
+</div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name" id="reexport.aead"><code>pub use <a class="mod" href="../aead/index.html" title="mod aead">aead</a>;</code></div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.CryptoBox.html" title="struct crypto_box::CryptoBox">CryptoBox</a></div><div class="desc docblock-short">Public-key encryption scheme based on the <a href="https://cr.yp.to/ecdh.html">X25519</a> Elliptic Curve
+Diffie-Hellman function and the <a href="https://github.com/RustCrypto/nacl-compat/tree/master/crypto_secretbox">crypto_secretbox</a> authenticated encryption
+cipher.</div></li><li><div class="item-name"><a class="struct" href="struct.PublicKey.html" title="struct crypto_box::PublicKey">PublicKey</a></div><div class="desc docblock-short">A <code>crypto_box</code> public key.</div></li><li><div class="item-name"><a class="struct" href="struct.SecretKey.html" title="struct crypto_box::SecretKey">SecretKey</a></div><div class="desc docblock-short">A <code>crypto_box</code> secret key.</div></li></ul><h2 id="constants" class="small-section-header"><a href="#constants">Constants</a></h2><ul class="item-table"><li><div class="item-name"><a class="constant" href="constant.KEY_SIZE.html" title="constant crypto_box::KEY_SIZE">KEY_SIZE</a></div><div class="desc docblock-short">Size of a <code>crypto_box</code> public or secret key in bytes.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.ChaChaBox.html" title="type crypto_box::ChaChaBox">ChaChaBox</a></div><div class="desc docblock-short"><a href="struct.CryptoBox.html" title="struct crypto_box::CryptoBox"><code>CryptoBox</code></a> instantiated with the ChaCha20 stream cipher.</div></li><li><div class="item-name"><a class="type" href="type.Nonce.html" title="type crypto_box::Nonce">Nonce</a></div><div class="desc docblock-short">Nonce type.</div></li><li><div class="item-name"><a class="type" href="type.SalsaBox.html" title="type crypto_box::SalsaBox">SalsaBox</a></div><div class="desc docblock-short"><a href="struct.CryptoBox.html" title="struct crypto_box::CryptoBox"><code>CryptoBox</code></a> instantiated with with the Salsa20 stream cipher.</div></li><li><div class="item-name"><a class="type" href="type.Tag.html" title="type crypto_box::Tag">Tag</a></div><div class="desc docblock-short">Poly1305 tag.</div></li></ul></section></div></main></body></html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["extend","hs","msg"],"struct":["RelayCell","RelayCmd","StreamId","UnparsedRelayCell"],"trait":["RelayMsg"],"type":["AnyRelayCell"]};

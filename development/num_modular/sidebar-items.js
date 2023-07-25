@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["FixedMersenne","Montgomery","PreInv","ReducedInt","Vanilla","udouble"],"trait":["DivExact","ModularAbs","ModularCoreOps","ModularInteger","ModularOps","ModularPow","ModularRefOps","ModularSymbols","ModularUnaryOps","Reducer"],"type":["FixedMersenneInt","MontgomeryInt","VanillaInt","umax"]};

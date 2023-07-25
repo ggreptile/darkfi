@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This library arranges textual data in a grid format suitable for fixed-width fonts, using an algorithm to minimise the amount of space needed. For example:"><title>term_grid - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="term_grid" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../term_grid/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../term_grid/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate term_grid</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.2.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">term_grid</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/term_grid/lib.rs.html#1-783">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This library arranges textual data in a grid format suitable for
+fixed-width fonts, using an algorithm to minimise the amount of space
+needed. For example:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>term_grid::{Grid, GridOptions, Direction, Filling, Cell};
+
+<span class="kw">let </span><span class="kw-2">mut </span>grid = Grid::new(GridOptions {
+    filling:    Filling::Spaces(<span class="number">1</span>),
+    direction:  Direction::LeftToRight,
+});
+
+<span class="kw">for </span>s <span class="kw">in </span><span class="kw-2">&amp;</span>[<span class="string">&quot;one&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>, <span class="string">&quot;five&quot;</span>, <span class="string">&quot;six&quot;</span>, <span class="string">&quot;seven&quot;</span>,
+           <span class="string">&quot;eight&quot;</span>, <span class="string">&quot;nine&quot;</span>, <span class="string">&quot;ten&quot;</span>, <span class="string">&quot;eleven&quot;</span>, <span class="string">&quot;twelve&quot;</span>]
+{
+    grid.add(Cell::from(<span class="kw-2">*</span>s));
+}
+
+<span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, grid.fit_into_width(<span class="number">24</span>).unwrap());</code></pre></div>
+<p>Produces the following tabular result:</p>
+<div class="example-wrap"><pre class="language-text"><code>one  two three  four
+five six seven  eight
+nine ten eleven twelve
+</code></pre></div><h3 id="creating-a-grid"><a href="#creating-a-grid">Creating a grid</a></h3>
+<p>To add data to a grid, first create a new <a href="./struct.Grid.html"><code>Grid</code></a> value, and then add
+cells to them with the <code>add</code> function.</p>
+<p>There are two options that must be specified in the <a href="./struct.GridOptions.html"><code>GridOptions</code></a> value
+that dictate how the grid is formatted:</p>
+<ul>
+<li><code>filling</code>: what to put in between two columns — either a number of
+spaces, or a text string;</li>
+<li><code>direction</code>, which specifies whether the cells should go along
+rows, or columns:
+<ul>
+<li><code>Direction::LeftToRight</code> starts them in the top left and
+moves <em>rightwards</em>, going to the start of a new row after reaching the
+final column;</li>
+<li><code>Direction::TopToBottom</code> starts them in the top left and moves
+<em>downwards</em>, going to the top of a new column after reaching the final
+row.</li>
+</ul>
+</li>
+</ul>
+<h3 id="displaying-a-grid"><a href="#displaying-a-grid">Displaying a grid</a></h3>
+<p>When display a grid, you can either specify the number of columns in advance,
+or try to find the maximum number of columns that can fit in an area of a
+given width.</p>
+<p>Splitting a series of cells into columns — or, in other words, starting a new
+row every <var>n</var> cells — is achieved with the <a href="./struct.Grid.html#method.fit_into_columns"><code>fit_into_columns</code></a> function
+on a <code>Grid</code> value. It takes as its argument the number of columns.</p>
+<p>Trying to fit as much data onto one screen as possible is the main use case
+for specifying a maximum width instead. This is achieved with the
+<a href="./struct.Grid.html#method.fit_into_width"><code>fit_into_width</code></a> function. It takes the maximum allowed width, including
+separators, as its argument. However, it returns an <em>optional</em> <a href="./struct.Display.html"><code>Display</code></a>
+value, depending on whether any of the cells actually had a width greater than
+the maximum width! If this is the case, your best bet is to just output the
+cells with one per line.</p>
+<h3 id="cells-and-data"><a href="#cells-and-data">Cells and data</a></h3>
+<p>Grids to not take <code>String</code>s or <code>&amp;str</code>s — they take <a href="./struct.Cell.html"><code>Cell</code></a> values.</p>
+<p>A <strong>Cell</strong> is a struct containing an individual cell’s contents, as a string,
+and its pre-computed length, which gets used when calculating a grid’s final
+dimensions. Usually, you want the <em>Unicode width</em> of the string to be used for
+this, so you can turn a <code>String</code> into a <code>Cell</code> with the <code>.into()</code> function.</p>
+<p>However, you may also want to supply your own width: when you already know the
+width in advance, or when you want to change the measurement, such as skipping
+over terminal control characters. For cases like these, the fields on the
+<code>Cell</code> values are public, meaning you can construct your own instances as
+necessary.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Cell.html" title="struct term_grid::Cell">Cell</a></div><div class="desc docblock-short">A <strong>Cell</strong> is the combination of a string and its pre-computed length.</div></li><li><div class="item-name"><a class="struct" href="struct.Display.html" title="struct term_grid::Display">Display</a></div><div class="desc docblock-short">A displayable representation of a <a href="struct.Grid.html"><code>Grid</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.Grid.html" title="struct term_grid::Grid">Grid</a></div><div class="desc docblock-short">Everything needed to format the cells with the grid options.</div></li><li><div class="item-name"><a class="struct" href="struct.GridOptions.html" title="struct term_grid::GridOptions">GridOptions</a></div><div class="desc docblock-short">The user-assignable options for a grid view that should be passed to
+<a href="struct.Grid.html#method.new"><code>Grid::new()</code></a>.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Alignment.html" title="enum term_grid::Alignment">Alignment</a></div><div class="desc docblock-short">Alignment indicate on which side the content should stick if some filling
+is required.</div></li><li><div class="item-name"><a class="enum" href="enum.Direction.html" title="enum term_grid::Direction">Direction</a></div><div class="desc docblock-short">Direction cells should be written in — either across, or downwards.</div></li><li><div class="item-name"><a class="enum" href="enum.Filling.html" title="enum term_grid::Filling">Filling</a></div><div class="desc docblock-short">The text to put in between each pair of columns.
+This does not include any spaces used when aligning cells.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Width.html" title="type term_grid::Width">Width</a></div><div class="desc docblock-short">The width of a cell, in columns.</div></li></ul></section></div></main></body></html>

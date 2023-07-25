@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["main"],"struct":["Args","DrkAddr","DrkContract","DrkToken"],"trait":["Prefixable"]};

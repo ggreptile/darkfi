@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["assign_free_advice"],"mod":["gadget","halo2","proof","vm","vm_heap"]};

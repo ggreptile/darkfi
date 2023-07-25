@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"fn":["apply_diff","looks_like_diff"],"struct":["DiffResult"]};

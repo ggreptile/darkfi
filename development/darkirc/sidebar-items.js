@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["handle_signals","main","parse_signals","realmain","reset_root"],"mod":["crypto","irc","privmsg","rpc","settings"],"struct":["SignalHandler"]};

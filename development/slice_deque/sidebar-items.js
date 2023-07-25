@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AllocError"],"macro":["sdeq"],"struct":["Buffer","Drain","DrainFilter","IntoIter","SliceDeque","Splice"]};

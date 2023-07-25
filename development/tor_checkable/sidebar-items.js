@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["TimeValidityError"],"mod":["signed","timed"],"trait":["ExternallySigned","SelfSigned","Timebound"]};

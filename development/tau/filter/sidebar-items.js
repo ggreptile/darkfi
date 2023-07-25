@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["apply_filter","get_ids","no_filter_warn"]};

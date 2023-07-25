@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CONFIG_FILE","CONFIG_FILE_CONTENTS","MAXIMUM_LENGTH_OF_MESSAGE","MAXIMUM_LENGTH_OF_NICK_CHAN_CNT"],"enum":["RPL","UserMode"],"fn":["parse_configured_channels","parse_configured_contacts","parse_secret_key","salt_box_from_shared_secret"],"struct":["Args","ChannelInfo","ContactInfo","Nick"]};

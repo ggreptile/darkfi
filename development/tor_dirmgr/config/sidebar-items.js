@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["DirMgrConfig","DirMgrExtensions","DirTolerance","DirToleranceBuilder","DownloadScheduleConfig","DownloadScheduleConfigBuilder","NetworkConfig","NetworkConfigBuilder"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"macro":["restricted_msg"],"mod":["chancell","relaycell","restrict"],"type":["Result"]};

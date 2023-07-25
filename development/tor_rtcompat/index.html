@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-rtcompat"><title>tor_rtcompat - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_rtcompat" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_rtcompat/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_rtcompat/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_rtcompat</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.9.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_rtcompat</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_rtcompat/lib.rs.html#1-654">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-rtcompat"><a href="#tor-rtcompat">tor-rtcompat</a></h2>
+<p>Compatibility between different async runtimes for Arti.</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>Rust’s support for asynchronous programming is powerful, but still
+a bit immature: there are multiple powerful runtimes you can use,
+but they do not expose a consistent set of interfaces.</p>
+<p>The <a href="../futures/index.html" title="mod futures"><code>futures</code></a> API abstracts much of the differences among these
+runtime libraries, but there are still areas where no standard API
+yet exists, including:</p>
+<ul>
+<li>Network programming.</li>
+<li>Time and delays.</li>
+<li>Launching new tasks</li>
+<li>Blocking until a task is finished.</li>
+</ul>
+<p>Additionally, the <code>AsyncRead</code> and <code>AsyncWrite</code> traits provide by
+<a href="../futures/index.html" title="mod futures"><code>futures</code></a> are not the same as those provided by <code>tokio</code>, and
+require compatibility wrappers to use.</p>
+<p>To solve these problems, the <code>tor-rtcompat</code> crate provides a set
+of traits that represent a runtime’s ability to perform these
+tasks, along with implementations for these traits for the <code>tokio</code>
+and <code>async-std</code> runtimes.  In the future we hope to add support
+for other runtimes as needed.</p>
+<p>This crate is part of
+<a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>, a project to
+implement <a href="https://www.torproject.org/">Tor</a> in Rust.
+As such, it does not currently include (or
+plan to include) any functionality beyond what Arti needs to
+implement Tor.</p>
+<p>We hope that in the future this crate can be replaced (or mostly
+replaced) with standardized and general-purpose versions of the
+traits it provides.</p>
+<h3 id="using-tor-rtcompat"><a href="#using-tor-rtcompat">Using <code>tor-rtcompat</code></a></h3>
+<p>The <code>tor-rtcompat</code> crate provides several traits that
+encapsulate different runtime capabilities.</p>
+<ul>
+<li>A runtime is a <a href="trait.BlockOn.html" title="trait tor_rtcompat::BlockOn"><code>BlockOn</code></a> if it can block on a future.</li>
+<li>A runtime is a <a href="trait.SleepProvider.html" title="trait tor_rtcompat::SleepProvider"><code>SleepProvider</code></a> if it can make timer futures that
+become Ready after a given interval of time.</li>
+<li>A runtime is a <a href="trait.TcpProvider.html" title="trait tor_rtcompat::TcpProvider"><code>TcpProvider</code></a> if it can make and receive TCP
+connections</li>
+<li>A runtime is a <a href="trait.TlsProvider.html" title="trait tor_rtcompat::TlsProvider"><code>TlsProvider</code></a> if it can make TLS connections.</li>
+</ul>
+<p>For convenience, the <a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a> trait derives from all the traits
+above, plus <a href="../futures_task/spawn/trait.Spawn.html" title="trait futures_task::spawn::Spawn"><code>futures::task::Spawn</code></a> and <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send"><code>Send</code></a>.</p>
+<p>You can get a <a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a> in several ways:</p>
+<ul>
+<li>
+<p>If you already have an asynchronous backend (for example, one
+that you built with tokio by running with
+<code>#[tokio::main]</code>), you can wrap it as a <a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a> with
+<a href="struct.PreferredRuntime.html#method.current" title="associated function tor_rtcompat::PreferredRuntime::current"><code>PreferredRuntime::current()</code></a>.</p>
+</li>
+<li>
+<p>If you want to construct a default runtime that you won’t be
+using for anything besides Arti, you can use <a href="struct.PreferredRuntime.html#method.create" title="associated function tor_rtcompat::PreferredRuntime::create"><code>PreferredRuntime::create()</code></a>.</p>
+</li>
+</ul>
+<p>Both of the above methods use the “preferred runtime”, which is usually Tokio.
+However, changing the set of Cargo features available can affect this; see
+<a href="struct.PreferredRuntime.html" title="struct tor_rtcompat::PreferredRuntime"><code>PreferredRuntime</code></a> for more.</p>
+<ul>
+<li>If you want to use a runtime with an explicitly chosen backend,
+name its type directly as [<code>async_std::AsyncStdNativeTlsRuntime</code>],
+<a href="async_std/struct.AsyncStdRustlsRuntime.html" title="struct tor_rtcompat::async_std::AsyncStdRustlsRuntime"><code>async_std::AsyncStdRustlsRuntime</code></a>, [<code>tokio::TokioNativeTlsRuntime</code>],
+or [<code>tokio::TokioRustlsRuntime</code>]. To construct one of these runtimes,
+call its <code>create()</code> method.  Or if you have already constructed a
+Tokio runtime that you want to use, you can wrap it as a
+<a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a> explicitly with <code>current()</code>.</li>
+</ul>
+<h3 id="advanced-usage-implementing-runtimes-yourself"><a href="#advanced-usage-implementing-runtimes-yourself">Advanced usage: implementing runtimes yourself</a></h3>
+<p>You might want to implement some of the traits above (especially <a href="trait.TcpProvider.html" title="trait tor_rtcompat::TcpProvider"><code>TcpProvider</code></a> and
+<a href="trait.TlsProvider.html" title="trait tor_rtcompat::TlsProvider"><code>TlsProvider</code></a>) if you’re embedding Arti, and want more control over the resources it uses.
+For example, you might want to perform actions when TCP connections open and close, replace the
+TLS stack with your own, or proxy TCP connections over your own custom transport.</p>
+<p>This can be more easily accomplished using the <a href="struct.CompoundRuntime.html" title="struct tor_rtcompat::CompoundRuntime"><code>CompoundRuntime</code></a> type, which lets you
+create a <a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a> from various implementors of the various traits (which don’t all need to
+be the same).</p>
+<p>See <a href="https://gitlab.torproject.org/tpo/core/arti/-/blob/main/crates/arti-client/examples/hook-tcp.rs"><code>arti-client/examples/hook-tcp.rs</code></a>
+for a full example of this.</p>
+<h3 id="cargo-features"><a href="#cargo-features">Cargo features</a></h3>
+<p>Features supported by this crate:</p>
+<ul>
+<li><code>tokio</code> – build with <a href="https://tokio.rs/">Tokio</a> support</li>
+<li><code>async-std</code> – build with <a href="https://async.rs/">async-std</a> support</li>
+<li><code>native-tls</code> –  build with the <a href="https://github.com/sfackler/rust-native-tls">native-tls</a>
+crate for TLS support</li>
+<li><code>static</code> – link the native TLS library statically (enables the <code>vendored</code> feature of the
+<code>native-tls</code> crate).</li>
+<li><code>rustls</code> – build with the <a href="https://github.com/rustls/rustls">rustls</a> crate for TLS support.  Note that <code>rustls</code> uses the <code>ring</code> crate, which uses
+the old (3BSD/SSLEay) OpenSSL license, which may introduce licensing
+compatibility issues.</li>
+</ul>
+<p>By default, <em>this</em> crate doesn’t enable any features. However, you’re almost certainly
+using this as part of the <code>arti-client</code> crate, which will enable <code>tokio</code> and <code>native-tls</code> in
+its default configuration.</p>
+<h3 id="design-faq"><a href="#design-faq">Design FAQ</a></h3><h4 id="why-support-async_std"><a href="#why-support-async_std">Why support <code>async_std</code>?</a></h4>
+<p>Although Tokio currently a more popular and widely supported
+asynchronous runtime than <code>async_std</code> is, we believe that it’s
+critical to build Arti against multiple runtimes.</p>
+<p>By supporting multiple runtimes, we avoid making tokio-specific
+assumptions in our code, which we hope will make it easier to port
+to other environments (like WASM) in the future.</p>
+<h4 id="why-a-runtime-trait-and-not-a-set-of-functions"><a href="#why-a-runtime-trait-and-not-a-set-of-functions">Why a <code>Runtime</code> trait, and not a set of functions?</a></h4>
+<p>We could simplify this code significantly by removing most of the
+traits it exposes, and instead just exposing a single
+implementation.  For example, instead of exposing a
+<a href="trait.BlockOn.html" title="trait tor_rtcompat::BlockOn"><code>BlockOn</code></a> trait to represent blocking until a task is
+done, we could just provide a single global <code>block_on</code> function.</p>
+<p>That simplification would come at a cost, however.  First of all,
+it would make it harder for us to use Rust’s “feature” system
+correctly.  Current features are supposed to be <em>additive only</em>,
+but if had a single global runtime, then support for different
+backends would be <em>mutually exclusive</em>.  (That is, you couldn’t
+have both the tokio and async-std features building at the same
+time.)</p>
+<p>Secondly, much of our testing in the rest of Arti relies on the
+ability to replace <a href="trait.Runtime.html" title="trait tor_rtcompat::Runtime"><code>Runtime</code></a>s.  By treating a runtime as an
+object, we can override a runtime’s view of time, or of the
+network, in order to test asynchronous code effectively.
+(See the [<code>tor-rtmock</code>] crate for examples.)</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="async_std/index.html" title="mod tor_rtcompat::async_std">async_std</a></div><div class="desc docblock-short">Entry points for use with async_std runtimes.</div></li><li><div class="item-name"><a class="mod" href="scheduler/index.html" title="mod tor_rtcompat::scheduler">scheduler</a></div><div class="desc docblock-short">Utilities for dealing with periodic recurring tasks.</div></li><li><div class="item-name"><a class="mod" href="task/index.html" title="mod tor_rtcompat::task">task</a></div><div class="desc docblock-short">Functions for task management that don’t belong inside the Runtime
+trait.</div></li><li><div class="item-name"><a class="mod" href="tls/index.html" title="mod tor_rtcompat::tls">tls</a></div><div class="desc docblock-short">Traits used to describe TLS connections and objects that can
+create them.</div></li></ul><h2 id="macros" class="small-section-header"><a href="#macros">Macros</a></h2><ul class="item-table"><li><div class="item-name"><a class="macro" href="macro.test_with_all_runtimes.html" title="macro tor_rtcompat::test_with_all_runtimes">test_with_all_runtimes</a></div><div class="desc docblock-short">Run a test closure, passing as argument every supported runtime.</div></li><li><div class="item-name"><a class="macro" href="macro.test_with_one_runtime.html" title="macro tor_rtcompat::test_with_one_runtime">test_with_one_runtime</a></div><div class="desc docblock-short">Run a test closure, passing as argument one supported runtime.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.CompoundRuntime.html" title="struct tor_rtcompat::CompoundRuntime">CompoundRuntime</a></div><div class="desc docblock-short">A runtime made of several parts, each of which implements one trait-group.</div></li><li><div class="item-name"><a class="struct" href="struct.PreferredRuntime.html" title="struct tor_rtcompat::PreferredRuntime">PreferredRuntime</a></div><div class="desc docblock-short">The runtime that we prefer to use, out of all the runtimes compiled into the
+tor-rtcompat crate.</div></li><li><div class="item-name"><a class="struct" href="struct.Timeout.html" title="struct tor_rtcompat::Timeout">Timeout</a></div><div class="desc docblock-short">A timeout returned by <a href="trait.SleepProviderExt.html#method.timeout" title="method tor_rtcompat::SleepProviderExt::timeout"><code>SleepProviderExt::timeout</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.TimeoutError.html" title="struct tor_rtcompat::TimeoutError">TimeoutError</a></div><div class="desc docblock-short">An error value given when a function times out.</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.BlockOn.html" title="trait tor_rtcompat::BlockOn">BlockOn</a></div><div class="desc docblock-short">Trait for a runtime that can block on a future.</div></li><li><div class="item-name"><a class="trait" href="trait.CertifiedConn.html" title="trait tor_rtcompat::CertifiedConn">CertifiedConn</a></div><div class="desc docblock-short">An object with a peer certificate: typically a TLS connection.</div></li><li><div class="item-name"><a class="trait" href="trait.Runtime.html" title="trait tor_rtcompat::Runtime">Runtime</a></div><div class="desc docblock-short">A runtime that we can use to run Tor as a client.</div></li><li><div class="item-name"><a class="trait" href="trait.SleepProvider.html" title="trait tor_rtcompat::SleepProvider">SleepProvider</a></div><div class="desc docblock-short">Trait for a runtime that can wait until a timer has expired.</div></li><li><div class="item-name"><a class="trait" href="trait.SleepProviderExt.html" title="trait tor_rtcompat::SleepProviderExt">SleepProviderExt</a></div><div class="desc docblock-short">An extension trait on <a href="trait.SleepProvider.html" title="trait tor_rtcompat::SleepProvider"><code>SleepProvider</code></a> for timeouts and clock delays.</div></li><li><div class="item-name"><a class="trait" href="trait.TcpListener.html" title="trait tor_rtcompat::TcpListener">TcpListener</a></div><div class="desc docblock-short">Trait for a local socket that accepts incoming TCP streams.</div></li><li><div class="item-name"><a class="trait" href="trait.TcpProvider.html" title="trait tor_rtcompat::TcpProvider">TcpProvider</a></div><div class="desc docblock-short">Trait for a runtime that can create and accept TCP connections.</div></li><li><div class="item-name"><a class="trait" href="trait.TlsProvider.html" title="trait tor_rtcompat::TlsProvider">TlsProvider</a></div><div class="desc docblock-short">Trait for a runtime that knows how to create TLS connections over
+TCP streams of type <code>S</code>.</div></li><li><div class="item-name"><a class="trait" href="trait.UdpProvider.html" title="trait tor_rtcompat::UdpProvider">UdpProvider</a></div><div class="desc docblock-short">Trait for a runtime that can send and receive UDP datagrams.</div></li><li><div class="item-name"><a class="trait" href="trait.UdpSocket.html" title="trait tor_rtcompat::UdpSocket">UdpSocket</a></div><div class="desc docblock-short">Trait for a locally bound Udp socket that can send and receive datagrams.</div></li></ul></section></div></main></body></html>

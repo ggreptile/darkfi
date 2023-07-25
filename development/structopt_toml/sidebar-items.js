@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["clap","serde","structopt"],"trait":["StructOptToml"]};

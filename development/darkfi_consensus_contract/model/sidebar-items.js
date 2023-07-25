@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["EPOCH_LENGTH","GRACE_PERIOD","HEADSTART","MU_RHO_PREFIX","MU_Y_PREFIX","REWARD","REWARD_PALLAS","SECRET_KEY_PREFIX","SEED_PREFIX","SERIAL_PREFIX","SLOT_TIME"],"fn":["calculate_grace_period"],"struct":["ConsensusGenesisStakeParamsV1","ConsensusProposalParamsV1","ConsensusProposalUpdateV1","ConsensusUnstakeRequestParamsV1"]};

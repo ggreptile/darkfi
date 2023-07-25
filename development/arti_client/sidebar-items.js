@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["BootstrapBehavior","DormantMode","ErrorKind","TorAddrError"],"mod":["config","isolation","status"],"struct":["DataReader","DataStream","DataWriter","Error","ErrorHint","IsolationToken","StreamPrefs","TorAddr","TorClient","TorClientBuilder"],"trait":["DangerouslyIntoTorAddr","HasKind","IntoTorAddr"],"type":["Result"]};

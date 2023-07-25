@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_subscriber","logs_assert","logs_with_scope_contain"],"static":["INITIALIZED"],"struct":["MockWriter"]};

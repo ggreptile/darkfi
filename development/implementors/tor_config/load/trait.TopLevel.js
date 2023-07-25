@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"arti_client":[["impl <a class=\"trait\" href=\"tor_config/load/trait.TopLevel.html\" title=\"trait tor_config::load::TopLevel\">TopLevel</a> for <a class=\"struct\" href=\"arti_client/config/struct.TorClientConfig.html\" title=\"struct arti_client::config::TorClientConfig\">TorClientConfig</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

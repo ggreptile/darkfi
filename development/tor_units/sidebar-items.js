@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"struct":["BoundedInt32","IntegerDays","IntegerMilliseconds","IntegerMinutes","IntegerSeconds","Percentage","SendMeVersion"]};

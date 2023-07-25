@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"tor_linkspec":[["impl <a class=\"trait\" href=\"strum/trait.EnumCount.html\" title=\"trait strum::EnumCount\">EnumCount</a> for <a class=\"enum\" href=\"tor_linkspec/enum.RelayIdType.html\" title=\"enum tor_linkspec::RelayIdType\">RelayIdType</a>"]],
+"tor_netdir":[["impl <a class=\"trait\" href=\"strum/trait.EnumCount.html\" title=\"trait strum::EnumCount\">EnumCount</a> for <a class=\"enum\" href=\"tor_netdir/enum.DirEvent.html\" title=\"enum tor_netdir::DirEvent\">DirEvent</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"crypto_api_chachapoly":[["impl <a class=\"trait\" href=\"crypto_api/cipher/trait.AeadCipher.html\" title=\"trait crypto_api::cipher::AeadCipher\">AeadCipher</a> for <a class=\"struct\" href=\"crypto_api_chachapoly/struct.XChachaPoly.html\" title=\"struct crypto_api_chachapoly::XChachaPoly\">XChachaPoly</a>"],["impl <a class=\"trait\" href=\"crypto_api/cipher/trait.AeadCipher.html\" title=\"trait crypto_api::cipher::AeadCipher\">AeadCipher</a> for <a class=\"struct\" href=\"crypto_api_chachapoly/struct.ChachaPolyIetf.html\" title=\"struct crypto_api_chachapoly::ChachaPolyIetf\">ChachaPolyIetf</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

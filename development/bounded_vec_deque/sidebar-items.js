@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Append","BoundedVecDeque","Drain","IntoIter","Iter","IterMut"]};

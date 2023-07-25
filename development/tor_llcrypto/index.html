@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-llcrypto"><title>tor_llcrypto - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_llcrypto" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_llcrypto/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_llcrypto/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_llcrypto</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.5.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_llcrypto</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_llcrypto/lib.rs.html#1-45">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-llcrypto"><a href="#tor-llcrypto">tor-llcrypto</a></h2>
+<p>Low-level cryptographic implementations for Tor.</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>The <code>tor-llcrypto</code> crate wraps lower-level cryptographic primitives that Tor
+needs, and provides a few smaller pieces of cryptographic functionality that
+are commonly required to implement Tor correctly.</p>
+<p>This crate is part of <a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>,
+a project to implement <a href="https://www.torproject.org/">Tor</a> in Rust. Many
+other crates in Arti depend on it.</p>
+<p>You probably wouldn’t want to use this crate for implementing non-Tor-based
+protocols; instead you should probably use the other crates that it depends
+on if you have a low-level protocol to implement, or a higher-level
+cryptographic system if you want to add security to something else.  It is
+easy to accidentally put these functions together in ways that are unsafe.</p>
+<h4 id="why-a-separate-crate"><a href="#why-a-separate-crate">Why a separate crate?</a></h4>
+<p>Why do we collect and re-export our cryptography here in <code>tor-llcrypto</code>,
+instead of having the different crates in Arti use underlying cryptographic
+crates directly?</p>
+<p>By wrapping our cryptography in this crate, we ensure that we’re using the
+same implementations across our ecosystem, and provide a single place to
+upgrade and test our cryptography.</p>
+<h4 id="adding-to-tor-llcrypto"><a href="#adding-to-tor-llcrypto">Adding to <code>tor-llcrypto</code></a></h4>
+<p>Any low-level cryptographic algorithm that is used by at least two other
+crates in Arti is a candidate for inclusion in <code>tor-llcrypto</code>, especially if
+that algorithm’s purpose is not specific to any single piece of the Tor
+algorithm.</p>
+<p>Cryptographic <em>traits</em> (like those from RustCrypto) don’t have to go in
+<code>tor-llcrypto</code>, since they are interfaces rather than implementations.</p>
+<h3 id="contents"><a href="#contents">Contents</a></h3>
+<p>Encryption is implemented in <a href="cipher/index.html" title="mod tor_llcrypto::cipher"><code>cipher</code></a>: Currently only AES is exposed or
+needed.</p>
+<p>Cryptographic digests are in <a href="d/index.html" title="mod tor_llcrypto::d"><code>d</code></a>: The Tor protocol uses several digests in
+different places, and these are all collected here.</p>
+<p>Public key cryptography (including signatures, encryption, and key
+agreement) are in <a href="pk/index.html" title="mod tor_llcrypto::pk"><code>pk</code></a>.  Older parts of the Tor protocol require RSA;
+newer parts are based on Curve25519 and Ed25519. There is also functionality
+here for <em>key manipulation</em> for the keys used in these symmetric algorithms.</p>
+<p>The <a href="util/index.html" title="mod tor_llcrypto::util"><code>util</code></a> module has some miscellaneous compatibility utilities for
+manipulating cryptography-related objects and code.</p>
+<h3 id="features"><a href="#features">Features</a></h3><h4 id="api-features"><a href="#api-features">API features</a></h4>
+<p><code>relay</code> – enable cryptography that’s only used on relays.</p>
+<p><code>hsv3-client</code> – enable cryptography that’s only needed when running as a v3
+onion service client.</p>
+<p><code>hsv3-service</code> – enable cryptography that’s only needed when running as a v3
+onion service.</p>
+<p><code>keymgr</code> – enable cryptography that’s only needed for key management</p>
+<p><code>cvt-x25519</code> – export functions for converting ed25519 keys to x25519 and
+vice-versa</p>
+<h4 id="acceleration-features"><a href="#acceleration-features">Acceleration features</a></h4>
+<p>These features should never be enabled by default from libraries, since they
+are not “strictly additive”: they disable one implementation in order to
+enable another.</p>
+<p><code>with-openssl</code> – Use <code>openssl</code> as the backend for those cryptographic
+features it supports.</p>
+<p><code>with-sha1-asm</code> – Use an assembly implementation of the sha1 algorithm, if
+one is enabled.</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="cipher/index.html" title="mod tor_llcrypto::cipher">cipher</a></div><div class="desc docblock-short">Ciphers used to implement the Tor protocols.</div></li><li><div class="item-name"><a class="mod" href="d/index.html" title="mod tor_llcrypto::d">d</a></div><div class="desc docblock-short">Digests and XOFs used to implement the Tor protocol.</div></li><li><div class="item-name"><a class="mod" href="pk/index.html" title="mod tor_llcrypto::pk">pk</a></div><div class="desc docblock-short">Public-key cryptography for Tor.</div></li><li><div class="item-name"><a class="mod" href="util/index.html" title="mod tor_llcrypto::util">util</a></div><div class="desc docblock-short">Utilities for cryptographic purposes</div></li></ul></section></div></main></body></html>

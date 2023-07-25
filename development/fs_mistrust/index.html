@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="fs-mistrust"><title>fs_mistrust - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="fs_mistrust" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../fs_mistrust/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../fs_mistrust/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate fs_mistrust</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.7.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">fs_mistrust</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/fs_mistrust/lib.rs.html#1-920">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="fs-mistrust"><a href="#fs-mistrust">fs-mistrust</a></h2>
+<p>Check whether file permissions are private.</p>
+<p>This crate provides a set of functionality to check the permissions on files
+and directories to ensure that they are effectively private—that is, that
+they are only readable or writable by trusted<sup id="fnref1"><a href="#fn1">1</a></sup> users.</p>
+<p>This kind of check can protect your users’ data against misconfigurations,
+such as cases where they’ve accidentally made their home directory
+world-writable, or where they’re using a symlink stored in a directory owned
+by another user.</p>
+<p>The checks in this crate try to guarantee that, after a path has been shown
+to be private, no action by a <em>non-trusted user</em> can make that path private.
+It’s still possible for a <em>trusted user</em> to change a path after it has been
+checked.  Because of that, you may want to use other mechanisms if you are
+concerned about time-of-check/time-of-use issues caused by <em>trusted</em> users
+altering the filesystem.</p>
+<p>Also see the <a href="#limitations">Limitations</a> section below.</p>
+<h4 id="whats-so-hard-about-checking-permissions"><a href="#whats-so-hard-about-checking-permissions">What’s so hard about checking permissions?</a></h4>
+<p>Suppose that we want to know whether a given path can be read or modified by
+an untrusted user. That’s trickier than it sounds:</p>
+<ul>
+<li>Even if the permissions on the file itself are correct, we also need to
+check the permissions on the directory holding it, since they might allow
+an untrusted user to replace the file, or change its permissions.</li>
+<li>Similarly, we need to check the permissions on the parent of <em>that</em>
+directory, since they might let an untrusted user replace the directory or
+change <em>its</em> permissions.  (And so on!)</li>
+<li>It can be tricky to define “a trusted user”.  On Unix systems, we usually
+say that each user is trusted by themself, and that root (UID 0) is
+trusted.  But it’s hard to say which <em>groups</em> are trusted: even if a given
+group contains only trusted users today, there’s no OS-level guarantee
+that untrusted users won’t be added to that group in the future.</li>
+<li>Symbolic links add another layer of confusion.  If there are any symlinks
+in the path you’re checking, then you need to check permissions on the
+directory containing the symlink, and then the permissions on the target
+path, <em>and all of its ancestors</em> too.</li>
+<li>Many programs first canonicalize the path being checked, removing all
+<code>..</code>s and symlinks.  That’s sufficient for telling whether the <em>final</em>
+file can be modified by an untrusted user, but not for whether the <em>path</em>
+can be modified by an untrusted user.  If there is a modifiable symlink in
+the middle of the path, or at any stage of the path resolution, somebody
+who can modify that symlink can change which file the path points to.</li>
+<li>Even if you have checked a directory as being writeable only by a trusted
+user, that doesn’t mean that the objects <em>in</em> that directory are only
+writeable by trusted users.  Those objects might be symlinks to some other
+(more writeable) place on the file system; or they might be accessible
+with hard links stored elsewhere on the file system.</li>
+</ul>
+<p>Different programs try to solve this problem in different ways, often with
+very little rationale.  This crate tries to give a reasonable implementation
+for file privacy checking and enforcement, along with clear justifications
+in its source for why it behaves that way.</p>
+<h4 id="what-we-actually-do"><a href="#what-we-actually-do">What we actually do</a></h4>
+<p>To make sure that every step in the file resolution process is checked, we
+emulate that process on our own.  We inspect each component in the provided
+path, to see whether it is modifiable by an untrusted user.  If we encounter
+one or more symlinks, then we resolve every component of the path added by
+those symlink, until we finally reach the target.</p>
+<p>In effect, we are emulating <code>realpath</code> (or <code>fs::canonicalize</code> if you
+prefer), and looking at the permissions on every part of the filesystem we
+touch in doing so, to see who has permissions to change our target file or
+the process that led us to it.</p>
+<p>For groups, we use the following heuristic: If there is a group with the
+same name as the current user, and the current user belongs to that group,
+we assume that group is trusted.  Otherwise, we treat all groups as
+untrusted.</p>
+<h4 id="examples"><a href="#examples">Examples</a></h4><h5 id="simple-cases"><a href="#simple-cases">Simple cases</a></h5>
+<p>Make sure that a directory is only readable or writeable by us (simple
+case):</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>fs_mistrust::Mistrust;
+<span class="kw">match </span>Mistrust::new().check_directory(<span class="string">&quot;/home/itchy/.local/hat-swap&quot;</span>) {
+    <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">println!</span>(<span class="string">&quot;directory is good&quot;</span>),
+    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">println!</span>(<span class="string">&quot;problem with our hat-swap directory: {}&quot;</span>, e),
+}</code></pre></div>
+<p>As above, but create the directory, and its parents if they do not already
+exist.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>fs_mistrust::Mistrust;
+<span class="kw">match </span>Mistrust::new().make_directory(<span class="string">&quot;/home/itchy/.local/hat-swap&quot;</span>) {
+    <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">println!</span>(<span class="string">&quot;directory exists (or was created without trouble&quot;</span>),
+    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">println!</span>(<span class="string">&quot;problem with our hat-swap directory: {}&quot;</span>, e),
+}</code></pre></div>
+<h5 id="configuring-a-mistrust"><a href="#configuring-a-mistrust">Configuring a <code>Mistrust</code></a></h5>
+<p>You can adjust the <a href="struct.Mistrust.html" title="struct fs_mistrust::Mistrust"><code>Mistrust</code></a> object to change what it permits:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>fs_mistrust::Mistrust;
+
+<span class="kw">let </span>my_mistrust = Mistrust::builder()
+    <span class="comment">// Assume that our home directory and its parents are all well-configured.
+    </span>.ignore_prefix(<span class="string">&quot;/home/doze/&quot;</span>)
+    <span class="comment">// Assume that a given group will only contain trusted users (this feature is only
+    // available on Unix-like platforms).
+    // .trust_group(413)
+    </span>.build()<span class="question-mark">?</span>;</code></pre></div>
+<p>See <a href="struct.Mistrust.html" title="struct fs_mistrust::Mistrust"><code>Mistrust</code></a> for more options.</p>
+<h5 id="using-verifier-for-more-fine-grained-checks"><a href="#using-verifier-for-more-fine-grained-checks">Using <code>Verifier</code> for more fine-grained checks</a></h5>
+<p>For more fine-grained control over a specific check, you can use the
+<a href="struct.Verifier.html" title="struct fs_mistrust::Verifier"><code>Verifier</code></a> API.  Unlike <a href="struct.Mistrust.html" title="struct fs_mistrust::Mistrust"><code>Mistrust</code></a>, which generally you’ll want to
+configure for several requests, the changes in <a href="struct.Verifier.html" title="struct fs_mistrust::Verifier"><code>Verifier</code></a> generally make
+sense only for one request at a time.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>fs_mistrust::Mistrust;
+<span class="kw">let </span>mistrust = Mistrust::new();
+
+<span class="comment">// Require that an object is a regular file; allow it to be world-
+// readable.
+</span>mistrust
+    .verifier()
+    .permit_readable()
+    .require_file()
+    .check(<span class="string">&quot;/home/trace/.path_cfg&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Make sure that a directory _and all of its contents_ are private.
+// Create the directory if it does not exist.
+// Return an error object containing _all_ of the problems discovered.
+</span>mistrust
+    .verifier()
+    .require_directory()
+    .check_content()
+    .all_errors()
+    .make_directory(<span class="string">&quot;/home/trace/private_keys/&quot;</span>);</code></pre></div>
+<p>See <a href="struct.Verifier.html" title="struct fs_mistrust::Verifier"><code>Verifier</code></a> for more options.</p>
+<h5 id="using-checkeddir-for-safety"><a href="#using-checkeddir-for-safety">Using <code>CheckedDir</code> for safety.</a></h5>
+<p>You can use the <a href="struct.CheckedDir.html" title="struct fs_mistrust::CheckedDir"><code>CheckedDir</code></a> API to ensure not only that a directory is
+private, but that all of your accesses to its contents continue to verify
+and enforce <em>their</em> permissions.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>fs_mistrust::{Mistrust, CheckedDir};
+<span class="kw">use </span>std::fs::{File, OpenOptions};
+<span class="kw">let </span>dir = Mistrust::new()
+    .verifier()
+    .secure_dir(<span class="string">&quot;/Users/clover/riddles&quot;</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// You can use the CheckedDir object to access files and directories.
+// All of these must be relative paths within the path you used to
+// build the CheckedDir.
+</span>dir.make_directory(<span class="string">&quot;timelines&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">let </span>file = dir.open(<span class="string">&quot;timelines/vault-destroyed.md&quot;</span>,
+    OpenOptions::new().write(<span class="bool-val">true</span>).create(<span class="bool-val">true</span>))<span class="question-mark">?</span>;
+<span class="comment">// (... use file...)</span></code></pre></div>
+<h4 id="limitations"><a href="#limitations">Limitations</a></h4>
+<p>As noted above, this crate only checks whether a path can be changed by
+<em>non-trusted</em> users.  After the path has been checked, a <em>trusted</em> user can
+still change its permissions.  (For example, the user could make their home
+directory world-writable.)  This crate does not try to defend against <em>that
+kind</em> of time-of-check/time-of-use issue.</p>
+<p>We currently assume a fairly vanilla Unix environment: we’ll tolerate other
+systems, but we don’t actually look at the details of any of these:</p>
+<ul>
+<li>Windows security (ACLs, SecurityDescriptors, etc)</li>
+<li>SELinux capabilities</li>
+<li>POSIX (and other) ACLs.</li>
+</ul>
+<p>We use a somewhat inaccurate heuristic when we’re checking the permissions
+of items <em>inside</em> a target directory (using <a href="struct.Verifier.html#method.check_content" title="method fs_mistrust::Verifier::check_content"><code>Verifier::check_content</code></a> or
+<a href="struct.CheckedDir.html" title="struct fs_mistrust::CheckedDir"><code>CheckedDir</code></a>): we continue to forbid untrusted-writeable directories and
+files, but we still allow readable ones, even if we insisted that the target
+directory itself was required to to be unreadable.  This is too permissive
+in the case of readable objects with hard links: if there is a hard link to
+the file somewhere else, then an untrusted user can read it.  It is also too
+restrictive in the case of writeable objects <em>without</em> hard links: if
+untrusted users have no path to those objects, they can’t actually write
+them.</p>
+<p>On Windows, we accept all file permissions and owners.</p>
+<p>We don’t check for mount-points and the privacy of filesystem devices
+themselves.  (For example, we don’t distinguish between our local
+administrator and the administrator of a remote filesystem. We also don’t
+distinguish between local filesystems and insecure networked filesystems.)</p>
+<p>This code has not been audited for correct operation in a setuid
+environment; there are almost certainly security holes in that case.</p>
+<p>This is fairly new software, and hasn’t been audited yet.</p>
+<p>All of the above issues are considered “good to fix, if practical”.</p>
+<h4 id="acknowledgements"><a href="#acknowledgements">Acknowledgements</a></h4>
+<p>The list of checks performed here was inspired by the lists from OpenSSH’s
+<a href="https://github.com/openssh/openssh-portable/blob/master/misc.c#L2177">safe_path</a>, GnuPG’s <a href="https://github.com/gpg/gnupg/blob/master/g10/gpg.c#L1551">check_permissions</a>, and Tor’s <a href="https://gitlab.torproject.org/tpo/core/tor/-/blob/main/src/lib/fs/dir.c#L70">check_private_dir</a>. All
+errors are my own.</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --><div class="footnotes"><hr><ol><li id="fn1"><p>we define “trust” here in the computer-security sense of the word: a
+user is “trusted” if they have the opportunity to break our security
+guarantees.  For example, <code>root</code> on a Unix environment is “trusted”,
+whether you actually trust them or not.&nbsp;<a href="#fnref1">↩</a></p></li></ol></div></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="anon_home/index.html" title="mod fs_mistrust::anon_home">anon_home</a></div><div class="desc docblock-short">Replace the home-directory in a filename with <code>${HOME}</code> or <code>%UserProfile%</code></div></li><li><div class="item-name"><a class="mod" href="walk/index.html" title="mod fs_mistrust::walk">walk</a></div><div class="desc docblock-short">An iterator to resolve and canonicalize a filename.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.CheckedDir.html" title="struct fs_mistrust::CheckedDir">CheckedDir</a></div><div class="desc docblock-short">A directory whose access properties we have verified, along with accessor
+functions to access members of that directory.</div></li><li><div class="item-name"><a class="struct" href="struct.Mistrust.html" title="struct fs_mistrust::Mistrust">Mistrust</a></div><div class="desc docblock-short">Configuration for verifying that a file or directory is really “private”.</div></li><li><div class="item-name"><a class="struct" href="struct.MistrustBuilder.html" title="struct fs_mistrust::MistrustBuilder">MistrustBuilder</a></div><div class="desc docblock-short">Builder for <a href="struct.Mistrust.html"><code>Mistrust</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.Verifier.html" title="struct fs_mistrust::Verifier">Verifier</a></div><div class="desc docblock-short">An object used to perform a single check.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum fs_mistrust::Error">Error</a></div><div class="desc docblock-short">An error returned while checking a path for privacy.</div></li><li><div class="item-name"><a class="enum" href="enum.TrustedGroup.html" title="enum fs_mistrust::TrustedGroup">TrustedGroup</a></div><div class="desc docblock-short">A group that we can be configured to trust.</div></li><li><div class="item-name"><a class="enum" href="enum.TrustedUser.html" title="enum fs_mistrust::TrustedUser">TrustedUser</a></div><div class="desc docblock-short">A user that we can be configured to trust.</div></li></ul><h2 id="constants" class="small-section-header"><a href="#constants">Constants</a></h2><ul class="item-table"><li><div class="item-name"><a class="constant" href="constant.GLOBAL_DISABLE_VAR.html" title="constant fs_mistrust::GLOBAL_DISABLE_VAR">GLOBAL_DISABLE_VAR</a></div><div class="desc docblock-short">An environment variable which, if set, will cause a us to trust all users
+(and therefore, in effect, to disable all permissions checks.)</div></li></ul><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><ul class="item-table"><li><div class="item-name"><a class="fn" href="fn.format_access_bits.html" title="fn fs_mistrust::format_access_bits">format_access_bits</a></div><div class="desc docblock-short">Convert the low 9 bits of <code>bits</code> into a unix-style string describing its
+access permission. Insert <code>c</code> between the ugo and perm.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Result.html" title="type fs_mistrust::Result">Result</a></div><div class="desc docblock-short">A result type as returned by this crate</div></li></ul></section></div></main></body></html>

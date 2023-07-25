@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This macro is used for a standard way of daemonizing darkfi binaries with TOML config file configuration, and argument parsing. It also spawns a multithreaded async executor and passes it into the given function."><title>async_daemonize in darkfi - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="darkfi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../darkfi/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../darkfi/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In darkfi</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Macro <a href="index.html">darkfi</a>::<wbr><a class="macro" href="#">async_daemonize</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/darkfi/util/cli.rs.html#169-297">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><span class="macro">macro_rules! </span>async_daemonize {
+    (<span class="macro-nonterminal">$realmain</span>:ident) =&gt; { ... };
+}</pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This macro is used for a standard way of daemonizing darkfi binaries
+with TOML config file configuration, and argument parsing. It also
+spawns a multithreaded async executor and passes it into the given
+function.</p>
+<p>The Cargo.toml dependencies needed for this are:</p>
+<div class="example-wrap"><pre class="language-text"><code>async-std = &quot;1.12.0&quot;
+darkfi = { path = &quot;../../&quot;, features = [&quot;util&quot;] }
+easy-parallel = &quot;3.2.0&quot;
+signal-hook-async-std = &quot;0.2.2&quot;
+signal-hook = &quot;0.3.15&quot;
+simplelog = &quot;0.12.0&quot;
+smol = &quot;1.2.5&quot;
+
+# Argument parsing
+serde = {version = &quot;1.0.135&quot;, features = [&quot;derive&quot;]}
+structopt = &quot;0.3.26&quot;
+structopt-toml = &quot;0.5.1&quot;
+</code></pre></div>
+<p>Example usage:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>async_std::{stream::StreamExt, sync::Arc};
+<span class="kw">use </span>structopt_toml::{serde::Deserialize, structopt::StructOpt, StructOptToml};
+
+<span class="kw">const </span>CONFIG_FILE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;daemond_config.toml&quot;</span>;
+<span class="kw">const </span>CONFIG_FILE_CONTENTS: <span class="kw-2">&amp;</span>str = <span class="macro">include_str!</span>(<span class="string">&quot;../daemond_config.toml&quot;</span>);
+
+<span class="attr">#[derive(Clone, Debug, Deserialize, StructOpt, StructOptToml)]
+#[serde(default)]
+#[structopt(name = <span class="string">&quot;daemond&quot;</span>, about = <span class="macro">cli_desc!</span>())]
+</span><span class="kw">struct </span>Args {
+    <span class="attr">#[structopt(short, long)]
+    </span><span class="doccomment">/// Configuration file to use
+    </span>config: <span class="prelude-ty">Option</span>&lt;String&gt;,
+
+    <span class="attr">#[structopt(short, long)]
+    </span><span class="doccomment">/// Set log file to ouput into
+    </span>log: <span class="prelude-ty">Option</span>&lt;String&gt;,
+
+    <span class="attr">#[structopt(short, parse(from_occurrences))]
+    </span><span class="doccomment">/// Increase verbosity (-vvv supported)
+    </span>verbose: u8,
+}
+
+<span class="macro">async_daemonize!</span>(realmain);
+<span class="kw">async fn </span>realmain(args: Args, ex: Arc&lt;smol::Executor&lt;<span class="lifetime">&#39;_</span>&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="macro">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+</div></details></section></div></main></body></html>

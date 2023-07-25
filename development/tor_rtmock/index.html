@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-rtmock"><title>tor_rtmock - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_rtmock" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_rtmock/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_rtmock/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_rtmock</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.8.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_rtmock</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_rtmock/lib.rs.html#1-58">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-rtmock"><a href="#tor-rtmock">tor-rtmock</a></h2>
+<p>Support for mocking with <code>tor-rtcompat</code> asynchronous runtimes.</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>The <code>tor-rtcompat</code> crate defines a <code>Runtime</code> trait that represents
+most of the common functionality of .  This crate provides mock
+implementations that override a <code>Runtime</code>, in whole or in part,
+for testing purposes.</p>
+<p>This crate is part of
+<a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>, a project to
+implement <a href="https://www.torproject.org/">Tor</a> in Rust.
+It is used to write tests for higher-level
+crates in Arti that rely on asynchronous runtimes.</p>
+<p>This crate should only be used for writing tests.</p>
+<p>Currently, we support mocking the passage of time (via
+<a href="struct.MockSleepRuntime.html" title="struct tor_rtmock::MockSleepRuntime"><code>MockSleepRuntime</code></a>), and impersonating the internet (via
+<a href="struct.MockNetRuntime.html" title="struct tor_rtmock::MockNetRuntime"><code>MockNetRuntime</code></a>).</p>
+<h3 id="examples"><a href="#examples">Examples</a></h3>
+<p>Suppose you’ve written a function that relies on making a
+connection to the network and possibly timing out:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tor_rtcompat::{Runtime,SleepProviderExt};
+<span class="kw">use </span>std::{net::SocketAddr, io::Result, time::Duration, io::Error};
+<span class="kw">use </span>futures::io::AsyncWriteExt;
+
+<span class="kw">async fn </span>say_hi(runtime: <span class="kw">impl </span>Runtime, addr: <span class="kw-2">&amp;</span>SocketAddr) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+   <span class="kw">let </span>delay = Duration::new(<span class="number">5</span>,<span class="number">0</span>);
+   runtime.timeout(delay, <span class="kw">async </span>{
+      <span class="kw">let </span><span class="kw-2">mut </span>conn = runtime.connect(addr).<span class="kw">await</span><span class="question-mark">?</span>;
+      conn.write_all(<span class="string">b&quot;Hello world!\r\n&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+      conn.close().<span class="kw">await</span><span class="question-mark">?</span>;
+      <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>,Error&gt;(())
+   }).<span class="kw">await</span><span class="question-mark">??</span>;
+   <span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+<p>But how should you test this function?</p>
+<p>You might try connecting to a well-known website to test the
+connection case, and to a well-known black hole to test the
+timeout case… but that’s a bit undesirable.  Your tests might be
+running in a container with no internet access; and even if they
+aren’t, it isn’t so great for your tests to rely on the actual
+state of the internet.  Similarly, if you make your timeout too long,
+your tests might block for a long time; but if your timeout is too short,
+the tests might fail on a slow machine or on a slow network.</p>
+<p>Or, you could solve both of these problems by using <code>tor-rtmock</code>
+to replace the internet <em>and</em> the passage of time.  (Here we’re only
+replacing the internet.)</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tor_rtmock::{MockSleepRuntime,MockNetRuntime,net::MockNetwork};
+<span class="kw">use </span>tor_rtcompat::{TcpProvider,TcpListener};
+<span class="kw">use </span>futures::io::AsyncReadExt;
+
+<span class="macro">tor_rtcompat::test_with_all_runtimes!</span>(|rt| <span class="kw">async move </span>{
+
+   <span class="kw">let </span>addr1 = <span class="string">&quot;198.51.100.7&quot;</span>.parse().unwrap();
+   <span class="kw">let </span>addr2 = <span class="string">&quot;198.51.100.99&quot;</span>.parse().unwrap();
+   <span class="kw">let </span>sockaddr = <span class="string">&quot;198.51.100.99:101&quot;</span>.parse().unwrap();
+
+   <span class="comment">// Make a runtime that pretends that we are at the first address...
+   </span><span class="kw">let </span>fake_internet = MockNetwork::new();
+   <span class="kw">let </span>rt1 = fake_internet.builder().add_address(addr1).runtime(rt.clone());
+   <span class="comment">// ...and one that pretends we&#39;re listening at the second address.
+   </span><span class="kw">let </span>rt2 = fake_internet.builder().add_address(addr2).runtime(rt);
+   <span class="kw">let </span>listener = rt2.listen(<span class="kw-2">&amp;</span>sockaddr).<span class="kw">await</span>.unwrap();
+
+   <span class="comment">// Now we can test our function!
+   </span><span class="kw">let </span>(result1,output) = <span class="macro">futures::join!</span>(
+          say_hi(rt1, <span class="kw-2">&amp;</span>sockaddr),
+          <span class="kw">async </span>{
+              <span class="kw">let </span>(<span class="kw-2">mut </span>conn,addr) = listener.accept().<span class="kw">await</span>.unwrap();
+              <span class="macro">assert_eq!</span>(addr.ip(), addr1);
+              <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
+              conn.read_to_end(<span class="kw-2">&amp;mut </span>output).<span class="kw">await</span>.unwrap();
+              output
+          });
+
+   <span class="macro">assert!</span>(result1.is_ok());
+   <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>output[..], <span class="string">b&quot;Hello world!\r\n&quot;</span>);
+});</code></pre></div>
+<p>(TODO: Add an example for the timeout case.)</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="io/index.html" title="mod tor_rtmock::io">io</a></div><div class="desc docblock-short">Mocking helpers for testing with futures::io types.</div></li><li><div class="item-name"><a class="mod" href="net/index.html" title="mod tor_rtmock::net">net</a></div><div class="desc docblock-short">Implements a simple mock network for testing purposes.</div></li><li><div class="item-name"><a class="mod" href="task/index.html" title="mod tor_rtmock::task">task</a></div><div class="desc docblock-short">Executor for running tests with mocked environment</div></li><li><div class="item-name"><a class="mod" href="time/index.html" title="mod tor_rtmock::time">time</a></div><div class="desc docblock-short">Functionality for simulating the passage of time in unit tests.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.MockNetRuntime.html" title="struct tor_rtmock::MockNetRuntime">MockNetRuntime</a></div><div class="desc docblock-short">A wrapper Runtime that overrides the SleepProvider trait for the
+underlying runtime.</div></li><li><div class="item-name"><a class="struct" href="struct.MockRuntime.html" title="struct tor_rtmock::MockRuntime">MockRuntime</a></div><div class="desc docblock-short">Completely mock runtime</div></li><li><div class="item-name"><a class="struct" href="struct.MockSleepRuntime.html" title="struct tor_rtmock::MockSleepRuntime">MockSleepRuntime</a></div><div class="desc docblock-short">A wrapper Runtime that overrides the SleepProvider trait for the
+underlying runtime.</div></li></ul></section></div></main></body></html>

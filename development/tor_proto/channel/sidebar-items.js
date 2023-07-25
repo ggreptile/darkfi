@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CHANNEL_BUFFER_SIZE"],"mod":["padding","params"],"struct":["Channel","ChannelBuilder","OutboundClientHandshake","UniqId","UnverifiedChannel","VerifiedChannel"]};

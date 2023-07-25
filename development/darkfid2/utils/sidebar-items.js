@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["genesis_txs_total","spawn_sync_p2p"]};

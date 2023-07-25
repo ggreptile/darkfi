@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This is a trick for rust compiler helping to distinguish types implementing mutually-exclusive traits (required until negative trait impls will be there) Implemented after concept by Martin Habovštiak martin.habovstiak@gmail.com"><title>amplify::strategy - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="amplify" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../amplify/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../amplify/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Module strategy</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../index.html">amplify</a>::<wbr><a class="mod" href="#">strategy</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/amplify/strategy.rs.html#17-100">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This is a trick for rust compiler helping to distinguish types implementing
+mutually-exclusive traits (required until negative trait impls will be
+there) Implemented after concept by Martin Habovštiak
+<a href="mailto:martin.habovstiak@gmail.com">martin.habovstiak@gmail.com</a></p>
+<p>The module proposes <strong>generic implementation strategies</strong>, which allow
+multiple generic trait implementations.</p>
+<p>Implementing trait for a generic type (“blanket implementation”) more than
+once (applies both for local and foreign traits) - or implement foreign
+trait for a concrete type where there is some blanket implementation in the
+upstream. The solution is to use special pattern by @Kixunil. I use it
+widely and have a special helper type in
+<a href=""><code>src/strategy.rs</code></a>src/strategy.rs module.</p>
+<p>With that helper type you can write the following code, which will provide
+you with efficiently multiple blanket implementations of some trait
+<code>SampleTrait</code>:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">pub trait </span>SampleTrait {
+    <span class="kw">fn </span>sample_trait_method(<span class="kw-2">&amp;</span><span class="self">self</span>);
+}
+
+<span class="comment">// Define strategies, one per specific implementation that you need,
+// either blanket or concrete
+</span><span class="kw">pub struct </span>StrategyA;
+<span class="kw">pub struct </span>StrategyB;
+<span class="kw">pub struct </span>StrategyC;
+
+<span class="comment">// Define a single marker type
+</span><span class="kw">pub trait </span>Strategy {
+    <span class="kw">type </span>Strategy;
+}
+
+<span class="comment">// Do a single blanket implementation using Holder and Strategy marker trait
+</span><span class="kw">impl</span>&lt;T&gt; SampleTrait <span class="kw">for </span>T
+<span class="kw">where
+    </span>T: Strategy,
+    <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; amplify::Holder&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T, T::Strategy&gt;: SampleTrait,
+{
+    <span class="comment">// Do this for each of sample trait methods:
+    </span><span class="kw">fn </span>sample_trait_method(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        amplify::Holder::new(<span class="self">self</span>).sample_trait_method()
+    }
+}
+
+<span class="comment">// Do this type of implementation for each of the strategies
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; SampleTrait <span class="kw">for </span>amplify::Holder&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T, StrategyA&gt;
+<span class="kw">where
+    </span>T: Strategy,
+{
+    <span class="kw">fn </span>sample_trait_method(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="comment">/* write your implementation-specific code here accessing type data,
+           when needed, via `self.as_inner()` */
+    </span>}
+}
+
+<span class="comment">// Finally, apply specific implementation strategy to a concrete type
+// (or do it in a blanket generic way) as a marker:
+</span><span class="kw">impl </span>Strategy <span class="kw">for </span>ConcreteTypeA {
+    <span class="kw">type </span>Strategy = StrategyA;
+}</code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Holder.html" title="struct amplify::strategy::Holder">Holder</a></div><div class="desc docblock-short">Helper type allowing implementation of trait object for generic types
+multiple times. In practice this type is never used</div></li></ul></section></div></main></body></html>

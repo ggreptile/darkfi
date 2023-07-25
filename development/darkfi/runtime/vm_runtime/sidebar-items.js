@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["GAS_LIMIT","MEMORY","SMART_CONTRACT_ZKAS_DB_NAME"],"enum":["ContractSection"],"struct":["Env","Runtime"]};

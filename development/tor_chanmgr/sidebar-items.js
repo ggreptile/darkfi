@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ChanProvenance","ChannelUsage","ConnBlockage","Dormancy","Error"],"mod":["builder","factory","transport"],"struct":["ChanMgr","ChannelConfig","ChannelConfigBuilder","ConnStatus","ConnStatusEvents"],"type":["Result"]};

@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-cell"><title>tor_cell - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_cell" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_cell/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_cell/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_cell</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.12.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_cell</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_cell/lib.rs.html#1-51">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-cell"><a href="#tor-cell">tor-cell</a></h2>
+<p>Coding and decoding for the cell types that make up Tor’s protocol</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>Tor’s primary network protocol is oriented around a set of
+messages called “Cells”.  They exist at two primary layers of the
+protocol: the channel-cell layer, and the relay-cell layer.</p>
+<p><a href="chancell/struct.ChanCell.html" title="struct tor_cell::chancell::ChanCell">Channel cells</a> are sent between relays, or
+between a client and a relay, over a TLS connection.  Each of them
+encodes a single <a href="chancell/trait.ChanMsg.html" title="trait tor_cell::chancell::ChanMsg">Channel Message</a>.
+Channel messages can affect the channel itself (such as those used
+to negotiate and authenticate the channel), but more frequently are
+used with respect to a given multi-hop circuit.</p>
+<p>Channel message that refer to a circuit do so with a channel-local
+identifier called a <a href="chancell/struct.CircId.html" title="struct tor_cell::chancell::CircId">Circuit ID</a>.  These
+messages include CREATE2 (used to extend a circuit to a first hop)
+and DESTROY (used to tear down a circuit).  But the most
+frequently used channel message is RELAY, which is used to send a
+message to a given hop along a circuit.</p>
+<p>Each RELAY cell is encrypted and decrypted (according to protocols
+not implemented in this crate) until it reaches its target.  When
+it does, it is decoded into a single <a href="relaycell/trait.RelayMsg.html" title="trait tor_cell::relaycell::RelayMsg">Relay
+Message</a>.  Some of these relay messages
+are used to manipulate circuits (e.g., by extending the circuit to
+a new hop); others are used to manipulate anonymous data-streams
+(by creating them, ending them, or sending data); and still others
+are used for protocol-specific purposes (like negotiating with an
+onion service.)</p>
+<p>For a list of <em>most</em> of the cell types used in Tor, see
+<a href="https://spec.torproject.org/tor-spec">tor-spec.txt</a>.  Other cell
+types are defined in <a href="https://spec.torproject.org/tor-spec">rend-spec-v3.txt (for onion
+services)</a> and
+<a href="https://spec.torproject.org/padding-spec">padding-spec.txt (for padding
+negotiation)</a>.</p>
+<p>This crate is part of
+<a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>, a project to
+implement <a href="https://www.torproject.org/">Tor</a> in Rust.</p>
+<h3 id="futureproofing-note"><a href="#futureproofing-note">Futureproofing note</a></h3>
+<p>There are two pending proposals to remove the one-to-one
+correspondence between relay cells and relay messages.</p>
+<p><a href="https://gitlab.torproject.org/tpo/core/torspec/-/blob/master/proposals/319-wide-everything.md">Proposal 319</a>
+would add a “RELAY_FRAGMENT” command that would allow larger relay
+messages to span multiple RELAY cells.</p>
+<p><a href="https://gitlab.torproject.org/tpo/core/torspec/-/blob/master/proposals/325-packed-relay-cells.md">Proposal 325</a>,
+on the other hand, would allow multiple relay messages to be
+packed into a single RELAY cell.</p>
+<p>The distinction between RelayCell and RelayMsg is meant in part
+to future-proof arti against these proposals if they are adopted.</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="chancell/index.html" title="mod tor_cell::chancell">chancell</a></div><div class="desc docblock-short">Messages sent over Tor channels</div></li><li><div class="item-name"><a class="mod" href="relaycell/index.html" title="mod tor_cell::relaycell">relaycell</a></div><div class="desc docblock-short">Implementation for parsing and encoding relay cells</div></li><li><div class="item-name"><a class="mod" href="restrict/index.html" title="mod tor_cell::restrict">restrict</a></div><div class="desc docblock-short">Declare a restricted variant of our message types.</div></li></ul><h2 id="macros" class="small-section-header"><a href="#macros">Macros</a></h2><ul class="item-table"><li><div class="item-name"><a class="macro" href="macro.restricted_msg.html" title="macro tor_cell::restricted_msg">restricted_msg</a></div><div class="desc docblock-short">Declare a restricted version of
+<a href="relaycell/msg/enum.AnyRelayMsg.html" title="enum tor_cell::relaycell::msg::AnyRelayMsg"><code>AnyRelayMsg</code></a> or
+<a href="chancell/msg/enum.AnyChanMsg.html" title="enum tor_cell::chancell::msg::AnyChanMsg"><code>AnyChanMsg</code></a>.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum tor_cell::Error">Error</a></div><div class="desc docblock-short">An error type for the tor-cell crate.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Result.html" title="type tor_cell::Result">Result</a></div><div class="desc docblock-short">An error type for this crate.</div></li></ul></section></div></main></body></html>

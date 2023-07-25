@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["set_both_gid","set_both_uid","set_current_gid","set_current_uid","set_effective_gid","set_effective_uid","switch_user_group"],"struct":["SwitchUserGuard"]};

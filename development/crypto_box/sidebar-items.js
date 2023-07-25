@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["KEY_SIZE"],"struct":["CryptoBox","PublicKey","SecretKey"],"type":["ChaChaBox","Nonce","SalsaBox","Tag"]};

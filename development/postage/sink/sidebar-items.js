@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["PollSend","TrySendError"],"struct":["SendError","SendFuture"],"trait":["Sink"]};

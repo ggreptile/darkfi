@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["P"],"fn":["calculate_f","calculate_sigmas","slot_pid_output"],"struct":["EPSILON","FIELD_P","K1","K2","K3","KD","KI","KP","MAX_F","MIN_F"]};

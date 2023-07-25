@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AnyRelayMsg","IpVersionPreference","ResolvedVal"],"struct":["Begin","BeginDir","BeginFlags","Connected","Data","Drop","End","EndReason","Extend","Extend2","Extended","Extended2","Resolve","Resolved","Sendme","Truncate","Truncated","Unrecognized"],"trait":["Body"]};

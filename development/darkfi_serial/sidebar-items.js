@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"derive":["SerialDecodable","SerialEncodable"],"fn":["deserialize","deserialize_partial","serialize"],"macro":["decoder_fn","encode_payload","encoder_fn","impl_int_encodable","tuple_encode"],"mod":["async_serial","endian","types"],"struct":["VarInt"],"trait":["Decodable","Encodable","ReadExt","WriteExt"]};

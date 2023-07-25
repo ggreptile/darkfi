@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error","RequestError"],"fn":["download","get_resource"],"mod":["request"],"struct":["DirResponse","RequestFailedError","SourceInfo"],"type":["RequestResult","Result"]};

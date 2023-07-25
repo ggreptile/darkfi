@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error"],"fn":["disable_safe_logging","enforce_safe_logging","sensitive","with_safe_logging_suppressed"],"struct":["BoxSensitive","Guard","MaybeRedacted","Redacted","Sensitive"],"trait":["Redactable"],"type":["Result"]};

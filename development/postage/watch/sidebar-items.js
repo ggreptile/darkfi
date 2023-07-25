@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["channel","channel_with","channel_with_option"],"struct":["Receiver","Ref","RefMut","Sender"]};

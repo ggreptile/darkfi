@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="The `typed-index-collections` crate provides `TiSlice` and `TiVec` structs that are typed index versions of the Rust `slice` and `std::vec::Vec` types."><title>typed_index_collections - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="typed_index_collections" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../typed_index_collections/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../typed_index_collections/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate typed_index_collections</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 3.1.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">typed_index_collections</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/typed_index_collections/lib.rs.html#1-244">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The <code>typed-index-collections</code> crate provides <a href="struct.TiSlice.html"><code>TiSlice</code></a> and <a href="struct.TiVec.html"><code>TiVec</code></a> structs
+that are typed index versions of the Rust <a href="https://doc.rust-lang.org/std/primitive.slice.html"><code>slice</code></a> and <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>std::vec::Vec</code></a> types.</p>
+<h2 id="introduction"><a href="#introduction">Introduction</a></h2>
+<p>The extensive use of slices and vectors instead of references
+and smart pointers might be useful for optimization,
+Data-Oriented Design and when using Struct of Arrays.
+But when dealing with a bunch of slices and vectors
+it is easy to accidentally use the wrong index,
+which is a common source of bugs.</p>
+<h2 id="about"><a href="#about">About</a></h2>
+<p>This crate provides <a href="struct.TiSlice.html"><code>TiSlice&lt;K, V&gt;</code></a> and <a href="struct.TiVec.html"><code>TiVec&lt;K, V&gt;</code></a> containers
+that can be indexed only by the specified index type <code>K</code>.
+These containers are only wrappers around
+the slice primitive <a href="https://doc.rust-lang.org/std/primitive.slice.html"><code>[V]</code></a> and the container <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>std::vec::Vec&lt;V&gt;</code></a>.
+Crate containers mirror the stable API of the matched Rust containers
+and forward to them as much as possible.</p>
+<p><a href="struct.TiSlice.html"><code>TiSlice</code></a> and <a href="struct.TiVec.html"><code>TiVec</code></a> can be easily converted to matched Rust containers and back using
+<a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>, <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a>, <a href="https://doc.rust-lang.org/std/convert/trait.AsRef.html"><code>AsRef</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.AsMut.html"><code>AsMut</code></a> traits.
+Also, they expose <code>raw</code> property with the original data type.
+Containers only require the index to implement
+<a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;usize&gt;</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into&lt;usize&gt;</code></a> traits
+that can be easily done with <a href="https://crates.io/crates/derive_more"><code>derive_more</code></a> crate and <code>#[derive(From, Into)]</code>.</p>
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+<p>First, add the following to your <code>Cargo.toml</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+typed-index-collections = &quot;3.1.0&quot;
+</code></pre></div>
+<p>This crate depends on the standard library by default that is useful
+for debugging and for some extra functionality.
+To use this crate in a <code>#![no_std]</code> context, use <code>default-features = false</code>
+in your <code>Cargo.toml</code> as shown below:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies.typed-index-collections]
+version = &quot;3.1.0&quot;
+default-features = false
+features = [&quot;alloc&quot;]
+</code></pre></div>
+<p>If you want to use <a href="https://crates.io/crates/derive_more"><code>derive_more</code></a> for
+<a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;usize&gt;</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into&lt;usize&gt;</code></a> implementation
+add it to your <code>Cargo.toml</code> as shown below:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+derive_more = &quot;0.99&quot;
+typed-index-collections = &quot;3.1.0&quot;
+</code></pre></div><h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Simple example with <a href="https://crates.io/crates/derive_more"><code>derive_more</code></a>:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>typed_index_collections::TiVec;
+<span class="kw">use </span>derive_more::{From, Into};
+
+<span class="attr">#[derive(From, Into)]
+</span><span class="kw">struct </span>FooId(usize);
+
+<span class="kw">let </span><span class="kw-2">mut </span>ti_vec: TiVec&lt;FooId, usize&gt; = <span class="macro">std::vec!</span>[<span class="number">10</span>, <span class="number">11</span>, <span class="number">13</span>].into();
+ti_vec.insert(FooId(<span class="number">2</span>), <span class="number">12</span>);
+<span class="macro">assert_eq!</span>(ti_vec[FooId(<span class="number">2</span>)], <span class="number">12</span>);</code></pre></div>
+<p>If a wrong index type is used, compilation will fail:</p>
+
+<div class="example-wrap compile_fail"><a href="#" class="tooltip" title="This example deliberately fails to compile">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>typed_index_collections::TiVec;
+<span class="kw">use </span>derive_more::{From, Into};
+
+<span class="attr">#[derive(From, Into)]
+</span><span class="kw">struct </span>FooId(usize);
+
+<span class="attr">#[derive(From, Into)]
+</span><span class="kw">struct </span>BarId(usize);
+
+<span class="kw">let </span><span class="kw-2">mut </span>ti_vec: TiVec&lt;FooId, usize&gt; = <span class="macro">std::vec!</span>[<span class="number">10</span>, <span class="number">11</span>, <span class="number">13</span>].into();
+
+ti_vec.insert(BarId(<span class="number">2</span>), <span class="number">12</span>);
+<span class="comment">//            ^^^^^^^^ expected struct `FooId`, found struct `BarId`
+</span><span class="macro">assert_eq!</span>(ti_vec[BarId(<span class="number">2</span>)], <span class="number">12</span>);
+<span class="comment">//         ^^^^^^^^^^^^^^^^ the trait ... is not implemented for `BarId`</span></code></pre></div>
+<p>Another more detailed example with <a href="https://crates.io/crates/derive_more"><code>derive_more</code></a>:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>typed_index_collections::{TiSlice, TiVec};
+<span class="kw">use </span>derive_more::{From, Into};
+
+<span class="attr">#[derive(Clone, Copy, Debug, From, Into, Eq, PartialEq)]
+</span><span class="kw">struct </span>FooId(usize);
+
+<span class="attr">#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+</span><span class="kw">struct </span>Foo {
+    value: usize,
+}
+
+<span class="kw">let </span>first = Foo { value: <span class="number">1 </span>};
+<span class="kw">let </span>second = Foo { value: <span class="number">2 </span>};
+
+<span class="kw">let </span>slice_ref = <span class="kw-2">&amp;</span>[first, second][..];
+<span class="kw">let </span>vec = <span class="macro">std::vec!</span>[first, second];
+<span class="kw">let </span>boxed_slice = <span class="macro">std::vec!</span>[first, second].into_boxed_slice();
+
+<span class="kw">let </span>ti_slice_ref: <span class="kw-2">&amp;</span>TiSlice&lt;FooId, Foo&gt; = slice_ref.as_ref();
+<span class="kw">let </span>ti_vec: TiVec&lt;FooId, Foo&gt; = vec.into();
+<span class="kw">let </span>ti_boxed_slice: std::boxed::Box&lt;TiSlice&lt;FooId, Foo&gt;&gt; = boxed_slice.into();
+
+<span class="macro">assert_eq!</span>(ti_vec[FooId(<span class="number">1</span>)], second);
+<span class="macro">assert_eq!</span>(ti_vec.raw[<span class="number">1</span>], second);
+<span class="macro">assert_eq!</span>(ti_vec.last(), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>second));
+<span class="macro">assert_eq!</span>(ti_vec.last_key_value(), <span class="prelude-val">Some</span>((FooId(<span class="number">1</span>), <span class="kw-2">&amp;</span>second)));
+<span class="macro">assert_eq!</span>(ti_vec.iter_enumerated().next(), <span class="prelude-val">Some</span>((FooId(<span class="number">0</span>), <span class="kw-2">&amp;</span>first)));
+
+<span class="kw">let </span>_slice_ref: <span class="kw-2">&amp;</span>[Foo] = ti_slice_ref.as_ref();
+<span class="kw">let </span>_vec: std::vec::Vec&lt;Foo&gt; = ti_vec.into();
+<span class="kw">let </span>_boxed_slice: std::boxed::Box&lt;[Foo]&gt; = ti_boxed_slice.into();</code></pre></div>
+<h2 id="feature-flags"><a href="#feature-flags">Feature Flags</a></h2>
+<ul>
+<li><code>alloc</code> (enabled by default): Enables types and functions
+which require memory allocation.</li>
+<li><code>std</code> (enabled by default): Enables all <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> features
+such as memory allocations, <a href="https://doc.rust-lang.org/std/error/trait.Error.html"><code>std::error::Error</code></a> trait and
+<a href="https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html"><code>std::panic::UnwindSafe</code></a> trait implementations.</li>
+<li><code>serde</code>: Implements <a href="https://docs.serde.rs/serde/trait.Serialize.html"><code>Serialize</code></a> trait for <a href="struct.TiSlice.html"><code>TiSlice</code></a> and <a href="struct.TiVec.html"><code>TiVec</code></a> containers.</li>
+<li><code>serde-alloc</code>: Enables <a href="https://doc.rust-lang.org/alloc/index.html"><code>alloc</code></a> and <code>serde/alloc</code> features and
+implements <a href="https://docs.serde.rs/serde/trait.Deserialize.html"><code>Deserialize</code></a> trait for <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a><code>&lt;</code><a href="struct.TiSlice.html"><code>TiSlice</code></a><code>&gt;</code> and <a href="struct.TiVec.html"><code>TiVec</code></a>.</li>
+<li><code>serde-std</code>: Enables <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> and <code>serde/std</code> features and
+implements <a href="https://docs.serde.rs/serde/trait.Deserialize.html"><code>Deserialize</code></a> trait for <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a><code>&lt;</code><a href="struct.TiSlice.html"><code>TiSlice</code></a><code>&gt;</code> and <a href="struct.TiVec.html"><code>TiVec</code></a>.</li>
+</ul>
+<h2 id="similar-crates"><a href="#similar-crates">Similar crates</a></h2>
+<ul>
+<li><a href="https://crates.io/crates/typed_index_collection"><code>typed_index_collection</code></a> provides a <code>Vec</code> wrapper with a very limited API.
+Indices are u32 wrappers,
+they are not customizable and can only index a specific type of container.</li>
+<li><a href="https://crates.io/crates/indexed_vec"><code>indexed_vec</code></a> is the closest copy of the <code>IndexVec</code> struct from <code>librustc_index</code>,
+but API is also different from standard Rust <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>std::vec::Vec</code></a>
+and it has no typed index <a href="https://doc.rust-lang.org/std/primitive.slice.html"><code>slice</code></a> alternative.</li>
+<li><a href="https://crates.io/crates/index_vec"><code>index_vec</code></a> have both <a href="https://doc.rust-lang.org/std/primitive.slice.html"><code>slice</code></a> and <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>std::vec::Vec</code></a> wrapper
+and API closer to standard API.
+But it implicitly allows you to use <code>usize</code> for get methods and index expressions
+that reduce type-safety,
+and the macro <code>define_index_type!</code> which is used to generate a newtyped index struct,
+implicitly implements a lot of traits that in my opinion would be better implemented
+only when necessary using crates intended for this, such as <a href="https://crates.io/crates/derive_more"><code>derive_more</code></a>.</li>
+</ul>
+<h2 id="license"><a href="#license">License</a></h2>
+<p>Licensed under either of</p>
+<ul>
+<li>Apache License, Version 2.0
+(<a href="https://github.com/zheland/typed-index-collections/blob/master/LICENSE-APACHE">LICENSE-APACHE</a> or
+<a href="https://www.apache.org/licenses/LICENSE-2.0">https://www.apache.org/licenses/LICENSE-2.0</a>)</li>
+<li>MIT license
+(<a href="https://github.com/zheland/typed-index-collections/blob/master/LICENSE-MIT">LICENSE-MIT</a> or
+<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>)</li>
+</ul>
+<p>at your option.</p>
+<h3 id="contribution"><a href="#contribution">Contribution</a></h3>
+<p>Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license,
+shall be dual licensed as above, without any
+additional terms or conditions.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.TiSlice.html" title="struct typed_index_collections::TiSlice">TiSlice</a></div><div class="desc docblock-short">A dynamically-sized view into a contiguous sequence of <code>T</code>
+that only accepts keys of the type <code>K</code>.</div></li><li><div class="item-name"><a class="struct" href="struct.TiVec.html" title="struct typed_index_collections::TiVec">TiVec</a></div><div class="desc docblock-short">A contiguous growable array type
+that only accepts keys of the type <code>K</code>.</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.TiRangeBounds.html" title="trait typed_index_collections::TiRangeBounds">TiRangeBounds</a></div><div class="desc docblock-short">A helper trait used to convert typed index ranges to <code>usize</code> ranges.
+The trait is implemented for Rust’s built-in range types with <code>K where usize: </code><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;K&gt;</code></a> used as bound endpoints.</div></li><li><div class="item-name"><a class="trait" href="trait.TiSliceIndex.html" title="trait typed_index_collections::TiSliceIndex">TiSliceIndex</a></div><div class="desc docblock-short">A helper trait used for indexing operations.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.TiEnumerated.html" title="type typed_index_collections::TiEnumerated">TiEnumerated</a></div><div class="desc docblock-short">An iterator over all key-value pairs.</div></li><li><div class="item-name"><a class="type" href="type.TiSliceKeys.html" title="type typed_index_collections::TiSliceKeys">TiSliceKeys</a></div><div class="desc docblock-short">An iterator over all keys.</div></li><li><div class="item-name"><a class="type" href="type.TiSliceMutMap.html" title="type typed_index_collections::TiSliceMutMap">TiSliceMutMap</a></div><div class="desc docblock-short">An iterator wrapper for iterators that yields <a href="struct.TiSlice.html"><code>TiSlice</code></a> subslice mutable references.</div></li><li><div class="item-name"><a class="type" href="type.TiSliceRefMap.html" title="type typed_index_collections::TiSliceRefMap">TiSliceRefMap</a></div><div class="desc docblock-short">An iterator wrapper for iterators that yields <a href="struct.TiSlice.html"><code>TiSlice</code></a> subslice references.</div></li></ul></section></div></main></body></html>

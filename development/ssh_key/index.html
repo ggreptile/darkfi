@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="RustCrypto: SSH Keys and Certificates"><title>ssh_key - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="ssh_key" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../ssh_key/index.html"><img src="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../ssh_key/index.html"><img src="https://raw.githubusercontent.com/RustCrypto/media/6ee8e381/logo.svg" alt="logo"></a><h2 class="location"><a href="#">Crate ssh_key</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.5.1</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">ssh_key</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/ssh_key/lib.rs.html#1-190">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="rustcrypto-ssh-keys-and-certificates"><a href="#rustcrypto-ssh-keys-and-certificates">RustCrypto: SSH Keys and Certificates</a></h2>
+<p><a href="https://crates.io/crates/ssh-key"><img src="https://buildstats.info/crate/ssh-key" alt="crate" /></a>
+<a href="https://docs.rs/ssh-key/"><img src="https://docs.rs/ssh-key/badge.svg" alt="Docs" /></a>
+<a href="https://github.com/RustCrypto/SSH/actions/workflows/ssh-key.yml"><img src="https://github.com/RustCrypto/SSH/actions/workflows/ssh-key.yml/badge.svg" alt="Build Status" /></a>
+<img src="https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg" alt="Apache2/MIT licensed" />
+<img src="https://img.shields.io/badge/rustc-1.60+-blue.svg" alt="Rust Version" />
+<a href="https://rustcrypto.zulipchat.com/#narrow/stream/346919-SSH"><img src="https://img.shields.io/badge/zulip-join_chat-blue.svg" alt="Project Chat" /></a></p>
+<p><a href="https://docs.rs/ssh-key/">Documentation</a></p>
+<h3 id="about"><a href="#about">About</a></h3>
+<p>Pure Rust implementation of SSH key file format decoders/encoders as described
+in <a href="https://datatracker.ietf.org/doc/html/rfc4251">RFC4251</a> and <a href="https://datatracker.ietf.org/doc/html/rfc4253">RFC4253</a> as well as OpenSSH’s <a href="https://cvsweb.openbsd.org/src/usr.bin/ssh/PROTOCOL.key?annotate=HEAD">PROTOCOL.key</a> format
+specification.</p>
+<p>Additionally provides support for SSH signatures as described in
+<a href="https://cvsweb.openbsd.org/src/usr.bin/ssh/PROTOCOL.sshsig?annotate=HEAD">PROTOCOL.sshsig</a>, OpenSSH certificates as specified in <a href="https://cvsweb.openbsd.org/src/usr.bin/ssh/PROTOCOL.certkeys?annotate=HEAD">PROTOCOL.certkeys</a>
+including certificate validation and certificate authority (CA) support,
+FIDO/U2F keys as specified in <a href="https://cvsweb.openbsd.org/src/usr.bin/ssh/PROTOCOL.u2f?annotate=HEAD">PROTOCOL.u2f</a> (and certificates thereof), and
+also the <code>authorized_keys</code> and <code>known_hosts</code> file formats.</p>
+<p>Supports a minimal profile which works on heapless <code>no_std</code> targets. See
+“Supported algorithms” table below for which key formats work on heapless
+targets and which algorithms require <code>alloc</code>.</p>
+<p>When the <code>ed25519</code>, <code>p256</code>, and/or <code>rsa</code> features of this crate are enabled,
+provides key generation and certificate signing/verification support for that
+respective SSH key algorithm.</p>
+<h3 id="features"><a href="#features">Features</a></h3>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Constant-time Base64 decoder/encoder using <code>base64ct</code>/<code>pem-rfc7468</code> crates</li>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH-compatible decoder/encoders for the following formats:
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH public keys</li>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH private keys (i.e. <code>BEGIN OPENSSH PRIVATE KEY</code>)</li>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH certificates</li>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH signatures (a.k.a. “sshsig”)</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox" checked=""/>
+OpenSSH certificate support
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Certificate validation</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Certificate authority (CA) support i.e. cert builder/signer</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Private key encryption/decryption (<code>bcrypt-pbkdf</code> + <code>aes256-ctr</code> only)</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Private key generation support: DSA, Ed25519, ECDSA (P-256+P-384), and RSA</li>
+<li><input disabled="" type="checkbox" checked=""/>
+FIDO/U2F key support (<code>sk-*</code>) as specified in <a href="https://cvsweb.openbsd.org/src/usr.bin/ssh/PROTOCOL.u2f?annotate=HEAD">PROTOCOL.u2f</a></li>
+<li><input disabled="" type="checkbox" checked=""/>
+Fingerprint support</li>
+<li><input disabled="" type="checkbox" checked=""/>
+<code>no_std</code> support including support for “heapless” (no-<code>alloc</code>) targets</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Parsing <code>authorized_keys</code> files</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Parsing <code>known_hosts</code> files</li>
+<li><input disabled="" type="checkbox" checked=""/>
+<code>serde</code> support</li>
+<li><input disabled="" type="checkbox" checked=""/>
+<code>zeroize</code> support for private keys</li>
+</ul>
+<h5 id="todo"><a href="#todo">TODO</a></h5>
+<ul>
+<li><input disabled="" type="checkbox"/>
+ECDSA/P-521 support</li>
+<li><input disabled="" type="checkbox"/>
+FIDO/U2F signature support</li>
+<li><input disabled="" type="checkbox"/>
+Legacy (pre-OpenSSH) SSH key format support
+<ul>
+<li><input disabled="" type="checkbox"/>
+PKCS#1</li>
+<li><input disabled="" type="checkbox"/>
+PKCS#8</li>
+<li><input disabled="" type="checkbox"/>
+<a href="https://datatracker.ietf.org/doc/html/rfc4716">RFC4716</a> public keys</li>
+<li><input disabled="" type="checkbox"/>
+SEC1</li>
+</ul>
+</li>
+</ul>
+<h3 id="supported-algorithms"><a href="#supported-algorithms">Supported algorithms</a></h3><div><table><thead><tr><th>Name</th><th>Decode</th><th>Encode</th><th>Cert</th><th>Keygen</th><th>Sign</th><th>Verify</th><th>Feature</th><th><code>no_std</code></th></tr></thead><tbody>
+<tr><td><code>ecdsa‑sha2‑nistp256</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅️</td><td>✅️</td><td>✅️</td><td><code>p256</code></td><td>heapless</td></tr>
+<tr><td><code>ecdsa‑sha2‑nistp384</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅️</td><td>✅️</td><td>✅️</td><td><code>p384</code></td><td>heapless</td></tr>
+<tr><td><code>ecdsa‑sha2‑nistp521</code></td><td>✅</td><td>✅</td><td>✅</td><td>⛔️</td><td>⛔ ️</td><td>⛔️</td><td>⛔</td><td>heapless</td></tr>
+<tr><td><code>ssh‑dsa</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅️</td><td>✅️</td><td><code>dsa</code></td><td><code>alloc</code> ️</td></tr>
+<tr><td><code>ssh‑ed25519</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅️</td><td>✅️</td><td>✅</td><td><code>ed25519</code></td><td>heapless</td></tr>
+<tr><td><code>ssh‑rsa</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅️</td><td>✅️</td><td>✅</td><td><code>rsa</code></td><td><code>alloc</code></td></tr>
+<tr><td><code>sk‑ecdsa‑sha2‑nistp256@openssh.com</code></td><td>✅</td><td>✅</td><td>✅</td><td>⛔</td><td>⛔️</td><td>⛔️</td><td>⛔</td><td><code>alloc</code></td></tr>
+<tr><td><code>sk‑ssh‑ed25519@openssh.com</code></td><td>✅</td><td>✅</td><td>✅</td><td>⛔</td><td>⛔️</td><td>⛔️</td><td>⛔</td><td><code>alloc</code></td></tr>
+</tbody></table>
+</div>
+<p>Note: the “Feature” section lists the name of <code>ssh-key</code> crate features which can
+be enabled to provide full support for the “Keygen”, “Sign”, and “Verify”
+functionality for a particular SSH key algorithm.</p>
+<h3 id="minimum-supported-rust-version"><a href="#minimum-supported-rust-version">Minimum Supported Rust Version</a></h3>
+<p>This crate requires <strong>Rust 1.60</strong> at a minimum.</p>
+<p>We may change the MSRV in the future, but it will be accompanied by a minor
+version bump.</p>
+<h3 id="license"><a href="#license">License</a></h3>
+<p>Licensed under either of:</p>
+<ul>
+<li><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></li>
+<li><a href="http://opensource.org/licenses/MIT">MIT license</a></li>
+</ul>
+<p>at your option.</p>
+<h4 id="contribution"><a href="#contribution">Contribution</a></h4>
+<p>Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.</p>
+<h3 id="usage"><a href="#usage">Usage</a></h3>
+<p>The main types provided by this library are:</p>
+<ul>
+<li><a href="certificate/struct.Certificate.html" title="struct ssh_key::certificate::Certificate"><code>Certificate</code></a>: OpenSSH certificates</li>
+<li><a href="enum.Fingerprint.html" title="enum ssh_key::Fingerprint"><code>Fingerprint</code></a>: public key fingerprints (i.e. hashes)</li>
+<li><a href="private/struct.PrivateKey.html" title="struct ssh_key::private::PrivateKey"><code>PrivateKey</code></a>: SSH private keys (i.e. digital signature keys)</li>
+<li><a href="public/struct.PublicKey.html" title="struct ssh_key::public::PublicKey"><code>PublicKey</code></a>: SSH public keys (i.e. signature verification keys)</li>
+</ul>
+<h4 id="parsing-openssh-public-keys"><a href="#parsing-openssh-public-keys">Parsing OpenSSH Public Keys</a></h4>
+<p>OpenSSH-formatted public keys have the form:</p>
+<div class="example-wrap"><pre class="language-text"><code>&lt;algorithm id&gt; &lt;base64 data&gt; &lt;comment&gt;
+</code></pre></div><h5 id="example"><a href="#example">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ssh_key::PublicKey;
+
+<span class="kw">let </span>encoded_key = <span class="string">&quot;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILM+rvN+ot98qgEN796jTiQfZfG1KaT0PtFDJ/XFSqti user@example.com&quot;</span>;
+<span class="kw">let </span>public_key = PublicKey::from_openssh(encoded_key)<span class="question-mark">?</span>;
+
+<span class="comment">// Key attributes
+</span><span class="macro">assert_eq!</span>(public_key.algorithm(), ssh_key::Algorithm::Ed25519);
+<span class="macro">assert_eq!</span>(public_key.comment(), <span class="string">&quot;user@example.com&quot;</span>);
+
+<span class="comment">// Key data: in this example an Ed25519 key
+</span><span class="kw">if let </span><span class="prelude-val">Some</span>(ed25519_public_key) = public_key.key_data().ed25519() {
+    <span class="macro">assert_eq!</span>(
+        ed25519_public_key.as_ref(),
+        [
+            <span class="number">0xb3</span>, <span class="number">0x3e</span>, <span class="number">0xae</span>, <span class="number">0xf3</span>, <span class="number">0x7e</span>, <span class="number">0xa2</span>, <span class="number">0xdf</span>, <span class="number">0x7c</span>, <span class="number">0xaa</span>, <span class="number">0x1</span>, <span class="number">0xd</span>, <span class="number">0xef</span>, <span class="number">0xde</span>, <span class="number">0xa3</span>,
+            <span class="number">0x4e</span>, <span class="number">0x24</span>, <span class="number">0x1f</span>, <span class="number">0x65</span>, <span class="number">0xf1</span>, <span class="number">0xb5</span>, <span class="number">0x29</span>, <span class="number">0xa4</span>, <span class="number">0xf4</span>, <span class="number">0x3e</span>, <span class="number">0xd1</span>, <span class="number">0x43</span>, <span class="number">0x27</span>, <span class="number">0xf5</span>,
+            <span class="number">0xc5</span>, <span class="number">0x4a</span>, <span class="number">0xab</span>, <span class="number">0x62
+        </span>].as_ref()
+    );
+}</code></pre></div>
+<h4 id="parsing-openssh-private-keys"><a href="#parsing-openssh-private-keys">Parsing OpenSSH Private Keys</a></h4>
+<p><em>NOTE: for more private key usage examples, see the <a href="private/index.html" title="mod ssh_key::private"><code>private</code></a> module.</em></p>
+<p>OpenSSH-formatted private keys are PEM-encoded and begin with the following:</p>
+<div class="example-wrap"><pre class="language-text"><code>-----BEGIN OPENSSH PRIVATE KEY-----
+</code></pre></div><h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ssh_key::PrivateKey;
+
+<span class="comment">// WARNING: don&#39;t actually hardcode private keys in source code!!!
+</span><span class="kw">let </span>encoded_key = <span class="string">r#&quot;
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACCzPq7zfqLffKoBDe/eo04kH2XxtSmk9D7RQyf1xUqrYgAAAJgAIAxdACAM
+XQAAAAtzc2gtZWQyNTUxOQAAACCzPq7zfqLffKoBDe/eo04kH2XxtSmk9D7RQyf1xUqrYg
+AAAEC2BsIi0QwW2uFscKTUUXNHLsYX4FxlaSDSblbAj7WR7bM+rvN+ot98qgEN796jTiQf
+ZfG1KaT0PtFDJ/XFSqtiAAAAEHVzZXJAZXhhbXBsZS5jb20BAgMEBQ==
+-----END OPENSSH PRIVATE KEY-----
+&quot;#</span>;
+
+<span class="kw">let </span>private_key = PrivateKey::from_openssh(encoded_key)<span class="question-mark">?</span>;
+
+<span class="comment">// Key attributes
+</span><span class="macro">assert_eq!</span>(private_key.algorithm(), ssh_key::Algorithm::Ed25519);
+<span class="macro">assert_eq!</span>(private_key.comment(), <span class="string">&quot;user@example.com&quot;</span>);
+
+<span class="comment">// Key data: in this example an Ed25519 key
+</span><span class="kw">if let </span><span class="prelude-val">Some</span>(ed25519_keypair) = private_key.key_data().ed25519() {
+   <span class="macro">assert_eq!</span>(
+       ed25519_keypair.public.as_ref(),
+       [
+           <span class="number">0xb3</span>, <span class="number">0x3e</span>, <span class="number">0xae</span>, <span class="number">0xf3</span>, <span class="number">0x7e</span>, <span class="number">0xa2</span>, <span class="number">0xdf</span>, <span class="number">0x7c</span>, <span class="number">0xaa</span>, <span class="number">0x1</span>, <span class="number">0xd</span>, <span class="number">0xef</span>, <span class="number">0xde</span>, <span class="number">0xa3</span>,
+           <span class="number">0x4e</span>, <span class="number">0x24</span>, <span class="number">0x1f</span>, <span class="number">0x65</span>, <span class="number">0xf1</span>, <span class="number">0xb5</span>, <span class="number">0x29</span>, <span class="number">0xa4</span>, <span class="number">0xf4</span>, <span class="number">0x3e</span>, <span class="number">0xd1</span>, <span class="number">0x43</span>, <span class="number">0x27</span>, <span class="number">0xf5</span>,
+           <span class="number">0xc5</span>, <span class="number">0x4a</span>, <span class="number">0xab</span>, <span class="number">0x62
+       </span>].as_ref()
+   );
+
+   <span class="macro">assert_eq!</span>(
+       ed25519_keypair.private.as_ref(),
+       [
+           <span class="number">0xb6</span>, <span class="number">0x6</span>, <span class="number">0xc2</span>, <span class="number">0x22</span>, <span class="number">0xd1</span>, <span class="number">0xc</span>, <span class="number">0x16</span>, <span class="number">0xda</span>, <span class="number">0xe1</span>, <span class="number">0x6c</span>, <span class="number">0x70</span>, <span class="number">0xa4</span>, <span class="number">0xd4</span>, <span class="number">0x51</span>,
+           <span class="number">0x73</span>, <span class="number">0x47</span>, <span class="number">0x2e</span>, <span class="number">0xc6</span>, <span class="number">0x17</span>, <span class="number">0xe0</span>, <span class="number">0x5c</span>, <span class="number">0x65</span>, <span class="number">0x69</span>, <span class="number">0x20</span>, <span class="number">0xd2</span>, <span class="number">0x6e</span>, <span class="number">0x56</span>, <span class="number">0xc0</span>,
+           <span class="number">0x8f</span>, <span class="number">0xb5</span>, <span class="number">0x91</span>, <span class="number">0xed
+       </span>].as_ref()
+   )
+}</code></pre></div>
+<h3 id="serde-support"><a href="#serde-support"><code>serde</code> support</a></h3>
+<p>When the <code>serde</code> feature of this crate is enabled, the <a href="certificate/struct.Certificate.html" title="struct ssh_key::certificate::Certificate"><code>Certificate</code></a>,
+<a href="enum.Fingerprint.html" title="enum ssh_key::Fingerprint"><code>Fingerprint</code></a>, and <a href="public/struct.PublicKey.html" title="struct ssh_key::public::PublicKey"><code>PublicKey</code></a> types receive impls of <code>serde</code>’s
+[<code>Deserialize</code>][<code>serde::Deserialize</code>] and [<code>Serialize</code>][<code>serde::Serialize</code>]
+traits.</p>
+<p>Serializing/deserializing <a href="private/struct.PrivateKey.html" title="struct ssh_key::private::PrivateKey"><code>PrivateKey</code></a> using <code>serde</code> is presently
+unsupported.</p>
+</div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name" id="reexport.AuthorizedKeys"><code>pub use crate::authorized_keys::<a class="struct" href="authorized_keys/struct.AuthorizedKeys.html" title="struct ssh_key::authorized_keys::AuthorizedKeys">AuthorizedKeys</a>;</code></div></li><li><div class="item-name" id="reexport.PrivateKey"><code>pub use crate::private::<a class="struct" href="private/struct.PrivateKey.html" title="struct ssh_key::private::PrivateKey">PrivateKey</a>;</code></div></li><li><div class="item-name" id="reexport.PublicKey"><code>pub use crate::public::<a class="struct" href="public/struct.PublicKey.html" title="struct ssh_key::public::PublicKey">PublicKey</a>;</code></div></li><li><div class="item-name" id="reexport.Certificate"><code>pub use crate::certificate::<a class="struct" href="certificate/struct.Certificate.html" title="struct ssh_key::certificate::Certificate">Certificate</a>;</code></div></li><li><div class="item-name" id="reexport.KnownHosts"><code>pub use crate::known_hosts::<a class="struct" href="known_hosts/struct.KnownHosts.html" title="struct ssh_key::known_hosts::KnownHosts">KnownHosts</a>;</code></div></li><li><div class="item-name" id="reexport.sha2"><code>pub use <a class="mod" href="../sha2/index.html" title="mod sha2">sha2</a>;</code></div></li><li><div class="item-name" id="reexport.sec1"><code>pub use <a class="mod" href="../sec1/index.html" title="mod sec1">sec1</a>;</code></div></li><li><div class="item-name" id="reexport.rand_core"><code>pub use <a class="mod" href="../rand_core/index.html" title="mod rand_core">rand_core</a>;</code></div></li></ul><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="authorized_keys/index.html" title="mod ssh_key::authorized_keys">authorized_keys</a></div><div class="desc docblock-short">Parser for <code>AuthorizedKeysFile</code>-formatted data.</div></li><li><div class="item-name"><a class="mod" href="certificate/index.html" title="mod ssh_key::certificate">certificate</a></div><div class="desc docblock-short">OpenSSH certificate support.</div></li><li><div class="item-name"><a class="mod" href="known_hosts/index.html" title="mod ssh_key::known_hosts">known_hosts</a></div><div class="desc docblock-short">Parser for <code>KnownHostsFile</code>-formatted data.</div></li><li><div class="item-name"><a class="mod" href="private/index.html" title="mod ssh_key::private">private</a></div><div class="desc docblock-short">SSH private key support.</div></li><li><div class="item-name"><a class="mod" href="public/index.html" title="mod ssh_key::public">public</a></div><div class="desc docblock-short">SSH public key support.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.MPInt.html" title="struct ssh_key::MPInt">MPInt</a></div><div class="desc docblock-short">Multiple precision integer, a.k.a. “mpint”.</div></li><li><div class="item-name"><a class="struct" href="struct.Signature.html" title="struct ssh_key::Signature">Signature</a></div><div class="desc docblock-short">Low-level digital signature (e.g. DSA, ECDSA, Ed25519).</div></li><li><div class="item-name"><a class="struct" href="struct.SshSig.html" title="struct ssh_key::SshSig">SshSig</a></div><div class="desc docblock-short"><code>sshsig</code> provides a general-purpose signature format based on SSH keys and
+wire formats.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.Algorithm.html" title="enum ssh_key::Algorithm">Algorithm</a></div><div class="desc docblock-short">SSH key algorithms.</div></li><li><div class="item-name"><a class="enum" href="enum.Cipher.html" title="enum ssh_key::Cipher">Cipher</a></div><div class="desc docblock-short">Cipher algorithms.</div></li><li><div class="item-name"><a class="enum" href="enum.EcdsaCurve.html" title="enum ssh_key::EcdsaCurve">EcdsaCurve</a></div><div class="desc docblock-short">Elliptic curves supported for use with ECDSA.</div></li><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum ssh_key::Error">Error</a></div><div class="desc docblock-short">Error type.</div></li><li><div class="item-name"><a class="enum" href="enum.Fingerprint.html" title="enum ssh_key::Fingerprint">Fingerprint</a></div><div class="desc docblock-short">SSH public key fingerprints.</div></li><li><div class="item-name"><a class="enum" href="enum.HashAlg.html" title="enum ssh_key::HashAlg">HashAlg</a></div><div class="desc docblock-short">Hashing algorithms a.k.a. digest functions.</div></li><li><div class="item-name"><a class="enum" href="enum.Kdf.html" title="enum ssh_key::Kdf">Kdf</a></div><div class="desc docblock-short">Key Derivation Functions (KDF).</div></li><li><div class="item-name"><a class="enum" href="enum.KdfAlg.html" title="enum ssh_key::KdfAlg">KdfAlg</a></div><div class="desc docblock-short">Key Derivation Function (KDF) algorithms.</div></li><li><div class="item-name"><a class="enum" href="enum.LineEnding.html" title="enum ssh_key::LineEnding">LineEnding</a></div><div class="desc docblock-short">Line endings: variants of newline characters that can be used with Base64.</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.SigningKey.html" title="trait ssh_key::SigningKey">SigningKey</a></div><div class="desc docblock-short">Trait for signing keys which produce a <a href="struct.Signature.html" title="struct ssh_key::Signature"><code>Signature</code></a>.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Result.html" title="type ssh_key::Result">Result</a></div><div class="desc docblock-short">Result type with <code>ssh-key</code>’s <a href="enum.Error.html" title="enum ssh_key::Error"><code>Error</code></a> as the error type.</div></li></ul></section></div></main></body></html>

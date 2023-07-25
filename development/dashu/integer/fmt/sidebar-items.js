@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["MAX_RADIX","MIN_RADIX"],"struct":["InRadix"]};

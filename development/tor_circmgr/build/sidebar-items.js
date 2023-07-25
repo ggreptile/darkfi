@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["circparameters_from_netparameters"],"struct":["CircuitBuilder"]};

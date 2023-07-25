@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["PolicyError","RuleKind"],"struct":["AddrPolicy","AddrPortPattern","PortPolicy","PortRange"]};

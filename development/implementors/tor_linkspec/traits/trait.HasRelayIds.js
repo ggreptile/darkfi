@@ -1,0 +1,6 @@
+(function() {var implementors = {
+"tor_guardmgr":[["impl <a class=\"trait\" href=\"tor_linkspec/traits/trait.HasRelayIds.html\" title=\"trait tor_linkspec::traits::HasRelayIds\">HasRelayIds</a> for <a class=\"struct\" href=\"tor_guardmgr/struct.FirstHopId.html\" title=\"struct tor_guardmgr::FirstHopId\">FirstHopId</a>"],["impl <a class=\"trait\" href=\"tor_linkspec/traits/trait.HasRelayIds.html\" title=\"trait tor_linkspec::traits::HasRelayIds\">HasRelayIds</a> for <a class=\"struct\" href=\"tor_guardmgr/struct.FirstHop.html\" title=\"struct tor_guardmgr::FirstHop\">FirstHop</a>"]],
+"tor_linkspec":[],
+"tor_netdir":[["impl&lt;'a&gt; <a class=\"trait\" href=\"tor_linkspec/traits/trait.HasRelayIds.html\" title=\"trait tor_linkspec::traits::HasRelayIds\">HasRelayIds</a> for <a class=\"struct\" href=\"tor_netdir/struct.UncheckedRelay.html\" title=\"struct tor_netdir::UncheckedRelay\">UncheckedRelay</a>&lt;'a&gt;"]],
+"tor_proto":[["impl <a class=\"trait\" href=\"tor_linkspec/traits/trait.HasRelayIds.html\" title=\"trait tor_linkspec::traits::HasRelayIds\">HasRelayIds</a> for <a class=\"struct\" href=\"tor_proto/channel/struct.Channel.html\" title=\"struct tor_proto::channel::Channel\">Channel</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

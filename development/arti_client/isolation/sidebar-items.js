@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["StreamIsolationBuilderError"],"struct":["IsolationToken","StreamIsolation","StreamIsolationBuilder"],"trait":["Isolation","IsolationHelper"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Authority","AuthorityBuilder","DirMgrConfig","DirTolerance","DirToleranceBuilder","DownloadSchedule","DownloadScheduleConfig","DownloadScheduleConfigBuilder","FallbackDir","FallbackDirBuilder","NetworkConfig","NetworkConfigBuilder"]};

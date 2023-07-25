@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["NICK_NICKSERV"],"mod":["nickserv"],"struct":["IrcServer"]};

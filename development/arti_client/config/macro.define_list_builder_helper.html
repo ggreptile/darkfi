@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Define a list builder struct for use with `define_list_builder_accessors`"><title>define_list_builder_helper in arti_client::config - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arti_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../arti_client/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../arti_client/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In arti_client::config</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Macro <a href="../index.html">arti_client</a>::<wbr><a href="index.html">config</a>::<wbr><a class="macro" href="#">define_list_builder_helper</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/tor_config/list_builder.rs.html#214">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><span class="macro">macro_rules! </span>define_list_builder_helper {
+    {
+        $(<span class="attr">#[ <span class="macro-nonterminal">$docs_and_attrs</span>:meta ]</span>)*
+        <span class="macro-nonterminal">$vis</span>:vis
+        <span class="kw">struct </span><span class="macro-nonterminal">$ListBuilder</span>:ident $( [ $(<span class="macro-nonterminal">$generics</span>:tt)* ] )<span class="question-mark">?
+        </span>$( <span class="kw">where </span>[ $(<span class="macro-nonterminal">$where_clauses</span>:tt)* ] )<span class="question-mark">?
+        </span>{
+            <span class="macro-nonterminal">$field_vis</span>:vis <span class="macro-nonterminal">$things</span>:ident : [<span class="macro-nonterminal">$EntryBuilder</span>:ty] $(,)<span class="question-mark">?
+        </span>}
+        built: <span class="macro-nonterminal">$Built</span>:ty = <span class="macro-nonterminal">$built</span>:expr;
+        default = <span class="macro-nonterminal">$default</span>:expr;
+        $( item_build: <span class="macro-nonterminal">$item_build</span>:expr; )<span class="question-mark">?
+        </span>$(<span class="attr">#[ serde <span class="macro-nonterminal">$serde_attrs</span>:tt ] </span>)+
+    } =&gt; { ... };
+    {
+        $(<span class="attr">#[ <span class="macro-nonterminal">$docs_and_attrs</span>:meta ]</span>)*
+        <span class="macro-nonterminal">$vis</span>:vis
+        <span class="kw">struct </span><span class="macro-nonterminal">$ListBuilder</span>:ident $( [ $(<span class="macro-nonterminal">$generics</span>:tt)* ] )<span class="question-mark">?
+        </span>$( <span class="kw">where </span>[ $(<span class="macro-nonterminal">$where_clauses</span>:tt)* ] )<span class="question-mark">?
+        </span>{
+            <span class="macro-nonterminal">$field_vis</span>:vis <span class="macro-nonterminal">$things</span>:ident : [<span class="macro-nonterminal">$EntryBuilder</span>:ty] $(,)<span class="question-mark">?
+        </span>}
+        built: <span class="macro-nonterminal">$Built</span>:ty = <span class="macro-nonterminal">$built</span>:expr;
+        default = <span class="macro-nonterminal">$default</span>:expr;
+        $( item_build: <span class="macro-nonterminal">$item_build</span>:expr; )<span class="question-mark">?
+    </span>} =&gt; { ... };
+}</pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Define a list builder struct for use with <a href="macro.define_list_builder_accessors.html" title="macro arti_client::config::define_list_builder_accessors"><code>define_list_builder_accessors</code></a></p>
+<p>Generates an builder struct that can be used with derive_builder
+and <a href="macro.define_list_builder_accessors.html" title="macro arti_client::config::define_list_builder_accessors"><code>define_list_builder_accessors</code></a> to configure a list of some kind.</p>
+<p><strong>See the <a href="../../tor_config/list_builder/index.html" title="mod tor_config::list_builder"><code>list_builder</code> module documentation</a> for an overview.</strong></p>
+<h4 id="generated-struct"><a href="#generated-struct">Generated struct</a></h4>
+<p>This macro-generated builder struct contains <code>Option&lt;Vec&lt;ThingBuilder&gt;&gt;</code>, to allow it to
+distinguish “never set” from “has been adjusted or set, possibly to the empty list”.</p>
+<p>This struct is not exposed as part of the API for setting the configuration.
+Generally the visibility (<code>$vis</code>) should be private,
+but sometimes <code>pub(crate)</code> or <code>pub</code> is necessary,
+for example if the list is to be included in a struct in another module or crate.
+Usually <code>$field_vis</code> should be the same as <code>$vis</code>.</p>
+<p><code>#[derive(Default, Clone, Debug, Serialize, Deserialize)]</code>
+will be applied to the generated builder,
+but you can specify other attributes too.
+There is no need to supply any documentation; this is an internal struct and
+the macro will supply a suitable (bland) doc comment.
+(If you do supply documentation, the autogenerated docs will be appended,
+so start with a summary line.)
+Documentation for the semantics and default value should be applied
+to the field(s) in the containing struct(s).</p>
+<p><code>#[serde(transparent)]</code> will be applied to the generated <code>ThingBuilder</code> struct,
+so that it deserializes just like <code>Option&lt;Vec&lt;Thing&gt;&gt;</code>.</p>
+<h4 id="input-to-the-macro"><a href="#input-to-the-macro">Input to the macro</a></h4>
+<p>For the input syntax, refer to the docs autogenerated from the macro’s matcher.</p>
+<p>The <code>built</code> clause specifies the type of the built value, and how to construct it.
+In the expression part, <code>things</code> (the field name) will be the default-resolved <code>Vec&lt;Thing&gt;</code>;
+it should be consumed by the expression.
+If the built value is simply a <code>Vec</code>, you can just write <code>built: ThingList = things;</code>.</p>
+<p>The <code>default</code> clause must provide an expression evaluating to a <code>Vec&lt;ThingBuilder&gt;</code>.</p>
+<p>The <code>item_build</code> clause, if supplied, provides a closure with type
+<code>FnMut(&amp;ThingBuilder) -&gt; Result&lt;Thing, ConfigBuildError&gt;</code>;
+the default is to call <code>thing_builder.build()</code>.</p>
+<p>The <code>#[ serde $serde_attrs:tt ]</code>, if supplied, replace the serde attribute
+<code>#[serde(transparent)]</code>.
+The transparent attribute is applied by default
+to arrange that the serde view of the list is precisely <code>Option&lt;Vec&gt;</code>.
+If serialisation is done another way, for example with <code>#[serde(into)]</code>,
+that must be specified here.</p>
+<p><code>[$generics]</code> are generics for <code>$ListBuilder</code>.
+Inline bounds (<code>T: Debug</code>) are not supported; use a <code>where</code> clause instead.
+Due to limitations of <code>macro_rules</code>, the parameters must be within <code>[ ]</code> rather than <code>&lt; &gt;</code>,
+and an extraneous pair of <code>[ ]</code> must appear around any <code>$where_clauses</code>.</p>
+</div></details></section></div></main></body></html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":["CubicRoot","CubicRootRem","DivEuclid","DivRem","DivRemAssign","DivRemEuclid","ExtendedGcd","Gcd","RemEuclid","SquareRoot","SquareRootRem"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["QueryType","SqlType"],"struct":["WalletDb"],"type":["WalletPtr"]};

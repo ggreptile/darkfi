@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Usage"><title>Display in amplify - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="amplify" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc derive"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../amplify/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../amplify/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In amplify</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Derive Macro <a href="index.html">amplify</a>::<wbr><a class="derive" href="#">Display</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/amplify_derive/lib.rs.html#286">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>#[derive(Display)]
+{
+    // Attributes available to this derive:
+    #[display]
+}
+</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="usage"><a href="#usage">Usage</a></h2>
+<ol>
+<li>Generate <a href="derive.Display.html" title="derive amplify::Display"><code>Display</code></a> descriptions using other formatting trait:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[derive(Display, Debug)]
+ #[display(Debug)]
+ </span><span class="kw">enum </span><span class="prelude-val">Some </span>{
+     Once,
+     Twice(u8)
+ }</code></pre></div>
+</li>
+<li>Use existing function for displaying descriptions:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[macro_use] </span><span class="kw">extern crate </span>amplify;
+
+ <span class="attr">#[derive(Display)]
+ #[display(Int::print)]
+ </span><span class="kw">union </span>Int { uint: u32, int: i32 };
+ <span class="kw">impl </span>Int {
+     <span class="kw">pub fn </span>print(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+         <span class="macro">s!</span>(<span class="string">&quot;Integer representation&quot;</span>)
+     }
+ }
+
+ <span class="kw">pub trait </span>ToSpecialString {
+     <span class="kw">fn </span>to_special_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+         <span class="macro">s!</span>(<span class="string">&quot;Special string&quot;</span>)
+     }
+ }
+
+ <span class="attr">#[derive(Display)]
+ #[display(Some::to_special_string)]
+ </span><span class="kw">struct </span><span class="prelude-val">Some </span>{ uint: u32, int: i32 };
+ <span class="kw">impl </span>ToSpecialString <span class="kw">for </span><span class="prelude-val">Some </span>{}
+
+ <span class="macro">assert_eq!</span>(
+     <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Int { uint: <span class="number">2 </span>}),
+     <span class="macro">s!</span>(<span class="string">&quot;Integer representation&quot;</span>)
+ );
+
+ <span class="attr">#[derive(Display)]
+ #[display(some_fmt)]
+ </span><span class="kw">enum </span>Enum { Once(u8), Twice };
+ <span class="kw">fn </span>some_fmt(<span class="kw">_</span>: <span class="kw-2">&amp;</span>Enum) -&gt; String { <span class="macro">s!</span>(<span class="string">&quot;Some&quot;</span>) }
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Enum::Once(<span class="number">3</span>)), <span class="macro">s!</span>(<span class="string">&quot;Some&quot;</span>))</code></pre></div>
+Formatting function must return [<code>String</code>] and take a single <code>self</code>
+argument (if you need formatting with streamed output, use one of
+existing formatting traits as shown in pt. 1).</li>
+<li>Custom format string:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[derive(Display)]
+ #[display(<span class="string">&quot;({x}, {y})&quot;</span>)]
+ </span><span class="kw">struct </span>Point { x: u32, y: u32 }
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Point { x: <span class="number">0</span>, y: <span class="number">1 </span>}), <span class="string">&quot;(0, 1)&quot;</span>);</code></pre></div>
+</li>
+<li>Support for alternative formatting with <code>alt</code> parameter:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[derive(Display)]
+ #[display(<span class="string">&quot;({x}, {y})&quot;</span>, alt = <span class="string">&quot;{x}:{y}&quot;</span>)]
+ </span><span class="kw">struct </span>Point { x: u32, y: u32 }
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Point { x: <span class="number">0</span>, y: <span class="number">1 </span>}), <span class="string">&quot;(0, 1)&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:#}&quot;</span>, Point { x: <span class="number">0</span>, y: <span class="number">1 </span>}), <span class="string">&quot;0:1&quot;</span>);</code></pre></div>
+</li>
+<li>Use of doc comments for descrition representation. In this case doc
+comments may also contain formatting like in the case 3:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[macro_use] </span><span class="kw">extern crate </span>amplify;
+
+ <span class="doccomment">/// Example enum with doc comments converted into display
+ </span><span class="attr">#[derive(Display)]
+ #[display(doc_comments)]
+ </span><span class="kw">enum </span>Variants {
+     <span class="doccomment">/// Letter A.
+     /// Multiline comments are also working, but joined together
+     ///
+     /// Empty line is replaced with line break
+     /// \nYou may also use this way
+     /// \n
+     /// The above will still result in a single line break
+     </span>A,
+     <span class="doccomment">/// Letter B
+     </span>B,
+     <span class="doccomment">/// This comment is ignored
+     </span><span class="attr">#[display(<span class="string">&quot;Letter C&quot;</span>)]
+     </span>C,
+     <span class="doccomment">/// Letter {0}
+     </span>Letter(String),
+     <span class="doccomment">/// You can omit parameters and just have a normal doc comment
+     </span>Number(u8),
+     <span class="doccomment">/// ... for variants with named fields as well
+     </span>Named { some: String }
+ };
+
+ <span class="macro">assert_eq!</span>(
+     <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Variants::A),
+     <span class="string">&quot;Letter A. Multiline comments are also working, but joined \
+     together\nEmpty line is replaced with line break\nYou may also use \
+     this way\nThe above will still result in a single line break&quot;
+ </span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Variants::C), <span class="string">&quot;Letter C&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Variants::Letter(<span class="macro">s!</span>(<span class="string">&quot;K&quot;</span>))), <span class="string">&quot;Letter K&quot;</span>);</code></pre></div>
+You can also mix in this mode with other fors of display tags on a
+specific options; in this case doc comments are ignored</li>
+<li>Support of unit structs and newtypes:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="doccomment">/// Some unit struct
+ </span><span class="attr">#[derive(Clone, Debug, Display, Error)]     
+ #[display(doc_comments)]
+ </span><span class="kw">pub struct </span>UnitStruct;
+
+ <span class="doccomment">/// displaying the wrapped type data: &#39;{0}&#39;.
+ </span><span class="attr">#[derive(Clone, PartialEq, Eq, Debug, Display)]
+ #[display(doc_comments)]
+ </span><span class="kw">pub struct </span>NewType(<span class="kw">pub </span>String);</code></pre></div>
+</li>
+<li>Print the name of enum variant in lowercase/uppercase:
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> <span class="attr">#[derive(Display)]
+ #[display(lowercase)]
+ </span><span class="kw">enum </span>Message {
+     Quit,
+     Move { x: i32, y: i32 },
+     Write(String),
+     ChangeColor(i32, i32, i32),
+ }
+
+ <span class="attr">#[derive(Display)]
+ #[display(uppercase)]
+ </span><span class="kw">enum </span>Event {
+     Init,
+     Load(Message),
+ }
+
+
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Message::Quit), <span class="string">&quot;quit&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Message::Move{ x: <span class="number">1</span>, y: <span class="number">2 </span>}),
+     <span class="string">&quot;move { x: 1, y: 2 }&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Message::Write(String::from(<span class="string">&quot;msg&quot;</span>))),
+     <span class="string">&quot;write(msg)&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Message::ChangeColor(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>)),
+     <span class="string">&quot;changecolor(255, 0, 0)&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Event::Init), <span class="string">&quot;INIT&quot;</span>);
+ <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Event::Load(Message::ChangeColor(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>))),
+     <span class="string">&quot;LOAD(changecolor(0, 255, 0))&quot;</span>);</code></pre></div>
+</li>
+</ol>
+<h2 id="example"><a href="#example">Example</a></h2>
+<p>Advanced use with enums:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Display)]
+</span><span class="kw">enum </span>Test {
+    <span class="prelude-val">Some</span>,
+
+    <span class="attr">#[display(<span class="string">&quot;OtherName&quot;</span>)]
+    </span>Other,
+
+    <span class="doccomment">/// Document comment working as display string
+    </span>Commented,
+
+    Named {
+        x: u8,
+    },
+
+    <span class="attr">#[display(<span class="string">&quot;Custom{x}&quot;</span>, alt = <span class="string">&quot;this is alternative&quot;</span>)]
+    </span>NamedCustom {
+        x: u8,
+    },
+
+    <span class="attr">#[display(inner)]
+    </span>Inner {
+        a: String,
+    },
+
+    Unnamed(u16),
+
+    <span class="comment">// NB: Use indexes for tuple values
+    </span><span class="attr">#[display(<span class="string">&quot;Custom{0}&quot;</span>)]
+    </span>UnnamedCustom(String),
+}
+
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::Some), <span class="string">&quot;Some&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::Other), <span class="string">&quot;OtherName&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::Named { x: <span class="number">1 </span>}), <span class="string">&quot;Named { .. }&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::Unnamed(<span class="number">5</span>)), <span class="string">&quot;Unnamed(..)&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::NamedCustom { x: <span class="number">8 </span>}), <span class="string">&quot;Custom8&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:#}&quot;</span>, Test::NamedCustom { x: <span class="number">8 </span>}), <span class="string">&quot;this is alternative&quot;</span>);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Test::UnnamedCustom(<span class="string">&quot;Test&quot;</span>.to_string())), <span class="string">&quot;CustomTest&quot;</span>);</code></pre></div>
+<p>Use with tuple types:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Clone, Copy, Debug, Display)]
+#[display(<span class="string">&quot;{0}&quot;</span>)]
+</span><span class="kw">struct </span>Tuple(u8);
+
+<span class="attr">#[derive(Clone, Copy, Debug, Display)]
+#[display(inner)] </span><span class="comment">// `inner` is synonym to &quot;{0}&quot;
+</span><span class="kw">struct </span>Tuple2(u8);
+
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Tuple(<span class="number">5</span>)), <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, Tuple2(<span class="number">5</span>)))</code></pre></div>
+<p>Using inner enum variant representation, defaulting to the variant name
+if the variant does not have inner data:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::net::{IpAddr, Ipv4Addr};
+
+<span class="attr">#[derive(Clone, Copy, Debug, Display)]
+#[display(inner)] </span><span class="comment">// `inner` is synonym to &quot;{0}&quot;
+</span><span class="kw">enum </span>Variants {
+    First,
+    Second,
+    WithData(u8),
+    WithComplexData(IpAddr),
+};
+
+<span class="macro">assert_eq!</span>(Variants::First.to_string(), <span class="string">&quot;First&quot;</span>);
+<span class="macro">assert_eq!</span>(Variants::WithData(<span class="number">5</span>).to_string(), <span class="string">&quot;5&quot;</span>);
+<span class="macro">assert_eq!</span>(
+    Variants::WithComplexData(IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>))).to_string(),
+    <span class="string">&quot;127.0.0.1&quot;
+</span>);</code></pre></div>
+</div></details></section></div></main></body></html>

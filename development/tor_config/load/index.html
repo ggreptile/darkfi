@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Processing a config::Config into a validated configuration"><title>tor_config::load - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tor_config" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../tor_config/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../tor_config/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Module load</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../index.html">tor_config</a>::<wbr><a class="mod" href="#">load</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/tor_config/load.rs.html#1-872">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Processing a config::Config into a validated configuration</p>
+<p>This module, and particularly <a href="fn.resolve.html" title="fn tor_config::load::resolve"><code>resolve</code></a>, takes care of:</p>
+<ul>
+<li>Deserializing a <a href="../../config/config/struct.Config.html" title="struct config::config::Config"><code>config::Config</code></a> into various <code>FooConfigBuilder</code></li>
+<li>Calling the <code>build()</code> methods to get various <code>FooConfig</code>.</li>
+<li>Reporting unrecognised configuration keys
+(eg to help the user detect misspellings).</li>
+</ul>
+<p>This is step 3 of the overall config processing,
+as described in the <a href="../index.html" title="mod tor_config">crate-level documentation</a>.</p>
+<h2 id="starting-points"><a href="#starting-points">Starting points</a></h2>
+<p>To use this, you will need to:</p>
+<ul>
+<li>
+<p><code>#[derive(Builder)]</code> and use <a href="../macro.impl_standard_builder.html" title="macro tor_config::impl_standard_builder"><code>impl_standard_builder!</code></a>
+for all of your configuration structures,
+using <code>#[sub_builder]</code> etc. sa appropriate,
+and making your builders <a href="../../serde/de/trait.Deserialize.html" title="trait serde::de::Deserialize"><code>Deserialize</code></a>.</p>
+</li>
+<li>
+<p><a href="trait.TopLevel.html" title="trait tor_config::load::TopLevel"><code>impl TopLevel</code></a> for your <em>top level</em> structures (only).</p>
+</li>
+<li>
+<p>Call <a href="fn.resolve.html" title="fn tor_config::load::resolve"><code>resolve</code></a> (or one of its variants) with a <code>config::Config</code>,
+to obtain your top-level configuration(s).</p>
+</li>
+</ul>
+<h2 id="example"><a href="#example">Example</a></h2>
+<p>In this example the developers are embedding <code>arti</code>, <code>arti_client</code>, etc.,
+into a program of their own.  The example code shown:</p>
+<ul>
+<li>Defines a configuration structure <code>EmbedderConfig</code>,
+for additional configuration settings for the added features.</li>
+<li>Establishes some configuration sources
+(the trivial empty <code>ConfigSources</code>, to avoid clutter in the example)</li>
+<li>Reads those sources into a single configuration taxonomy <a href="../../config/config/struct.Config.html" title="struct config::config::Config"><code>config::Config</code></a>.</li>
+<li>Processes that configuration into a 3-tuple of configuration
+structs for the three components, namely:
+<ul>
+<li><code>TorClientConfig</code>, the configuration for the <code>arti_client</code> crate’s <code>TorClient</code></li>
+<li><code>ArtiConfig</code>, for behaviours in the <code>arti</code> command line utility</li>
+<li><code>EmbedderConfig</code>.</li>
+</ul>
+</li>
+<li>Will report a warning to the user about config settings found in the config files,
+but not recognized by <em>any</em> of the three config consumers,</li>
+</ul>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>derive_builder::Builder;
+<span class="kw">use </span>tor_config::{impl_standard_builder, resolve, ConfigBuildError, ConfigurationSources};
+<span class="kw">use </span>tor_config::load::TopLevel;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+
+<span class="attr">#[derive(Debug, Clone, Builder, Eq, PartialEq)]
+#[builder(build_fn(error = <span class="string">&quot;ConfigBuildError&quot;</span>))]
+#[builder(derive(Debug, Serialize, Deserialize))]
+</span><span class="kw">struct </span>EmbedderConfig {
+    <span class="comment">// ....
+</span>}
+<span class="macro">impl_standard_builder! </span>{ EmbedderConfig }
+<span class="kw">impl </span>TopLevel <span class="kw">for </span>EmbedderConfig {
+    <span class="kw">type </span>Builder = EmbedderConfigBuilder;
+}
+
+<span class="kw">let </span>cfg_sources = ConfigurationSources::new_empty(); <span class="comment">// In real program, use from_cmdline
+</span><span class="kw">let </span>cfg = cfg_sources.load()<span class="question-mark">?</span>;
+
+<span class="kw">let </span>(tcc, arti_config, embedder_config) =
+     tor_config::resolve::&lt;(TorClientConfig, ArtiConfig, EmbedderConfig)&gt;(cfg)<span class="question-mark">?</span>;
+
+<span class="kw">let _</span>: EmbedderConfig = embedder_config; <span class="comment">// etc.
+</span></code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.DisfavouredKey.html" title="struct tor_config::load::DisfavouredKey">DisfavouredKey</a></div><div class="desc docblock-short">Key in config file(s) which is disfavoured (unrecognized or deprecated)</div></li><li><div class="item-name"><a class="struct" href="struct.ResolutionResults.html" title="struct tor_config::load::ResolutionResults">ResolutionResults</a></div><div class="desc docblock-short">Results of a successful <code>resolve_return_disfavoured</code></div></li><li><div class="item-name"><a class="struct" href="struct.ResolveContext.html" title="struct tor_config::load::ResolveContext">ResolveContext</a></div><div class="desc docblock-short">Config resolution context, not used outside <code>tor_config::load</code></div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.ConfigResolveError.html" title="enum tor_config::load::ConfigResolveError">ConfigResolveError</a></div><div class="desc docblock-short">Error resolving a configuration (during deserialize, or build)</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.Builder.html" title="trait tor_config::load::Builder">Builder</a></div><div class="desc docblock-short">A type that can be built from a builder via a build method</div></li><li><div class="item-name"><a class="trait" href="trait.Resolvable.html" title="trait tor_config::load::Resolvable">Resolvable</a></div><div class="desc docblock-short">Collection of configuration settings that can be deserialized and then built</div></li><li><div class="item-name"><a class="trait" href="trait.TopLevel.html" title="trait tor_config::load::TopLevel">TopLevel</a></div><div class="desc docblock-short">Top-level configuration struct, made from a deserializable builder</div></li></ul><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><ul class="item-table"><li><div class="item-name"><a class="fn" href="fn.resolve.html" title="fn tor_config::load::resolve">resolve</a></div><div class="desc docblock-short">Deserialize and build overall configuration from config sources</div></li><li><div class="item-name"><a class="fn" href="fn.resolve_ignore_warnings.html" title="fn tor_config::load::resolve_ignore_warnings">resolve_ignore_warnings</a></div><div class="desc docblock-short">Deserialize and build overall configuration, silently ignoring unrecognized config keys</div></li><li><div class="item-name"><a class="fn" href="fn.resolve_return_results.html" title="fn tor_config::load::resolve_return_results">resolve_return_results</a></div><div class="desc docblock-short">Deserialize and build overall configuration, reporting unrecognized keys in the return value</div></li></ul></section></div></main></body></html>

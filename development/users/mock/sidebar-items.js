@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Group","MockUsers","User"],"trait":["Groups","Users"],"type":["gid_t","uid_t"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["convert_index_to_last_level","gen_empty_hashes","is_left_child","is_root","left_child","log2","parent","right_child","sibling","tree_height"],"struct":["Path","Poseidon","SparseMerkleTree"],"trait":["FieldHasher"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["BLUE","GREEN","INCREASE_FACTOR","MAX_SCALE","MIN_SCALE","NO_TASK_SCALE"],"fn":["assignees","drawdown","get_days_from_month","helper_parse_func","is_leap_year","to_naivedate"]};

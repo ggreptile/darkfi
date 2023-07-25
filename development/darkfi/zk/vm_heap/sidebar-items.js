@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["HeapVar","Literal","Witness"],"fn":["empty_witnesses"],"macro":["impl_from"]};

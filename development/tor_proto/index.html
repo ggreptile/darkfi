@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="tor-proto"><title>tor_proto - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_proto" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_proto/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_proto/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate tor_proto</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.11.1</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">tor_proto</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_proto/lib.rs.html#1-82">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="tor-proto"><a href="#tor-proto">tor-proto</a></h2>
+<p>Implementations for the core Tor protocol</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>The <code>tor-proto</code> crate lies at the core of
+<a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>, a project to
+implement <a href="https://www.torproject.org/">Tor</a> in Rust.
+Most people shouldn’t use this crate directly,
+since its APIs are needlessly low-level for most purposes, and it is
+easy to misuse them in an insecure or privacy-violating way.</p>
+<p>Most people should use the [<code>arti-client</code>] crate instead.  This crate is
+of interest mainly for those that want to access the Tor protocols at
+a low level.</p>
+<h4 id="core-concepts"><a href="#core-concepts">Core concepts</a></h4>
+<p>At its essence, Tor makes connections called “channels” to other
+Tor instances.  These channels are implemented using TLS.  Each of
+these channels multiplexes a number of anonymized multihop
+“circuits” that act as reliable transports for “relay messages”
+that are sent between clients and the different relays on the
+circuits.  Finally, each circuit multiplexes a number of “streams”,
+each corresponding roughly to an application-level request.</p>
+<p>This crate implements the logic, protocols, and cryptography that
+implement these <a href="channel/struct.Channel.html" title="struct tor_proto::channel::Channel"><code>channel::Channel</code></a>s, <a href="circuit/struct.ClientCirc.html" title="struct tor_proto::circuit::ClientCirc"><code>circuit::ClientCirc</code></a>s, and
+<a href="stream/struct.DataStream.html" title="struct tor_proto::stream::DataStream"><code>stream::DataStream</code></a>s.  It uses rust async code and future-related
+traits, and is intended to work with (nearly) any executor
+implementation that complies with the futures API.  It should also
+work with nearly any TLS implementation that exposes AsyncRead and
+AsyncWrite traits.</p>
+<h4 id="not-in-this-crate"><a href="#not-in-this-crate">Not in this crate</a></h4>
+<p>This crate does <em>not</em> implement higher level protocols, like onion
+services or the Tor directory protocol, that are based on the Tor
+protocol here.  Nor does it decide <em>when</em>, <em>how</em>, or <em>where</em> to
+build channels and circuits: that’s the role of higher-level crates.</p>
+<p>This crate also has no support for timeouts, so every network
+operation here has the potential to block the current task
+indefinitely.  Timeouts are another necessary piece that gets
+added at a higher level.</p>
+<p>In order to create channels and circuits, you’ll need to know
+about some Tor relays, and expose their information via
+<a href="../tor_linkspec/traits/trait.ChanTarget.html" title="trait tor_linkspec::traits::ChanTarget"><code>tor_linkspec::ChanTarget</code></a> and <a href="../tor_linkspec/traits/trait.CircTarget.html" title="trait tor_linkspec::traits::CircTarget"><code>tor_linkspec::CircTarget</code></a>.
+Currently, the [<code>tor-netdir</code>] crate is the easiest way to do so.</p>
+<p>For an example of this crate in action, see the [<code>arti-client</code>]
+library, or the <code>arti</code> CLI.</p>
+<h3 id="design-notes"><a href="#design-notes">Design notes</a></h3>
+<p>This crate’s APIs are structured to limit usage of an asynchronous runtime:
+It doesn’t launch tasks or create timers except when necessary.</p>
+<p>To the extent possible, this crate avoids doing public-key
+cryptography in the same functions it uses for network activity.
+This makes it easier for higher-level code to parallelize or yield
+around public-key operations.</p>
+<p>Also, this crate tries to avoid knowing or encoding information about what
+its objects (channels, circuits, streams) are “used for”.  That is, whenever
+possible, we encode <em>how an object should behave</em>, not <em>the reason that it
+should behave that way</em>.  For example, the <code>Circuit</code> object in this crate
+remembers the path through which the circuit was built, but <em>not</em> the
+purpose that the circuit serves, or what it may be used for.  It’s the
+responsibility of other crates to enforce that kind of rule.</p>
+<p>Why separate behavior from purpose in this way?
+We do so in order to prevent a kind of logical overloading that we ran into
+with the C tor implementation, where usage information is <em>not</em> separate
+from behavioral settings.  Since usage information is available, at all
+points in the codebase the C tor code has converged in many places on
+complex logic involving that usage information in order to set individual
+behaviors.  Because of that, adding a new kinds usage or behavior in C tor
+has become quite complex.  We’re trying to avoid that kind of complexity in
+Arti.</p>
+<h3 id="limitations"><a href="#limitations">Limitations</a></h3>
+<p>This is all a work in progress, and will need severe refactoring
+before it’s done.</p>
+<p>This is a client-only implementation; there is no support the
+operations that Relays need.</p>
+<p>There are too many missing features to list.</p>
+<p>There isn’t enough documentation or examples.</p>
+<p>This crate was my first attempt to use async in rust, and is probably
+pretty kludgy.</p>
+<p>I bet that there are deadlocks somewhere in this code.  I fixed
+all the ones I could find or think of, but it would be great to
+find a good way to eliminate every lock that we have.</p>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --></div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name" id="reexport.ChannelPaddingInstructions"><code>pub use channel::params::<a class="struct" href="channel/params/struct.ChannelPaddingInstructions.html" title="struct tor_proto::channel::params::ChannelPaddingInstructions">ChannelPaddingInstructions</a>;</code></div></li></ul><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="channel/index.html" title="mod tor_proto::channel">channel</a></div><div class="desc docblock-short">Code for talking directly (over a TLS connection) to a Tor client or relay.</div></li><li><div class="item-name"><a class="mod" href="circuit/index.html" title="mod tor_proto::circuit">circuit</a></div><div class="desc docblock-short">Multi-hop paths over the Tor network.</div></li><li><div class="item-name"><a class="mod" href="stream/index.html" title="mod tor_proto::stream">stream</a></div><div class="desc docblock-short">Implements Tor’s “stream“s from a client perspective</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.ClockSkew.html" title="enum tor_proto::ClockSkew">ClockSkew</a></div><div class="desc docblock-short">A reported amount of clock skew from a relay or other source.</div></li><li><div class="item-name"><a class="enum" href="enum.Error.html" title="enum tor_proto::Error">Error</a></div><div class="desc docblock-short">An error type for the tor-proto crate.</div></li><li><div class="item-name"><a class="enum" href="enum.ResolveError.html" title="enum tor_proto::ResolveError">ResolveError</a></div><div class="desc docblock-short">Details about an error received while resolving a domain</div></li></ul><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><ul class="item-table"><li><div class="item-name"><a class="fn" href="fn.time_since_last_incoming_traffic.html" title="fn tor_proto::time_since_last_incoming_traffic">time_since_last_incoming_traffic</a></div><div class="desc docblock-short">Return the amount of time since we last received “incoming traffic”.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Result.html" title="type tor_proto::Result">Result</a></div><div class="desc docblock-short">A Result type for this crate.</div></li></ul></section></div></main></body></html>

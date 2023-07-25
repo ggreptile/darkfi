@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ConfigResolveError"],"fn":["resolve","resolve_ignore_warnings","resolve_return_results"],"struct":["DisfavouredKey","ResolutionResults","ResolveContext"],"trait":["Builder","Resolvable","TopLevel"]};

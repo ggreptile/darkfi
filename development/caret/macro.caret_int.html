@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Declare an integer type with some named elements."><title>caret_int in caret - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="caret" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../caret/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../caret/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In caret</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Macro <a href="index.html">caret</a>::<wbr><a class="macro" href="#">caret_int</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/caret/lib.rs.html#78-144">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><span class="macro">macro_rules! </span>caret_int {
+    {
+       $(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+       <span class="macro-nonterminal">$v</span>:vis <span class="kw">struct </span><span class="macro-nonterminal">$name</span>:ident ( <span class="macro-nonterminal">$numtype</span>:ty ) {
+           $(
+               $(<span class="attr">#[<span class="macro-nonterminal">$item_meta</span>:meta]</span>)*
+               <span class="macro-nonterminal">$id</span>:ident = <span class="macro-nonterminal">$num</span>:literal
+           ),*
+           $(,)<span class="question-mark">?
+      </span>}
+    } =&gt; { ... };
+}</pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Declare an integer type with some named elements.</p>
+<p>This macro declares a struct that wraps an integer
+type, and allows any integer type as a value.  Some values of this type
+have names, and others do not, but they are all allowed.</p>
+<p>This macro is suitable for protocol implementations that accept
+any integer on the wire, and have definitions for some of those
+integers.  For example, Tor cell commands are 8-bit integers, but
+not every u8 is a currently recognized Tor command.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>caret::caret_int;
+<span class="macro">caret_int! </span>{
+    <span class="kw">pub struct </span>FruitID(u8) {
+        AVOCADO = <span class="number">7</span>,
+        PERSIMMON = <span class="number">8</span>,
+        LONGAN = <span class="number">99
+    </span>}
+}
+
+<span class="comment">// Known fruits work the way we would expect...
+</span><span class="kw">let </span>a_num: u8 = FruitID::AVOCADO.into();
+<span class="macro">assert_eq!</span>(a_num, <span class="number">7</span>);
+<span class="kw">let </span>a_fruit: FruitID = <span class="number">8</span>.into();
+<span class="macro">assert_eq!</span>(a_fruit, FruitID::PERSIMMON);
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;I&#39;d like a {}&quot;</span>, FruitID::PERSIMMON),
+           <span class="string">&quot;I&#39;d like a PERSIMMON&quot;</span>);
+
+<span class="comment">// And we can construct unknown fruits, if we encounter any.
+</span><span class="kw">let </span>weird_fruit: FruitID = <span class="number">202</span>.into();
+<span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;I&#39;d like a {}&quot;</span>, weird_fruit),
+           <span class="string">&quot;I&#39;d like a 202&quot;</span>);</code></pre></div>
+</div></details></section></div></main></body></html>

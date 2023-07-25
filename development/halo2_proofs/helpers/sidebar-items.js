@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["SerdeFormat"],"fn":["pack","unpack"],"trait":["SerdeCurveAffine","SerdeObject","SerdePrimeField"]};

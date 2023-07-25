@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["alice","bob","main"],"mod":["dchat_error","dchatmsg","protocol_dchat","rpc"],"struct":["AppSettings","Dchat"],"type":["Error","Result"]};

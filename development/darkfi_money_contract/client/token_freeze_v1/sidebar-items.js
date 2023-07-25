@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_token_freeze_proof"],"struct":["TokenFreezeCallBuilder","TokenFreezeCallDebris","TokenFreezeRevealed"]};

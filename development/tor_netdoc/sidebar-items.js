@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AllowAnnotations","BuildError","NetdocErrorKind","Pos"],"mod":["doc","types"],"struct":["Error"],"type":["BuildResult","Result"]};

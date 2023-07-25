@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Assigned"],"mod":["plonk"],"struct":["Advice","AssignedCell","Column","Value"],"trait":["Field","Layouter"]};

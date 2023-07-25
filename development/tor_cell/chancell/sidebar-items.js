@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CELL_DATA_LEN"],"mod":["codec","msg"],"struct":["ChanCell","ChanCmd","CircId"],"trait":["ChanMsg"],"type":["AnyChanCell","BoxedCellBody","RawCellBody"]};

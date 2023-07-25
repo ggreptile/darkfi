@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CIRCUIT_BUFFER_SIZE"],"enum":["MetaCellDisposition"],"mod":["handshake"],"struct":["CircParameters","ClientCirc","Path","PathEntry","PendingClientCirc","UniqId"],"trait":["MsgHandler"]};

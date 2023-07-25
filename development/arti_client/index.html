@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="arti-client"><title>arti_client - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="arti_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../arti_client/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../arti_client/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate arti_client</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.9.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">arti_client</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/arti_client/lib.rs.html#1-70">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="arti-client"><a href="#arti-client">arti-client</a></h2>
+<p>High-level functionality for accessing the Tor network as a client.</p>
+<h3 id="overview"><a href="#overview">Overview</a></h3>
+<p>The <code>arti-client</code> crate aims to provide a safe, easy-to-use API for
+applications that want to use the Tor network to anonymize their traffic.</p>
+<p>This crate is part of <a href="https://gitlab.torproject.org/tpo/core/arti/">Arti</a>,
+a project to implement <a href="https://www.torproject.org/">Tor</a> in Rust. It is the
+highest-level library crate in Arti, and the one that nearly all client-only
+programs should use. Most of its functionality is provided by lower-level
+crates in Arti.</p>
+<h4 id="shape-of-the-api-and-relationship-to-other-crates"><a href="#shape-of-the-api-and-relationship-to-other-crates">Shape of the API, and relationship to other crates</a></h4>
+<p>The API here is great if you are building an application in async Rust
+and want your Tor connections as async streams (<code>AsyncRead</code>/<code>AsyncWrite</code>).
+If you are wanting to make HTTP requests,
+look at <a href="https://tpo.pages.torproject.net/core/doc/rust/arti_hyper/index.html">arti_hyper</a>).</p>
+<p>If you are trying to glue Arti to some other programming language,
+right now your best bet is probably to spawn the
+<a href="https://tpo.pages.torproject.net/core/doc/rust/arti/index.html"><code>arti</code> CLI</a>
+SOCKS proxy,
+as a subprocess.
+We don’t yet offer an API that would be nice to expose via FFI;
+we intend to add this in the future.</p>
+<h4 id="-warnings-"><a href="#-warnings-">⚠ Warnings ⚠</a></h4>
+<p>Also note that the APIs for this crate are not all yet completely stable.
+We’ll try not to break things without good reason, and we’ll follow semantic
+versioning when we do, but please expect a certain amount of breakage
+between now and us declaring <code>arti-client</code> 1.x.</p>
+<p>The APIs exposed by lower-level crates in Arti are <em>even more unstable</em>;
+they will break more often than those from <code>arti-client</code>, for less reason.</p>
+<h3 id="using-arti-client"><a href="#using-arti-client">Using <code>arti-client</code></a></h3>
+<p>The main entry point for this crate is the <a href="struct.TorClient.html" title="struct arti_client::TorClient"><code>TorClient</code></a>, an object that
+lets you make connections over the Tor network.</p>
+<h4 id="connecting-to-tor"><a href="#connecting-to-tor">Connecting to Tor</a></h4>
+<p>Calling <a href="struct.TorClient.html#method.create_bootstrapped" title="associated function arti_client::TorClient::create_bootstrapped"><code>TorClient::create_bootstrapped</code></a> establishes a connection to the
+Tor network, pulling in necessary state about network consensus as required.
+This state gets persisted to the locations specified in the
+<a href="config/struct.TorClientConfig.html" title="struct arti_client::config::TorClientConfig"><code>TorClientConfig</code></a>.</p>
+<p>(This method requires you to initialize the client in an <code>async fn</code>.
+Consider using the builder method, below, if that doesn’t work for you.)</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// The client configuration describes how to connect to the Tor network,
+// and what directories to use for storing persistent state.
+</span><span class="kw">let </span>config = TorClientConfig::default();
+
+<span class="comment">// Start the Arti client, and let it bootstrap a connection to the Tor network.
+// (This takes a while to gather the necessary directory information.
+// It uses cached information when possible.)
+</span><span class="kw">let </span>tor_client = TorClient::create_bootstrapped(config).<span class="kw">await</span><span class="question-mark">?</span>;</code></pre></div>
+<h4 id="creating-a-client-and-connecting-later"><a href="#creating-a-client-and-connecting-later">Creating a client and connecting later</a></h4>
+<p>You might wish to create a Tor client immediately, without waiting for it to
+bootstrap (or having to use an <code>await</code>). This can be done by making a
+<a href="struct.TorClientBuilder.html" title="struct arti_client::TorClientBuilder"><code>TorClientBuilder</code></a> with <a href="struct.TorClient.html#method.builder" title="associated function arti_client::TorClient::builder"><code>TorClient::builder</code></a>, and calling
+<a href="struct.TorClientBuilder.html#method.create_unbootstrapped" title="method arti_client::TorClientBuilder::create_unbootstrapped"><code>TorClientBuilder::create_unbootstrapped</code></a>.</p>
+<p>The returned client can be made to bootstrap when it is first used (the
+default), or not; see <a href="enum.BootstrapBehavior.html" title="enum arti_client::BootstrapBehavior"><code>BootstrapBehavior</code></a> for more details.</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// Specifying `BootstrapBehavior::OnDemand` means the client will automatically
+// bootstrap when it is used. `Manual` exists if you&#39;d rather have full control.
+</span><span class="kw">let </span>tor_client = TorClient::builder()
+    .bootstrap_behavior(BootstrapBehavior::OnDemand)
+    .create_unbootstrapped()<span class="question-mark">?</span>;</code></pre></div>
+<h4 id="using-the-client"><a href="#using-the-client">Using the client</a></h4>
+<p>A client can then be used to make connections over Tor with
+<a href="struct.TorClient.html#method.connect" title="method arti_client::TorClient::connect"><code>TorClient::connect</code></a>, which accepts anything implementing <a href="trait.IntoTorAddr.html" title="trait arti_client::IntoTorAddr"><code>IntoTorAddr</code></a>.
+This returns a <a href="struct.DataStream.html" title="struct arti_client::DataStream"><code>DataStream</code></a>, an anonymized TCP stream type that implements
+<a href="../futures_io/if_std/trait.AsyncRead.html" title="trait futures_io::if_std::AsyncRead"><code>AsyncRead</code></a> and
+<a href="../futures_io/if_std/trait.AsyncWrite.html" title="trait futures_io::if_std::AsyncWrite"><code>AsyncWrite</code></a>, as well as the Tokio versions of
+those traits if the <code>tokio</code> crate feature is enabled.</p>
+<h4 id="example-making-connections-over-tor"><a href="#example-making-connections-over-tor">Example: making connections over Tor</a></h4>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// Initiate a connection over Tor to example.com, port 80.
+</span><span class="kw">let </span><span class="kw-2">mut </span>stream = tor_client.connect((<span class="string">&quot;example.com&quot;</span>, <span class="number">80</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+
+<span class="kw">use </span>futures::io::{AsyncReadExt, AsyncWriteExt};
+
+<span class="comment">// Write out an HTTP request.
+</span>stream
+    .write_all(<span class="string">b&quot;GET / HTTP/1.1\r\nHost: example.com\r\nConnection: close\r\n\r\n&quot;</span>)
+    .<span class="kw">await</span><span class="question-mark">?</span>;
+
+<span class="comment">// IMPORTANT: Make sure the request was written.
+// Arti buffers data, so flushing the buffer is usually required.
+</span>stream.flush().<span class="kw">await</span><span class="question-mark">?</span>;
+
+<span class="comment">// Read and print the result.
+</span><span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
+stream.read_to_end(<span class="kw-2">&amp;mut </span>buf).<span class="kw">await</span><span class="question-mark">?</span>;
+
+<span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, String::from_utf8_lossy(<span class="kw-2">&amp;</span>buf));</code></pre></div>
+<h4 id="bridge-usage"><a href="#bridge-usage">Bridge usage</a></h4>
+<p>Bridges and Pluggable Transports (PT) can be used as censorship circunvention tools
+to connect to Tor in places where it is otherwise blocked. In arti, they are
+configured through <a href="config/struct.BridgesConfig.html" title="struct arti_client::config::BridgesConfig"><code>config::BridgesConfig</code></a>. You will need to enable the feature
+<code>pt-client</code> for PT support. Note that pluggable transports need to be installed
+separately and that Arti does not provide them on its own. You can read more about
+PTs in <a href="https://tb-manual.torproject.org/circumvention/">TB manual</a>.</p>
+<h4 id="more-advanced-usage"><a href="#more-advanced-usage">More advanced usage</a></h4>
+<p>This version of Arti includes basic support for “stream isolation”: the
+ability to ensure that different TCP connections (‘streams’) go over
+different Tor circuits (and thus different exit nodes, making them originate
+from different IP addresses).</p>
+<p>This is useful to avoid deanonymizing users by correlation: for example, you
+might want a Tor connection to your bank and a Tor connection to an online
+forum to use different circuits, to avoid the possibility of the two
+identities being linked by having the same source IP.</p>
+<p>Streams can be isolated in two ways:</p>
+<ul>
+<li>by calling <a href="struct.TorClient.html#method.isolated_client" title="method arti_client::TorClient::isolated_client"><code>TorClient::isolated_client</code></a>, which returns a new
+<a href="struct.TorClient.html" title="struct arti_client::TorClient"><code>TorClient</code></a> whose streams will use a different circuit</li>
+<li>by generating <a href="struct.IsolationToken.html" title="struct arti_client::IsolationToken"><code>IsolationToken</code></a>s, and passing them in via <a href="struct.StreamPrefs.html" title="struct arti_client::StreamPrefs"><code>StreamPrefs</code></a>
+to <a href="struct.TorClient.html#method.connect" title="method arti_client::TorClient::connect"><code>TorClient::connect</code></a>.</li>
+</ul>
+<h3 id="multiple-runtime-support"><a href="#multiple-runtime-support">Multiple runtime support</a></h3>
+<p>Arti uses the <a href="../tor_rtcompat/index.html" title="mod tor_rtcompat"><code>tor_rtcompat</code></a> crate to support multiple asynchronous
+runtimes; currently, both <a href="https://tokio.rs">Tokio</a> and
+<a href="https://async.rs">async-std</a> are supported.</p>
+<p>The backend Arti uses for TCP connections (<a href="../tor_rtcompat/traits/trait.TcpProvider.html" title="trait tor_rtcompat::traits::TcpProvider"><code>tor_rtcompat::TcpProvider</code></a>)
+and for creating TLS sessions (<a href="../tor_rtcompat/traits/trait.TlsProvider.html" title="trait tor_rtcompat::traits::TlsProvider"><code>tor_rtcompat::TlsProvider</code></a>) is also
+configurable using this crate. This can be used to embed Arti in custom
+environments where you want lots of control over how it uses the network.</p>
+<p><a href="../tor_rtcompat/index.html" title="mod tor_rtcompat"><strong>View the <code>tor_rtcompat</code> crate documentation</strong></a> for more
+about these features.</p>
+<h3 id="reporting-arti-errors"><a href="#reporting-arti-errors">Reporting Arti errors</a></h3>
+<p>Arti often outputs very long Debug messages that are hard to understand,
+even for developers. In order to have a better idea of what went wrong in your
+program, <code>match</code> every <code>Error</code> and have <code>err.report()</code> be logged, where <code>err</code>
+is the caught error.</p>
+<p>For example, the previous example can be modified to report one of the errors:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// Initiate a connection over Tor to example.com, port 80.
+// Note: here we try to handle the potential error using match
+</span><span class="kw">match </span>tor_client.connect((<span class="string">&quot;example.com&quot;</span>, <span class="number">80</span>)).<span class="kw">await </span>{
+    <span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>stream) =&gt; {
+        <span class="macro">eprintln!</span>(<span class="string">&quot;sending request...&quot;</span>);
+
+        stream
+            .write_all(<span class="string">b&quot;GET / HTTP/1.1\r\nHost: example.com\r\nConnection: close\r\n\r\n&quot;</span>)
+            .<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="comment">// IMPORTANT: Make sure the request was written.
+        // Arti buffers data, so flushing the buffer is usually required.
+        </span>stream.flush().<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="macro">eprintln!</span>(<span class="string">&quot;reading response...&quot;</span>);
+
+        <span class="comment">// Read and print the result.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
+        stream.read_to_end(<span class="kw-2">&amp;mut </span>buf).<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, String::from_utf8_lossy(<span class="kw-2">&amp;</span>buf));
+    }
+    <span class="prelude-val">Err</span>(err) =&gt; {
+        <span class="comment">// Use .report() on an error to get a nicer error message
+        // Raw Debug output will be much harder to decipher for all parties involved
+        </span><span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, err.report());
+    }
+}</code></pre></div>
+<h3 id="feature-flags"><a href="#feature-flags">Feature flags</a></h3><h4 id="additive-features"><a href="#additive-features">Additive features</a></h4>
+<ul>
+<li>
+<p><code>tokio</code> (default) – build with <a href="https://tokio.rs/">Tokio</a> support</p>
+</li>
+<li>
+<p><code>native-tls</code> (default) – build with the
+<a href="https://github.com/sfackler/rust-native-tls">native-tls</a> crate for TLS
+support</p>
+</li>
+<li>
+<p><code>async-std</code> – build with <a href="https://async.rs/">async-std</a> support</p>
+</li>
+<li>
+<p><code>compression</code> (default) – Build support for downloading compressed
+documents. Requires a C compiler.</p>
+</li>
+<li>
+<p><code>bridge-client</code> – Build with support for bridges.</p>
+</li>
+<li>
+<p><code>pt-client</code> – Build with support for pluggable transports.</p>
+</li>
+<li>
+<p><code>full</code> – Build with all features above, along with all stable additive
+features from other arti crates.  (This does not include experimental
+features. It also does not include features that select a particular
+implementation to the exclusion of another, or those that set a build
+flag.)</p>
+</li>
+<li>
+<p><code>rustls</code> – build with the <a href="https://github.com/rustls/rustls">rustls</a>
+crate for TLS support.  This is not included in <code>full</code>, since it uses the
+<code>ring</code> crate, which uses the old (3BSD/SSLEay) OpenSSL license, which may
+introduce licensing compatibility issues.</p>
+</li>
+</ul>
+<p>Note that flags <code>tokio</code>, <code>native-tls</code>, <code>async-std</code>, <code>rustls</code> and <code>static</code>
+will enable the flags of the same name on the <a href="../tor_rtcompat/index.html" title="mod tor_rtcompat"><code>tor_rtcompat</code></a> crate.</p>
+<h4 id="build-flag-related-features"><a href="#build-flag-related-features">Build-flag related features</a></h4>
+<ul>
+<li><code>static</code> – link with static versions of Arti’s system dependencies, like
+SQLite and OpenSSL (⚠ Warning ⚠: this feature will include a dependency on
+native-tls, even if you weren’t planning to use native-tls.  If you only
+want to build with a static sqlite library, enable the <code>static-sqlite</code>
+feature.  We’ll look for better solutions here in the future.)</li>
+<li><code>static-sqlite</code> – link with a static version of sqlite.</li>
+<li><code>static-native-tls</code> – link with a static version of <code>native-tls</code>. Enables
+<code>native-tls</code>.</li>
+</ul>
+<h4 id="cryptographic-acceleration-features"><a href="#cryptographic-acceleration-features">Cryptographic acceleration features</a></h4>
+<p>Libraries should not enable these by default, since they replace one
+implementation with another.</p>
+<ul>
+<li><code>accel-sha1-asm</code> – Accelerate cryptography by using an assembly
+implementation of SHA1, if one is available.</li>
+<li><code>accel-openssl</code> – Accelerate cryptography by using openssl as a backend.</li>
+</ul>
+<h4 id="experimental-and-unstable-features"><a href="#experimental-and-unstable-features">Experimental and unstable features</a></h4>
+<p>Note that the APIs enabled by these features are NOT covered by semantic
+versioning<sup id="fnref1"><a href="#fn1">1</a></sup> guarantees: we might break them or remove them between patch
+versions.</p>
+<ul>
+<li>
+<p><code>experimental-api</code> – build with experimental, unstable API support.</p>
+</li>
+<li>
+<p><code>error_detail</code> – expose the <code>arti_client::Error</code> inner error type.</p>
+</li>
+<li>
+<p><code>dirfilter</code> – expose the <code>DirFilter</code> API, which lets you modify a network
+directory before it is used.</p>
+</li>
+<li>
+<p><code>onion-service-client</code> – build with non-working stub APIs to support connecting to
+onion services.  (These do not work yet, and will just cause your code to
+panic.)</p>
+</li>
+<li>
+<p><code>keymgr</code> – build with non-working APIs for key management. (These do not work
+yet, and will just cause your code to panic.)</p>
+</li>
+<li>
+<p><code>experimental</code> – Build with all experimental features above, along with
+all experimental features from other arti crates.</p>
+</li>
+</ul>
+<p>License: MIT OR Apache-2.0</p>
+<!-- @@ end lint list maintained by maint/add_warning @@ --><div class="footnotes"><hr><ol><li id="fn1"><p>Remember, semantic versioning is what makes various <code>cargo</code> features
+work reliably. To be explicit: if you want <code>cargo update</code> to <em>only</em> make safe
+changes, then you cannot enable these features.&nbsp;<a href="#fnref1">↩</a></p></li></ol></div></div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name" id="reexport.TorClientConfig"><code>pub use config::<a class="struct" href="config/struct.TorClientConfig.html" title="struct arti_client::config::TorClientConfig">TorClientConfig</a>;</code></div></li></ul><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="config/index.html" title="mod arti_client::config">config</a></div><div class="desc docblock-short">Types and functions to configure a Tor client.</div></li><li><div class="item-name"><a class="mod" href="isolation/index.html" title="mod arti_client::isolation">isolation</a></div><div class="desc docblock-short">Types related to stream isolation</div></li><li><div class="item-name"><a class="mod" href="status/index.html" title="mod arti_client::status">status</a></div><div class="desc docblock-short">Code to collect and publish information about a client’s bootstrapping
+status.</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.DataReader.html" title="struct arti_client::DataReader">DataReader</a></div><div class="desc docblock-short">The read half of a <a href="struct.DataStream.html" title="struct arti_client::DataStream"><code>DataStream</code></a>, implementing <a href="../futures_io/if_std/trait.AsyncRead.html" title="trait futures_io::if_std::AsyncRead"><code>futures::io::AsyncRead</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.DataStream.html" title="struct arti_client::DataStream">DataStream</a></div><div class="desc docblock-short">An anonymized stream over the Tor network.</div></li><li><div class="item-name"><a class="struct" href="struct.DataWriter.html" title="struct arti_client::DataWriter">DataWriter</a></div><div class="desc docblock-short">The write half of a <a href="struct.DataStream.html" title="struct arti_client::DataStream"><code>DataStream</code></a>, implementing <a href="../futures_io/if_std/trait.AsyncWrite.html" title="trait futures_io::if_std::AsyncWrite"><code>futures::io::AsyncWrite</code></a>.</div></li><li><div class="item-name"><a class="struct" href="struct.Error.html" title="struct arti_client::Error">Error</a></div><div class="desc docblock-short">Main high-level error type for the Arti Tor client</div></li><li><div class="item-name"><a class="struct" href="struct.ErrorHint.html" title="struct arti_client::ErrorHint">ErrorHint</a></div><div class="desc docblock-short">Verbose information about an error, meant to provide detail or justification
+for user-facing errors, rather than the normal short message for
+developer-facing errors.</div></li><li><div class="item-name"><a class="struct" href="struct.IsolationToken.html" title="struct arti_client::IsolationToken">IsolationToken</a></div><div class="desc docblock-short">A token used to isolate unrelated streams on different circuits.</div></li><li><div class="item-name"><a class="struct" href="struct.StreamPrefs.html" title="struct arti_client::StreamPrefs">StreamPrefs</a></div><div class="desc docblock-short">Preferences for how to route a stream over the Tor network.</div></li><li><div class="item-name"><a class="struct" href="struct.TorAddr.html" title="struct arti_client::TorAddr">TorAddr</a></div><div class="desc docblock-short">An address object that you can connect to over the Tor network.</div></li><li><div class="item-name"><a class="struct" href="struct.TorClient.html" title="struct arti_client::TorClient">TorClient</a></div><div class="desc docblock-short">An active client session on the Tor network.</div></li><li><div class="item-name"><a class="struct" href="struct.TorClientBuilder.html" title="struct arti_client::TorClientBuilder">TorClientBuilder</a></div><div class="desc docblock-short">An object for constructing a <a href="struct.TorClient.html" title="struct arti_client::TorClient"><code>TorClient</code></a>.</div></li></ul><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><ul class="item-table"><li><div class="item-name"><a class="enum" href="enum.BootstrapBehavior.html" title="enum arti_client::BootstrapBehavior">BootstrapBehavior</a></div><div class="desc docblock-short">Preferences for whether a <a href="struct.TorClient.html" title="struct arti_client::TorClient"><code>TorClient</code></a> should bootstrap on its own or not.</div></li><li><div class="item-name"><a class="enum" href="enum.DormantMode.html" title="enum arti_client::DormantMode">DormantMode</a></div><div class="desc docblock-short">What level of sleep to put a Tor client into.</div></li><li><div class="item-name"><a class="enum" href="enum.ErrorKind.html" title="enum arti_client::ErrorKind">ErrorKind</a></div><div class="desc docblock-short">Classification of an error arising from Arti’s Tor operations</div></li><li><div class="item-name"><a class="enum" href="enum.TorAddrError.html" title="enum arti_client::TorAddrError">TorAddrError</a></div><div class="desc docblock-short">An error created while making or using a <a href="struct.TorAddr.html" title="struct arti_client::TorAddr"><code>TorAddr</code></a>.</div></li></ul><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><ul class="item-table"><li><div class="item-name"><a class="trait" href="trait.DangerouslyIntoTorAddr.html" title="trait arti_client::DangerouslyIntoTorAddr">DangerouslyIntoTorAddr</a></div><div class="desc docblock-short">An object that can be converted to a <a href="struct.TorAddr.html" title="struct arti_client::TorAddr"><code>TorAddr</code></a>, but which it
+might be risky to get in the first place if you’re hoping for
+anonymity.</div></li><li><div class="item-name"><a class="trait" href="trait.HasKind.html" title="trait arti_client::HasKind">HasKind</a></div><div class="desc docblock-short">Errors that can be categorized as belonging to an <a href="enum.ErrorKind.html" title="enum arti_client::ErrorKind"><code>ErrorKind</code></a></div></li><li><div class="item-name"><a class="trait" href="trait.IntoTorAddr.html" title="trait arti_client::IntoTorAddr">IntoTorAddr</a></div><div class="desc docblock-short">An object that can be converted to a <a href="struct.TorAddr.html" title="struct arti_client::TorAddr"><code>TorAddr</code></a> with a minimum of risk.</div></li></ul><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><ul class="item-table"><li><div class="item-name"><a class="type" href="type.Result.html" title="type arti_client::Result">Result</a></div><div class="desc docblock-short">Alias for the <a href="type.Result.html" title="type arti_client::Result"><code>Result</code></a> type corresponding to the high-level <a href="struct.Error.html" title="struct arti_client::Error"><code>Error</code></a>.</div></li></ul></section></div></main></body></html>

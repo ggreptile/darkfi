@@ -1,0 +1,13 @@
+(function() {var implementors = {
+"darkfi":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"darkfi/net/settings/struct.SettingsOpt.html\" title=\"struct darkfi::net::settings::SettingsOpt\">SettingsOpt</a>"]],
+"darkfid":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"darkfid/struct.Args.html\" title=\"struct darkfid::Args\">Args</a>"]],
+"darkfid2":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"darkfid2/struct.Args.html\" title=\"struct darkfid2::Args\">Args</a>"]],
+"darkirc":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"darkirc/settings/struct.Args.html\" title=\"struct darkirc::settings::Args\">Args</a>"]],
+"faucetd":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"faucetd/struct.Args.html\" title=\"struct faucetd::Args\">Args</a>"]],
+"fud":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"fud/struct.Args.html\" title=\"struct fud::Args\">Args</a>"]],
+"genevd":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"genevd/struct.Args.html\" title=\"struct genevd::Args\">Args</a>"]],
+"lilith":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"lilith/struct.Args.html\" title=\"struct lilith::Args\">Args</a>"]],
+"structopt":[],
+"structopt_toml":[],
+"taud":[["impl <a class=\"trait\" href=\"structopt/trait.StructOpt.html\" title=\"trait structopt::StructOpt\">StructOpt</a> for <a class=\"struct\" href=\"taud/settings/struct.Args.html\" title=\"struct taud::settings::Args\">Args</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ED25519_ID_LEN","ED25519_SIGNATURE_LEN"],"fn":["validate_batch"],"struct":["Ed25519Identity","ExpandedKeypair","ExpandedSecretKey","Keypair","PublicKey","SecretKey","Signature","ValidatableEd25519Signature"],"trait":["Ed25519PublicKey","Signer"]};

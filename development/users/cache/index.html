@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A cache for users and groups provided by the OS."><title>users::cache - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="users" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../users/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../users/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Module cache</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../index.html">users</a>::<wbr><a class="mod" href="#">cache</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../src/users/cache.rs.html#1-360">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A cache for users and groups provided by the OS.</p>
+<p>Because the users table changes so infrequently, it’s common for
+short-running programs to cache the results instead of getting the most
+up-to-date entries every time. The <a href="struct.UsersCache.html"><code>UsersCache</code></a>
+type helps with this, providing methods that have the same name as the
+others in this crate, only they store the results.</p>
+<h3 id="example"><a href="#example">Example</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::sync::Arc;
+<span class="kw">use </span>users::{Users, UsersCache};
+
+<span class="kw">let </span><span class="kw-2">mut </span>cache = UsersCache::new();
+<span class="kw">let </span>user      = cache.get_user_by_uid(<span class="number">502</span>).expect(<span class="string">&quot;User not found&quot;</span>);
+<span class="kw">let </span>same_user = cache.get_user_by_uid(<span class="number">502</span>).unwrap();
+
+<span class="comment">// The two returned values point to the same User
+</span><span class="macro">assert!</span>(Arc::ptr_eq(<span class="kw-2">&amp;</span>user, <span class="kw-2">&amp;</span>same_user));</code></pre></div>
+<h3 id="caching-multiple-threads-and-mutability"><a href="#caching-multiple-threads-and-mutability">Caching, multiple threads, and mutability</a></h3>
+<p>The <code>UsersCache</code> type is caught between a rock and a hard place when it
+comes to providing references to users and groups.</p>
+<p>Instead of returning a fresh <code>User</code> struct each time, for example, it will
+return a reference to the version it currently has in its cache. So you can
+ask for User #501 twice, and you’ll get a reference to the same value both
+time. Its methods are <em>idempotent</em> – calling one multiple times has the
+same effect as calling one once.</p>
+<p>This works fine in theory, but in practice, the cache has to update its own
+state somehow: it contains several <code>HashMap</code>s that hold the result of user
+and group lookups. Rust provides mutability in two ways:</p>
+<ol>
+<li>Have its methods take <code>&amp;mut self</code>, instead of <code>&amp;self</code>, allowing the
+internal maps to be mutated (“inherited mutability”)</li>
+<li>Wrap the internal maps in a <code>RefCell</code>, allowing them to be modified
+(“interior mutability”).</li>
+</ol>
+<p>Unfortunately, Rust is also very protective of references to a mutable
+value. In this case, switching to <code>&amp;mut self</code> would only allow for one user
+to be read at a time!</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>users::{Users, Groups, UsersCache};
+
+<span class="kw">let </span><span class="kw-2">mut </span>cache = UsersCache::new();
+
+<span class="kw">let </span>uid   = cache.get_current_uid();                          <span class="comment">// OK...
+</span><span class="kw">let </span>user  = cache.get_user_by_uid(uid).unwrap();              <span class="comment">// OK...
+</span><span class="kw">let </span>group = cache.get_group_by_gid(user.primary_group_id());  <span class="comment">// No!</span></code></pre></div>
+<p>When we get the <code>user</code>, it returns an optional reference (which we unwrap)
+to the user’s entry in the cache. This is a reference to something contained
+in a mutable value. Then, when we want to get the user’s primary group, it
+will return <em>another</em> reference to the same mutable value. This is something
+that Rust explicitly disallows!</p>
+<p>The compiler wasn’t on our side with Option 1, so let’s try Option 2:
+changing the methods back to <code>&amp;self</code> instead of <code>&amp;mut self</code>, and using
+<code>RefCell</code>s internally. However, Rust is smarter than this, and knows that
+we’re just trying the same trick as earlier. A simplified implementation of
+a user cache lookup would look something like this:</p>
+<div class="example-wrap"><pre class="language-text"><code>fn get_user_by_uid(&amp;self, uid: uid_t) -&gt; Option&lt;&amp;User&gt; {
+    let users = self.users.borrow_mut();
+    users.get(uid)
+}
+</code></pre></div>
+<p>Rust won’t allow us to return a reference like this because the <code>Ref</code> of the
+<code>RefCell</code> just gets dropped at the end of the method, meaning that our
+reference does not live long enough.</p>
+<p>So instead of doing any of that, we use <code>Arc</code> everywhere in order to get
+around all the lifetime restrictions. Returning reference-counted users and
+groups mean that we don’t have to worry about further uses of the cache, as
+the values themselves don’t count as being stored <em>in</em> the cache anymore. So
+it can be queried multiple times or go out of scope and the values it
+produces are not affected.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.UsersCache.html" title="struct users::cache::UsersCache">UsersCache</a></div><div class="desc docblock-short">A producer of user and group instances that caches every result.</div></li></ul></section></div></main></body></html>

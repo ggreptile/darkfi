@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The DarkFi Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">DarkFi</a></li><li class="chapter-item expanded "><a href="../philosophy/philosophy.html"><strong aria-hidden="true">1.</strong> Philosophy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../philosophy/ideology.html"><strong aria-hidden="true">1.1.</strong> Ideology</a></li><li class="chapter-item expanded "><a href="../philosophy/books.html"><strong aria-hidden="true">1.2.</strong> Books</a></li></ol></li><li class="chapter-item expanded "><a href="../testnet/testnet.html"><strong aria-hidden="true">2.</strong> Testnet Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../testnet/node.html"><strong aria-hidden="true">2.1.</strong> Running a Node</a></li><li class="chapter-item expanded "><a href="../testnet/airdrop.html"><strong aria-hidden="true">2.2.</strong> Airdrops</a></li><li class="chapter-item expanded "><a href="../testnet/payment.html"><strong aria-hidden="true">2.3.</strong> Payments</a></li><li class="chapter-item expanded "><a href="../testnet/atomic-swap.html"><strong aria-hidden="true">2.4.</strong> Atomic Swap</a></li><li class="chapter-item expanded "><a href="../testnet/dao.html"><strong aria-hidden="true">2.5.</strong> DAO</a></li></ol></li><li class="chapter-item expanded "><a href="../development/development.html"><strong aria-hidden="true">3.</strong> Development</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development/contributing.html"><strong aria-hidden="true">3.1.</strong> Contributing</a></li><li class="chapter-item expanded "><a href="../development/learn.html"><strong aria-hidden="true">3.2.</strong> Learn</a></li><li class="chapter-item expanded "><a href="../development/rustdoc.html"><strong aria-hidden="true">3.3.</strong> API Rustdoc</a></li><li class="chapter-item expanded "><a href="../development/seminars.html"><strong aria-hidden="true">3.4.</strong> Seminars</a></li></ol></li><li class="chapter-item expanded "><a href="../architecture/architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../architecture/overview.html"><strong aria-hidden="true">4.1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="../architecture/anonymous_assets.html"><strong aria-hidden="true">4.2.</strong> Anonymous assets</a></li><li class="chapter-item expanded "><a href="../architecture/blockchain.html"><strong aria-hidden="true">4.3.</strong> Blockchain</a></li><li class="chapter-item expanded "><a href="../architecture/consensus.html"><strong aria-hidden="true">4.4.</strong> Consensus</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../architecture/consensus/genesis_stake.html"><strong aria-hidden="true">4.4.1.</strong> GenesisStake</a></li><li class="chapter-item expanded "><a href="../architecture/consensus/stake.html"><strong aria-hidden="true">4.4.2.</strong> Stake</a></li><li class="chapter-item expanded "><a href="../architecture/consensus/proposal.html"><strong aria-hidden="true">4.4.3.</strong> Proposal</a></li><li class="chapter-item expanded "><a href="../architecture/consensus/unstake_request.html"><strong aria-hidden="true">4.4.4.</strong> UnstakeRequest</a></li><li class="chapter-item expanded "><a href="../architecture/consensus/unstake.html"><strong aria-hidden="true">4.4.5.</strong> Unstake</a></li></ol></li><li class="chapter-item expanded "><a href="../architecture/tx_lifetime.html"><strong aria-hidden="true">4.5.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../architecture/smart_contracts.html"><strong aria-hidden="true">4.6.</strong> Smart Contracts</a></li><li class="chapter-item expanded "><a href="../architecture/bridge.html"><strong aria-hidden="true">4.7.</strong> Bridge</a></li><li class="chapter-item expanded "><a href="../architecture/tooling.html"><strong aria-hidden="true">4.8.</strong> Tooling</a></li></ol></li><li class="chapter-item expanded "><a href="../architecture/sc/sc.html"><strong aria-hidden="true">5.</strong> Smart Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../architecture/sc/tx-lifetime.html"><strong aria-hidden="true">5.1.</strong> Transaction lifetime</a></li></ol></li><li class="chapter-item expanded "><a href="../zkas/index.html"><strong aria-hidden="true">6.</strong> zkas</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../zkas/bincode.html"><strong aria-hidden="true">6.1.</strong> Bincode</a></li><li class="chapter-item expanded "><a href="../zkas/zkvm.html"><strong aria-hidden="true">6.2.</strong> zkVM</a></li><li class="chapter-item expanded "><a href="../zkas/examples.html"><strong aria-hidden="true">6.3.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../zkas/examples/voting.html"><strong aria-hidden="true">6.3.1.</strong> Anonymous voting</a></li><li class="chapter-item expanded "><a href="../zkas/examples/sapling.html"><strong aria-hidden="true">6.3.2.</strong> Anonymous payments</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clients/clients.html"><strong aria-hidden="true">7.</strong> Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clients/darkfid_jsonrpc.html"><strong aria-hidden="true">7.1.</strong> darkfid JSON-RPC API</a></li><li class="chapter-item expanded "><a href="../clients/faucetd_jsonrpc.html"><strong aria-hidden="true">7.2.</strong> faucetd JSON-RPC API</a></li><li class="chapter-item expanded "><a href="../clients/anonymous_nodes.html"><strong aria-hidden="true">7.3.</strong> Anonymous Nodes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clients/tor_inbound.html"><strong aria-hidden="true">7.3.1.</strong> Tor Inbound Node</a></li><li class="chapter-item expanded "><a href="../clients/nym_outbound.html"><strong aria-hidden="true">7.3.2.</strong> Nym Outbound Node</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../crypto/crypto.html"><strong aria-hidden="true">8.</strong> Crypto</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../crypto/fft.html"><strong aria-hidden="true">8.1.</strong> FFT</a></li><li class="chapter-item expanded "><a href="../crypto/zk_explainer.html"><strong aria-hidden="true">8.2.</strong> ZK explainer</a></li><li class="chapter-item expanded "><a href="../crypto/research.html"><strong aria-hidden="true">8.3.</strong> Research</a></li><li class="chapter-item expanded "><a href="../crypto/rln.html"><strong aria-hidden="true">8.4.</strong> Rate-Limit Nullifiers</a></li><li class="chapter-item expanded "><a href="../crypto/reading-maths-books.html"><strong aria-hidden="true">8.5.</strong> Reading maths books</a></li></ol></li><li class="chapter-item expanded "><a href="../learn/dchat/dchat.html"><strong aria-hidden="true">9.</strong> P2P API Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../learn/dchat/deployment/part-1.html"><strong aria-hidden="true">9.1.</strong> Deployment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../learn/dchat/deployment/getting-started.html"><strong aria-hidden="true">9.1.1.</strong> Getting started</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/writing-a-daemon.html"><strong aria-hidden="true">9.1.2.</strong> Writing a daemon</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/sessions.html"><strong aria-hidden="true">9.1.3.</strong> Sessions</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/settings.html"><strong aria-hidden="true">9.1.4.</strong> Settings</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/error-handling.html"><strong aria-hidden="true">9.1.5.</strong> Error handling</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/start-run-stop.html"><strong aria-hidden="true">9.1.6.</strong> Start-Run-Stop</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/seed-node.html"><strong aria-hidden="true">9.1.7.</strong> Seed</a></li><li class="chapter-item expanded "><a href="../learn/dchat/deployment/deploy.html"><strong aria-hidden="true">9.1.8.</strong> Deploy</a></li></ol></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/part-2.html"><strong aria-hidden="true">9.2.</strong> Creating dchat</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/message.html"><strong aria-hidden="true">9.2.1.</strong> Message</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/protocols.html"><strong aria-hidden="true">9.2.2.</strong> Protocols</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/protocol-dchat.html"><strong aria-hidden="true">9.2.3.</strong> ProtocolDchat</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/register-protocol.html"><strong aria-hidden="true">9.2.4.</strong> Register protocol</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/sending-messages.html"><strong aria-hidden="true">9.2.5.</strong> Sending messages</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/ui.html"><strong aria-hidden="true">9.2.6.</strong> Slap on a UI</a></li><li class="chapter-item expanded "><a href="../learn/dchat/creating-dchat/using-dchat.html"><strong aria-hidden="true">9.2.7.</strong> Using dchat</a></li></ol></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/part-3.html"><strong aria-hidden="true">9.3.</strong> Net tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/rpc.html"><strong aria-hidden="true">9.3.1.</strong> RPC interface</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/accept-addr.html"><strong aria-hidden="true">9.3.2.</strong> Accept addr</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/pong.html"><strong aria-hidden="true">9.3.3.</strong> Adding methods</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/server.html"><strong aria-hidden="true">9.3.4.</strong> RPC server</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/get-info.html"><strong aria-hidden="true">9.3.5.</strong> get_info</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/using-dnetview.html"><strong aria-hidden="true">9.3.6.</strong> Using dnetview</a></li><li class="chapter-item expanded "><a href="../learn/dchat/network-tools/debug.html"><strong aria-hidden="true">9.3.7.</strong> Debugging</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../misc/misc.html"><strong aria-hidden="true">10.</strong> Miscellaneous tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../misc/vanityaddr.html"><strong aria-hidden="true">10.1.</strong> vanityaddr</a></li><li class="chapter-item expanded "><a href="../misc/ircd/ircd.html"><strong aria-hidden="true">10.2.</strong> darkirc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../misc/ircd/specification.html"><strong aria-hidden="true">10.2.1.</strong> Specification</a></li><li class="chapter-item expanded "><a href="../misc/ircd/private_message.html"><strong aria-hidden="true">10.2.2.</strong> Private Message</a></li></ol></li><li class="chapter-item expanded "><a href="../misc/tau.html"><strong aria-hidden="true">10.3.</strong> tau</a></li><li class="chapter-item expanded "><a href="../misc/event_graph/event_graph.html"><strong aria-hidden="true">10.4.</strong> event_graph</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../misc/event_graph/network_protocol.html"><strong aria-hidden="true">10.4.1.</strong> Network Protocol</a></li></ol></li><li class="chapter-item expanded "><a href="../misc/darkwiki.html"><strong aria-hidden="true">10.5.</strong> darkwiki</a></li><li class="chapter-item expanded "><a href="../misc/dnetview.html" class="active"><strong aria-hidden="true">10.6.</strong> dnetview</a></li></ol></li><li class="chapter-item expanded "><a href="../zero2dark/zero2darkfi.html"><strong aria-hidden="true">11.</strong> zero2darkfi</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../zero2darkfi/darkmap.html"><strong aria-hidden="true">11.1.</strong> smart contract</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Make the book title only appear if it is *not* the chapter title as well -->
+                    <h1 id="book-title" class="menu-title">The DarkFi Book</h1>
+                    <script type="text/javascript">
+                        var bookTitleElement = document.getElementById('book-title')
+                        var bookTitle = 'The DarkFi Book';
+                        var chapterTitle = 'dnetview';
+                        if (bookTitle === chapterTitle) {
+                            bookTitleElement.innerText = null;
+                            document.title = bookTitle;
+                        }
+                    </script>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="dnetview"><a class="header" href="#dnetview">Dnetview</a></h1>
+<p>A simple tui to explore darkfi ircd network topology.</p>
+<p>dnetview displays: </p>
+<ol>
+<li>all active nodes</li>
+<li>outgoing, incoming and manual sessions</li>
+<li>each associated connection and recent messages.</li>
+</ol>
+<h2 id="install"><a class="header" href="#install">Install</a></h2>
+<pre><code class="language-shell">% git clone https://github.com/darkrenaissance/darkfi 
+% cd darkfi
+% make BINS=dnetview
+</code></pre>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>Run dnetview as follows:</p>
+<pre><code class="language-shell">dnetview -v
+</code></pre>
+<p>On first run, dnetview will create a config file in .config/darkfi. You
+must manually enter the RPC ports of the nodes you want to connect to
+and title them as you see fit.</p>
+<p>Dnetview creates a logging file in /tmp/dnetview.log. To see json data
+and other debug info, tail the file like so:</p>
+<pre><code class="language-shell">tail -f /tmp/dnetview.log
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../misc/darkwiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../zero2dark/zero2darkfi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../misc/darkwiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../zero2dark/zero2darkfi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript" src="../theme/mermaid.min.js"></script>
+        <script type="text/javascript" src="../theme/mermaid-init.js"></script>
+
+
+    </body>
+</html>

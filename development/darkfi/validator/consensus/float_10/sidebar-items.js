@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["B","RADIX_BITS"],"fn":["base2ibig","fbig2base","fbig2ibig"],"struct":["FLOAT10_FIVE","FLOAT10_NEG_ONE","FLOAT10_NEG_TWO","FLOAT10_NINE","FLOAT10_ONE","FLOAT10_TEN","FLOAT10_THREE","FLOAT10_TWO","FLOAT10_ZERO","Float10"]};

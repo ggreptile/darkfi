@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["MAX_K","MAX_NS_LEN"]};

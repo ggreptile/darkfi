@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"dashu_int":[["impl <a class=\"trait\" href=\"num_order/trait.NumHash.html\" title=\"trait num_order::NumHash\">NumHash</a> for <a class=\"struct\" href=\"dashu_int/struct.IBig.html\" title=\"struct dashu_int::IBig\">IBig</a>"],["impl <a class=\"trait\" href=\"num_order/trait.NumHash.html\" title=\"trait num_order::NumHash\">NumHash</a> for <a class=\"struct\" href=\"dashu_int/struct.UBig.html\" title=\"struct dashu_int::UBig\">UBig</a>"]],
+"num_order":[]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

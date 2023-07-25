@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Extension trait for `Sink` to add a method for cancel-safe usage."><title>SinkPrepareExt in tor_async_utils - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="tor_async_utils" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../tor_async_utils/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../tor_async_utils/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">SinkPrepareExt</a></h2><div class="sidebar-elems"><section><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.prepare_send_from">prepare_send_from</a></li></ul><h3><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul class="block"><li><a href="#impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-%26'w+mut+OS">&amp;&#x27;w mut OS</a></li><li><a href="#impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-Pin%3C%26'w+mut+OS%3E">Pin&lt;&amp;&#x27;w mut OS&gt;</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><h2><a href="index.html">In tor_async_utils</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Trait <a href="index.html">tor_async_utils</a>::<wbr><a class="trait" href="#">SinkPrepareExt</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/tor_async_utils/prepare_send.rs.html#18-222">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub trait SinkPrepareExt&lt;'w, OS, OM&gt;<span class="where fmt-newline">where
+    OS: <a class="trait" href="../futures_sink/trait.Sink.html" title="trait futures_sink::Sink">Sink</a>&lt;OM&gt;,</span>{
+    // Required method
+    fn <a href="#tymethod.prepare_send_from" class="fn">prepare_send_from</a>&lt;IF, IM&gt;(
+        self,
+        message_generator: IF
+    ) -&gt; <a class="struct" href="struct.SinkPrepareSendFuture.html" title="struct tor_async_utils::SinkPrepareSendFuture">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt; <a href="#" class="tooltip" data-notable-ty="SinkPrepareSendFuture&lt;&#39;w, IF, OS, OM&gt;">ⓘ</a>
+       <span class="where">where IF: <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = IM&gt;</span>;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Extension trait for <a href="../futures_sink/trait.Sink.html" title="trait futures_sink::Sink"><code>Sink</code></a> to add a method for cancel-safe usage.</p>
+</div></details><h2 id="required-methods" class="small-section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.prepare_send_from" class="method"><a class="src rightside" href="../src/tor_async_utils/prepare_send.rs.html#216-221">source</a><h4 class="code-header">fn <a href="#tymethod.prepare_send_from" class="fn">prepare_send_from</a>&lt;IF, IM&gt;(
+    self,
+    message_generator: IF
+) -&gt; <a class="struct" href="struct.SinkPrepareSendFuture.html" title="struct tor_async_utils::SinkPrepareSendFuture">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt; <a href="#" class="tooltip" data-notable-ty="SinkPrepareSendFuture&lt;&#39;w, IF, OS, OM&gt;">ⓘ</a><span class="where fmt-newline">where
+    IF: <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = IM&gt;,</span></h4></section></summary><div class="docblock"><p>For processing an item obtained from a future, avoiding async cancel lossage</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>    <span class="kw">let </span>(message, sendable) = sink.prepare_send_from(
+        message_generator_future
+    ).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let </span>message = process_message(message)<span class="question-mark">?</span>;
+    sendable.send(message);</code></pre></div>
+<p>Prepares to send a output message<sup id="fnref1"><a href="#fn1">1</a></sup> <code>OM</code> to an output sink <code>OS</code> (<code>self</code>),
+where the <code>OM</code> is made from an input message <code>IM</code>,
+and the <code>IM</code> is obtained from a future, <code>generator: IF</code>.</p>
+<p>When successfully run, <code>prepare_send_from</code> gives <code>(IM, SinkSendable)</code>.</p>
+<p>After processing <code>IM</code> into <code>OM</code>,
+use the <a href="struct.SinkSendable.html" title="struct tor_async_utils::SinkSendable"><code>SinkSendable</code></a> to <a href="struct.SinkSendable.html#method.send" title="method tor_async_utils::SinkSendable::send"><code>send</code></a> the <code>OM</code> to <code>OS</code>.</p>
+<h5 id="why-use-this"><a href="#why-use-this">Why use this</a></h5>
+<p>This avoids the an async cancellation hazard
+which exists with naive use of <code>select!</code>
+followed by <code>OS.send().await</code>.  You might write this:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="macro">select!</span>{
+    message = input_stream.next() =&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(message) = message {
+            <span class="kw">let </span>message = do_our_processing(message);
+            output_sink(message).<span class="kw">await</span>; <span class="comment">// &lt;---**BUG**
+        </span>}
+    }
+    control = something_else() =&gt; { .. }
+}</code></pre></div>
+<p>If, when we reach <code>BUG</code>, the output sink is not ready to receive the message,
+the future for that particular <code>select!</code> branch will be suspended.
+But when <code>select!</code> finds that <em>any one</em> of the branches is ready,
+it <em>drops</em> the futures for the other branches.
+That drops all the local variables, including possibly <code>message</code>, losing it.</p>
+<p>For more about cancellation safety, see
+<a href="https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/async.html#cancellation-safety">Rust for the Polyglot Programmer</a>
+which has a general summary, and
+Matthias Einwag’s
+<a href="https://gist.github.com/Matthias247/ffc0f189742abf6aa41a226fe07398a8#cancellation-in-async-rust">extensive discussion in his gist</a>
+with comparisons to other languages.</p>
+<h6 id="alternatives"><a href="#alternatives">Alternatives</a></h6>
+<p>Unbounded mpsc channels, and certain other primitives,
+do not suffer from this problem because they do not block.
+<code>UnboundedSender</code> offers
+<a href="../futures_channel/mpsc/struct.UnboundedSender.html#method.unbounded_send" title="method futures_channel::mpsc::UnboundedSender::unbounded_send"><code>unbounded_send</code></a>
+but only as an inherent method, so this does not compose with <code>Sink</code> combinators.
+And of course unbounded channels do not implement any backpressure.</p>
+<p>The problem can otherwise be avoided by completely eschewing use of <code>select!</code>
+and writing manual implementations of <code>Future</code>, <code>Sink</code>, and so on,
+However, such code is typically considerably more complex and involves
+entangling the primary logic with future machinery.
+It is normally better to write primary functionality in <code>async { }</code>
+using utilities (often “futures combinators”) such as this one.</p>
+<h5 id="example"><a href="#example">Example</a></h5>
+<p>This comprehensive example demonstrates how to read from possibly multiple sources
+and also be able to process other events:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>futures::select;
+<span class="kw">use </span>futures::{SinkExt <span class="kw">as _</span>, StreamExt <span class="kw">as _</span>};
+<span class="kw">use </span>tor_async_utils::SinkPrepareExt <span class="kw">as _</span>;
+
+<span class="kw">let </span>(<span class="kw-2">mut </span>input_w, <span class="kw-2">mut </span>input_r) = futures::channel::mpsc::unbounded::&lt;usize&gt;();
+<span class="kw">let </span>(<span class="kw-2">mut </span>output_w, <span class="kw-2">mut </span>output_r) = futures::channel::mpsc::unbounded::&lt;String&gt;();
+input_w.send(<span class="number">42</span>).<span class="kw">await</span>;
+<span class="macro">select!</span>{
+    ret = output_w.prepare_send_from(<span class="kw">async </span>{
+        <span class="macro">select!</span>{
+            got_input = input_r.next() =&gt; got_input.expect(<span class="string">&quot;input stream ended!&quot;</span>),
+            () = futures::future::pending() =&gt; <span class="macro">panic!</span>(), <span class="comment">// other branches are OK here
+        </span>}
+    }) =&gt; {
+        <span class="kw">let </span>(input_msg, sendable) = ret.unwrap();
+        <span class="kw">let </span>output_msg = input_msg.to_string();
+        <span class="kw">let </span>() = sendable.send(output_msg).unwrap();
+    },
+    () = futures::future::pending() =&gt; <span class="macro">panic!</span>(), <span class="comment">// other branches are OK here
+</span>}
+
+<span class="macro">assert_eq!</span>(output_r.next().<span class="kw">await</span>.unwrap(), <span class="string">&quot;42&quot;</span>);</code></pre></div>
+<h5 id="formally"><a href="#formally">Formally</a></h5>
+<p><a href="trait.SinkPrepareExt.html#tymethod.prepare_send_from" title="method tor_async_utils::SinkPrepareExt::prepare_send_from"><code>prepare_send_from</code></a>
+returns a <a href="struct.SinkPrepareSendFuture.html" title="struct tor_async_utils::SinkPrepareSendFuture"><code>SinkPrepareSendFuture</code></a> which, when awaited:</p>
+<ul>
+<li>Waits for <code>OS</code> to be ready to receive an item.</li>
+<li>Runs <code>message_generator</code> to obtain a <code>IM</code>.</li>
+<li>Returns the <code>IM</code> (for processing), and a <a href="struct.SinkSendable.html" title="struct tor_async_utils::SinkSendable"><code>SinkSendable</code></a>.</li>
+</ul>
+<p>The caller should then:</p>
+<ul>
+<li>Check the error from <code>prepare_send_from</code>
+(which came from the <em>output</em> sink).</li>
+<li>Process the <code>IM</code>, making an <code>OM</code> out of it.</li>
+<li>Call <a href="struct.SinkSendable.html#method.send" title="method tor_async_utils::SinkSendable::send"><code>sendable.send()</code></a> (and check its error).</li>
+</ul>
+<h5 id="flushing"><a href="#flushing">Flushing</a></h5>
+<p><code>prepare_send_from</code> will (when awaited)
+<a href="../futures_util/sink/trait.SinkExt.html#method.flush" title="method futures_util::sink::SinkExt::flush"><code>flush</code></a> the output sink
+when it finds the input is not ready yet.
+Until then items may be buffered
+(as if they had been written with <a href="../futures_util/sink/trait.SinkExt.html#method.feed" title="method futures_util::sink::SinkExt::feed"><code>feed</code></a>).</p>
+<h5 id="errors"><a href="#errors">Errors</a></h5><h6 id="output-sink-errors"><a href="#output-sink-errors">Output sink errors</a></h6>
+<p>The call site can experience output sink errors in two places,
+<a href="trait.SinkPrepareExt.html#tymethod.prepare_send_from" title="method tor_async_utils::SinkPrepareExt::prepare_send_from"><code>prepare_send_from()</code></a> and <a href="struct.SinkSendable.html#method.send" title="method tor_async_utils::SinkSendable::send"><code>SinkSendable::send()</code></a>.
+The caller should typically handle them the same way regardless of when they occurred.</p>
+<p>If the error happens at <a href="struct.SinkSendable.html#method.send" title="method tor_async_utils::SinkSendable::send"><code>SinkSendable::send()</code></a>,
+the call site will usually be forced to discard the item being processed.
+This will only occur if the sink is actually broken.</p>
+<h6 id="errors-specific-to-the-call-site-faillible-input-and-fallible-processing"><a href="#errors-specific-to-the-call-site-faillible-input-and-fallible-processing">Errors specific to the call site: faillible input, and fallible processing</a></h6>
+<p>At some call sites, the input future may yield errors
+(perhaps it is reading from a <code>Stream</code> of <a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result"><code>Result</code></a>s).
+in that case the value from the input future will be a <a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result"><code>Result</code></a>.
+Then <code>IM</code> is a <code>Result</code>, and is provided in the <code>.0</code> element
+of the “successful” return from <code>prepare_send_from</code>.</p>
+<p>And, at some call sites, the processing of an <code>IM</code> into an <code>OM</code> is fallible.</p>
+<p>Handling these latter two error caess is up to the caller,
+in the code which processes <code>IM</code>.
+The call site will often want to deal with such an error
+without sending anything into the output sink,
+and can then just drop the <a href="struct.SinkSendable.html" title="struct tor_async_utils::SinkSendable"><code>SinkSendable</code></a>.</p>
+<h5 id="implementations-1"><a href="#implementations-1">Implementations</a></h5>
+<p>This is an extension trait and you are not expected to need to implement it.</p>
+<p>There are provided implementations for <code>Pin&lt;&amp;mut impl Sink&gt;</code>
+and <code>&amp;mut impl Sink + Unpin</code>, for your convenience.</p>
+<div class="footnotes"><hr><ol><li id="fn1"><p>We sometimes use slightly inconsistent terminology,
+“item” vs “message”.
+This avoids having to have the generic parameters by named <code>OI</code> and <code>II</code>
+where <code>I</code> is sometimes “item” and sometimes “input”.&nbsp;<a href="#fnref1">↩</a></p></li></ol></div></div></details></div><h2 id="foreign-impls" class="small-section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor">§</a></h2><details class="toggle implementors-toggle"><summary><section id="impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-Pin%3C%26'w+mut+OS%3E" class="impl"><a class="src rightside" href="../src/tor_async_utils/prepare_send.rs.html#224-241">source</a><a href="#impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-Pin%3C%26'w+mut+OS%3E" class="anchor">§</a><h3 class="code-header">impl&lt;'w, OS, OM&gt; <a class="trait" href="trait.SinkPrepareExt.html" title="trait tor_async_utils::SinkPrepareExt">SinkPrepareExt</a>&lt;'w, OS, OM&gt; for <a class="struct" href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'w mut OS</a>&gt;<span class="where fmt-newline">where
+    OS: <a class="trait" href="../futures_sink/trait.Sink.html" title="trait futures_sink::Sink">Sink</a>&lt;OM&gt;,</span></h3></section></summary><div class="impl-items"><section id="method.prepare_send_from" class="method trait-impl"><a class="src rightside" href="../src/tor_async_utils/prepare_send.rs.html#228-240">source</a><a href="#method.prepare_send_from" class="anchor">§</a><h4 class="code-header">fn <a href="#tymethod.prepare_send_from" class="fn">prepare_send_from</a>&lt;'r, IF, IM&gt;(
+    self,
+    message_generator: IF
+) -&gt; <a class="struct" href="struct.SinkPrepareSendFuture.html" title="struct tor_async_utils::SinkPrepareSendFuture">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt; <a href="#" class="tooltip" data-notable-ty="SinkPrepareSendFuture&lt;&#39;w, IF, OS, OM&gt;">ⓘ</a><span class="where fmt-newline">where
+    IF: <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = IM&gt;,</span></h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-%26'w+mut+OS" class="impl"><a class="src rightside" href="../src/tor_async_utils/prepare_send.rs.html#243-256">source</a><a href="#impl-SinkPrepareExt%3C'w,+OS,+OM%3E-for-%26'w+mut+OS" class="anchor">§</a><h3 class="code-header">impl&lt;'w, OS, OM&gt; <a class="trait" href="trait.SinkPrepareExt.html" title="trait tor_async_utils::SinkPrepareExt">SinkPrepareExt</a>&lt;'w, OS, OM&gt; for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'w mut OS</a><span class="where fmt-newline">where
+    OS: <a class="trait" href="../futures_sink/trait.Sink.html" title="trait futures_sink::Sink">Sink</a>&lt;OM&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Unpin.html" title="trait core::marker::Unpin">Unpin</a>,</span></h3></section></summary><div class="impl-items"><section id="method.prepare_send_from-1" class="method trait-impl"><a class="src rightside" href="../src/tor_async_utils/prepare_send.rs.html#247-255">source</a><a href="#method.prepare_send_from-1" class="anchor">§</a><h4 class="code-header">fn <a href="#tymethod.prepare_send_from" class="fn">prepare_send_from</a>&lt;'r, IF, IM&gt;(
+    self,
+    message_generator: IF
+) -&gt; <a class="struct" href="struct.SinkPrepareSendFuture.html" title="struct tor_async_utils::SinkPrepareSendFuture">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt; <a href="#" class="tooltip" data-notable-ty="SinkPrepareSendFuture&lt;&#39;w, IF, OS, OM&gt;">ⓘ</a><span class="where fmt-newline">where
+    IF: <a class="trait" href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = IM&gt;,</span></h4></section></div></details><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../implementors/tor_async_utils/prepare_send/trait.SinkPrepareExt.js" data-ignore-extern-crates="core" async></script><script type="text/json" id="notable-traits-data">{"SinkPrepareSendFuture<'w, IF, OS, OM>":"<h3>Notable traits for <code><a class=\"struct\" href=\"struct.SinkPrepareSendFuture.html\" title=\"struct tor_async_utils::SinkPrepareSendFuture\">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt;</code></h3><pre><code><span class=\"where fmt-newline\">impl&lt;'w, IF, OS, IM, OM&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html\" title=\"trait core::future::future::Future\">Future</a> for <a class=\"struct\" href=\"struct.SinkPrepareSendFuture.html\" title=\"struct tor_async_utils::SinkPrepareSendFuture\">SinkPrepareSendFuture</a>&lt;'w, IF, OS, OM&gt;<span class=\"where fmt-newline\">where\n    IF: <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html\" title=\"trait core::future::future::Future\">Future</a>&lt;Output = IM&gt;,\n    OS: <a class=\"trait\" href=\"../futures_sink/trait.Sink.html\" title=\"trait futures_sink::Sink\">Sink</a>&lt;OM&gt;,</span></span><span class=\"where fmt-newline\">    type <a href=\"https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html#associatedtype.Output\" class=\"associatedtype\">Output</a> = <a class=\"enum\" href=\"https://doc.rust-lang.org/nightly/core/result/enum.Result.html\" title=\"enum core::result::Result\">Result</a>&lt;(IM, <a class=\"struct\" href=\"struct.SinkSendable.html\" title=\"struct tor_async_utils::SinkSendable\">SinkSendable</a>&lt;'w, OS, OM&gt;), OS::<a class=\"associatedtype\" href=\"../futures_sink/trait.Sink.html#associatedtype.Error\" title=\"type futures_sink::Sink::Error\">Error</a>&gt;;</span>"}</script></section></div></main></body></html>

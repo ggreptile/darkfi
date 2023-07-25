@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["MultilineListBuilder"],"macro":["define_list_builder_accessors","define_list_builder_helper"],"struct":["MultilineListBuilderError","VecBuilder"],"trait":["DirectDefaultEmptyListBuilderAccessors"]};

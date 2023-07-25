@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":["main","test"],"macro":["eprint","eprintln","print","println","task_local","write","writeln"],"mod":["channel","fs","future","io","net","os","path","pin","prelude","process","stream","sync","task"]};

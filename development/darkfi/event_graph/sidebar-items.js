@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["gen_id"],"mod":["events_queue","model","protocol_event","view"],"trait":["EventMsg"]};

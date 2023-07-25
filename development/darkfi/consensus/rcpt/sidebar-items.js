@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["AEAD_TAG_SIZE","CIPHER_SIZE","PLAINTEXT_SIZE"],"struct":["EncryptedTxRcpt","TxRcpt"]};

@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"tor_cert":[["impl <a class=\"trait\" href=\"tor_checkable/trait.Timebound.html\" title=\"trait tor_checkable::Timebound\">Timebound</a>&lt;<a class=\"struct\" href=\"tor_cert/struct.Ed25519Cert.html\" title=\"struct tor_cert::Ed25519Cert\">Ed25519Cert</a>&gt; for <a class=\"struct\" href=\"tor_cert/struct.SigCheckedCert.html\" title=\"struct tor_cert::SigCheckedCert\">SigCheckedCert</a>"],["impl <a class=\"trait\" href=\"tor_checkable/trait.Timebound.html\" title=\"trait tor_checkable::Timebound\">Timebound</a>&lt;<a class=\"struct\" href=\"tor_cert/struct.Ed25519Cert.html\" title=\"struct tor_cert::Ed25519Cert\">Ed25519Cert</a>&gt; for <a class=\"struct\" href=\"tor_cert/struct.Ed25519Cert.html\" title=\"struct tor_cert::Ed25519Cert\">Ed25519Cert</a>"]],
+"tor_checkable":[]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

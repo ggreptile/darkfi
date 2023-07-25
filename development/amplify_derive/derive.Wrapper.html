@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Creates rust new type wrapping existing type. Can be used in structures containing multiple named or unnamed fields; in this case the field you’d like to wrap should be marked with `#[wrap]` attribute; otherwise the first field is assumed to be the wrapped one."><title>Wrapper in amplify_derive - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="amplify_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc derive"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../amplify_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../amplify_derive/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In amplify_derive</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Derive Macro <a href="index.html">amplify_derive</a>::<wbr><a class="derive" href="#">Wrapper</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/amplify_derive/lib.rs.html#757-762">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>#[derive(Wrapper)]
+{
+    // Attributes available to this derive:
+    #[wrap]
+    #[wrapper]
+    #[amplify_crate]
+}
+</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Creates rust new type wrapping existing type. Can be used in structures
+containing multiple named or unnamed fields; in this case the field you’d
+like to wrap should be marked with <code>#[wrap]</code> attribute; otherwise the first
+field is assumed to be the wrapped one.</p>
+<p>NB: You have to use <code>derive(From)</code> in order foe Wrapper to work properly.
+Also, in case of multiple fields, each non-wrapped field type must implement
+<code>Default</code> trait.</p>
+<p>Supports automatic implementation of the following traits:</p>
+<ul>
+<li><code>amplify::Wrapper</code></li>
+<li><a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef"><code>AsRef</code></a></li>
+<li><a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html" title="trait core::borrow::Borrow"><code>core::borrow::Borrow</code></a></li>
+</ul>
+<p>You can implement additional derives, it they are implemented for the
+wrapped type, using <code>#[wrapper()]</code> proc macro:</p>
+<ol>
+<li>Reference access to the inner type:
+<ul>
+<li><code>Deref</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref"><code>core::ops::Deref</code></a></li>
+<li><code>BorrowSlice</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html" title="trait core::borrow::Borrow"><code>core::borrow::Borrow</code></a><code>&lt;[Self::Inner]&gt;</code></li>
+</ul>
+</li>
+<li>Formatting:
+<ul>
+<li><code>FromStr</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html" title="trait core::str::traits::FromStr"><code>core::str::FromStr</code></a></li>
+<li><code>Debug</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug"><code>core::fmt::Debug</code></a></li>
+<li><code>Display</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display"><code>core::fmt::Display</code></a></li>
+<li><code>FromHex</code> for implementing [<code>amplify::hex::FromHex</code>]</li>
+<li><code>LowerHex</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.LowerHex.html" title="trait core::fmt::LowerHex"><code>core::fmt::LowerHex</code></a></li>
+<li><code>UpperHex</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.UpperHex.html" title="trait core::fmt::UpperHex"><code>core::fmt::UpperHex</code></a></li>
+<li><code>LowerExp</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.LowerExp.html" title="trait core::fmt::LowerExp"><code>core::fmt::LowerExp</code></a></li>
+<li><code>UpperExp</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.UpperExp.html" title="trait core::fmt::UpperExp"><code>core::fmt::UpperExp</code></a></li>
+<li><code>Octal</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Octal.html" title="trait core::fmt::Octal"><code>core::fmt::Octal</code></a></li>
+</ul>
+</li>
+<li>Indexed access to the inner type:
+<ul>
+<li><code>Index</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;usize&gt;</code></li>
+<li><code>IndexRange</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.Range.html" title="struct core::ops::range::Range"><code>core::ops::Range</code></a><code>&lt;usize&gt;&gt;</code></li>
+<li><code>IndexTo</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.RangeTo.html" title="struct core::ops::range::RangeTo"><code>core::ops::RangeTo</code></a><code>&lt;usize&gt;&gt;</code></li>
+<li><code>IndexFrom</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.RangeFrom.html" title="struct core::ops::range::RangeFrom"><code>core::ops::RangeFrom</code></a><code>&lt;usize&gt;&gt;</code></li>
+<li><code>IndexInclusive</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.RangeInclusive.html" title="struct core::ops::range::RangeInclusive"><code>core::ops::RangeInclusive</code></a><code>&lt;usize&gt;&gt;</code></li>
+<li><code>IndexToInclusive</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.RangeToInclusive.html" title="struct core::ops::range::RangeToInclusive"><code>core::ops::RangeToInclusive</code></a><code>&lt;usize&gt;&gt;</code></li>
+<li><code>IndexFull</code> for implementing
+<a href="https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html" title="trait core::ops::index::Index"><code>core::ops::Index</code></a><code>&lt;</code><a href="https://doc.rust-lang.org/nightly/core/ops/range/struct.RangeFrom.html" title="struct core::ops::range::RangeFrom"><code>core::ops::RangeFrom</code></a><code>&lt;usize&gt;&gt;</code></li>
+</ul>
+</li>
+<li>Arithmetic operations:
+<ul>
+<li><code>Neg</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Neg.html" title="trait core::ops::arith::Neg"><code>core::ops::Neg</code></a></li>
+<li><code>Add</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add"><code>core::ops::Add</code></a></li>
+<li><code>Sub</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Sub.html" title="trait core::ops::arith::Sub"><code>core::ops::Sub</code></a></li>
+<li><code>Mul</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul"><code>core::ops::Mul</code></a></li>
+<li><code>Div</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Div.html" title="trait core::ops::arith::Div"><code>core::ops::Div</code></a></li>
+<li><code>Rem</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Rem.html" title="trait core::ops::arith::Rem"><code>core::ops::Rem</code></a></li>
+</ul>
+</li>
+<li>Boolean and bit-wise operations:
+<ul>
+<li><code>Not</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.Not.html" title="trait core::ops::bit::Not"><code>core::ops::Not</code></a></li>
+<li><code>BitAnd</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.BitAnd.html" title="trait core::ops::bit::BitAnd"><code>core::ops::BitAnd</code></a></li>
+<li><code>BitOr</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.BitOr.html" title="trait core::ops::bit::BitOr"><code>core::ops::BitOr</code></a></li>
+<li><code>BitXor</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.BitXor.html" title="trait core::ops::bit::BitXor"><code>core::ops::BitXor</code></a></li>
+<li><code>Shl</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.Shl.html" title="trait core::ops::bit::Shl"><code>core::ops::Shl</code></a></li>
+<li><code>Shr</code> for implementing <a href="https://doc.rust-lang.org/nightly/core/ops/bit/trait.Shr.html" title="trait core::ops::bit::Shr"><code>core::ops::Shr</code></a></li>
+</ul>
+</li>
+</ol>
+<p>There are shortcuts for derivations:</p>
+<ul>
+<li><code>#[wrapper(Hex)]</code> will derive both <code>LowerHex</code>, <code>UpperHex</code> and <code>FromHex</code>;</li>
+<li><code>#[wrapper(Exp)]</code> will derive both <code>LowerExp</code> and <code>UpperExp</code>;</li>
+<li><code>#[wrapper(NumberFmt)]</code> will derive all number formatting traits
+(<code>LowerHex</code>, <code>UpperHex</code>, <code>LowerExp</code>, <code>UpperExp</code>, <code>Octal</code>);</li>
+<li><code>#[wrapper(RangeOps)]</code> will derive all index traits working with ranges
+(<code>IndexRange</code>, <code>IndexTo</code>, <code>IndexFrom</code>, <code>IndexInclusive</code>,
+<code>IndexToInclusive</code>, <code>IndexFull</code>);</li>
+<li><code>#[wrapper(MathOps)]</code> will derive all arithmetic operations (<code>Neg</code>, <code>Add</code>,
+<code>Sub</code>, <code>Mul</code>, <code>Div</code>, <code>Rem</code>);</li>
+<li><code>#[wrapper(BoolOps)]</code> will derive all boolean operations (<code>Not</code>, <code>BitAnd</code>,
+<code>BitOr</code>, <code>BitXor</code>);</li>
+<li><code>#[wrapper(BitOps)]</code> will derive all boolean operations <em>and bit shifts</em>
+(<code>Not</code>, <code>BitAnd</code>, <code>BitOr</code>, <code>BitXor</code>, <code>Shl</code>, <code>Shr</code>).</li>
+</ul>
+<p>Other traits, such as <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq"><code>PartialEq</code></a>, <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq"><code>Eq</code></a>, <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html" title="trait core::cmp::PartialOrd"><code>PartialOrd</code></a>, <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html" title="trait core::cmp::Ord"><code>Ord</code></a>,
+<a href="https://doc.rust-lang.org/nightly/core/hash/macros/derive.Hash.html" title="derive core::hash::macros::Hash"><code>Hash</code></a> can be implemented using standard <code>#[derive]</code> attribute in the
+same manner as <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default"><code>Default</code></a>, <a href="https://doc.rust-lang.org/nightly/core/fmt/macros/derive.Debug.html" title="derive core::fmt::macros::Debug"><code>Debug</code></a> and <a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From"><code>From</code></a></p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<p>Simple wrapper:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>amplify::Wrapper;
+
+<span class="attr">#[derive(Wrapper, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, From, Debug, Display)]
+#[display(inner)]
+#[wrapper(LowerHex, UpperHex, Octal)]
+#[wrapper(MathOps, BitOps)]
+</span><span class="kw">struct </span>Int64(i64);</code></pre></div>
+<p>More complex wrapper with multiple unnamed fields:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::marker::PhantomData;
+
+<span class="kw">use </span>amplify::Wrapper;
+
+<span class="attr">#[derive(Clone, Wrapper, Default, From)]
+#[wrapper(Debug)]
+</span><span class="kw">struct </span>Wrapped&lt;T, U&gt;(
+    <span class="attr">#[wrap]
+    #[from]
+    </span>HashMap&lt;usize, Vec&lt;U&gt;&gt;,
+    PhantomData&lt;T&gt;,
+)
+<span class="kw">where </span>U: Sized + Clone + Debug;
+
+<span class="kw">let </span>w = Wrapped::&lt;(), u8&gt;::default();
+<span class="macro">assert_eq!</span>(w.into_inner(), HashMap::&lt;usize, Vec&lt;u8&gt;&gt;::default());</code></pre></div>
+<p>Wrappers for indexable types</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>amplify::Wrapper;
+
+<span class="attr">#[derive(Wrapper, From)]
+#[wrapper(Index, RangeOps)]
+</span><span class="kw">struct </span>VecNewtype(Vec&lt;u8&gt;);</code></pre></div>
+</div></details></section></div></main></body></html>

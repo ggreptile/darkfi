@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="async_executors"><title>async_executors - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="async_executors" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (31395ec38 2023-07-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../async_executors/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../async_executors/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate async_executors</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.6.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">async_executors</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/async_executors/lib.rs.html#1-41">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="async_executors"><a href="#async_executors">async_executors</a></h2>
+<p><a href="https://github.com/RichardLitt/standard-readme"><img src="https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square" alt="standard-readme compliant" /></a>
+<a href="https://travis-ci.org/najamelan/async_executors"><img src="https://api.travis-ci.org/najamelan/async_executors.svg?branch=master" alt="Build Status" /></a>
+<a href="https://docs.rs/async_executors"><img src="https://docs.rs/async_executors/badge.svg" alt="Docs" /></a>
+<a href="https://crates.io/crates/async_executors"><img src="https://img.shields.io/crates/v/async_executors.svg" alt="crates.io" /></a></p>
+<blockquote>
+<p>Abstract over different executors.</p>
+</blockquote>
+<p><em>async_executors</em> aims to help you write executor agnostic libraries. We express common executor functionality in traits and implement it for the most used executors. This way libraries can require the exact functionality they need and client code can use any executor they choose as long as it can provide the required functionality.</p>
+<p>Available traits are grouped in the <a href="iface/index.html" title="mod async_executors::iface"><code>iface</code></a> module. We also implement <a href="../futures_task/spawn/trait.Spawn.html" title="trait futures_task::spawn::Spawn"><code>Spawn</code></a> and/or <a href="../futures_task/spawn/trait.LocalSpawn.html" title="trait futures_task::spawn::LocalSpawn"><code>LocalSpawn</code></a> traits from <em>futures</em>.</p>
+<p>All supported executors are turned on with features, see below.</p>
+<h3 id="table-of-contents"><a href="#table-of-contents">Table of Contents</a></h3>
+<ul>
+<li><a href="#install">Install</a>
+<ul>
+<li><a href="#upgrade">Upgrade</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#security">Security</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a>
+<ul>
+<li><a href="#general-features">General Features</a></li>
+<li><a href="#executor-specific">Executor Specific</a></li>
+</ul>
+</li>
+<li><a href="#usage">Usage</a>
+<ul>
+<li><a href="#basic-example">Basic Example</a></li>
+<li><a href="#api">API</a></li>
+</ul>
+</li>
+<li><a href="#contributing">Contributing</a>
+<ul>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+</ul>
+</li>
+<li><a href="#license">License</a></li>
+</ul>
+<h3 id="install"><a href="#install">Install</a></h3>
+<p>With <a href="https://github.com/killercup/cargo-edit">cargo add</a>:
+<code>cargo add async_executors</code></p>
+<p>With <a href="https://gitlab.com/storedbox/cargo-yaml">cargo yaml</a>:</p>
+<div class="example-wrap"><pre class="language-yaml"><code>dependencies:
+
+   async_executors: ^0.6
+</code></pre></div>
+<p>With Cargo.toml</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+
+    async_executors = &quot;0.6&quot;
+</code></pre></div><h4 id="upgrade"><a href="#upgrade">Upgrade</a></h4>
+<p>Please check out the <a href="https://github.com/najamelan/async_executors/blob/master/CHANGELOG.md">changelog</a> when upgrading.</p>
+<h4 id="dependencies"><a href="#dependencies">Dependencies</a></h4>
+<p>This crate has few dependencies. Cargo will automatically handle it’s dependencies for you.</p>
+<p>The only hard dependencies are <code>futures-task</code> and <code>futures-util</code>. The rest are the optional dependencies to turn on support for each executor.</p>
+<h3 id="features"><a href="#features">Features</a></h3>
+<p>This crate has a lot of features. Lets go over them:</p>
+<h4 id="general-features"><a href="#general-features">General features</a></h4>
+<ul>
+<li><code>tracing</code>: when enabled, all traits are re-implemented for [<code>tracing-futures::Instrumented</code>] and [<code>tracing-futures::WithDispatch</code>].</li>
+<li><code>timer</code>  : Turns on the <em>futures-timer</em> crate. This enables executors to async sleep. On <em>tokio</em>, alternatively you can enable <code>tokio_timer</code> to enable the tokio native timer. <em>async_std</em>, when not on wasm, provides a timer without needing this feature.</li>
+</ul>
+<h4 id="executor-specific"><a href="#executor-specific">Executor specific:</a></h4>
+<ul>
+<li><code>async_global</code>      : Turns on the executor from <a href="https://docs.rs/async-global-executor"><em>async-global-executor</em></a>.
+Supports Wasm, <code>!Send</code> tasks.</li>
+<li><code>async_global_tokio</code>: Makes sure a tokio reactor is running for tasks spawned on [<code>AsyncGlobal</code>]. [<code>AsyncGlobal</code>] will implement the <a href="iface/trait.TokioIo.html" title="trait async_executors::iface::TokioIo"><code>TokioIo</code></a> trait.</li>
+<li><code>async_std</code>         : Turns on the executor from the <a href="https://docs.rs/async-std"><em>async-std</em></a> crate. Supports Wasm and <code>!Send</code> tasks.</li>
+<li><code>async_std_tokio</code>   : Makes sure a tokio reactor is running for tasks spawned on <a href="exec/struct.AsyncStd.html" title="struct async_executors::exec::AsyncStd"><code>AsyncStd</code></a>. <a href="exec/struct.AsyncStd.html" title="struct async_executors::exec::AsyncStd"><code>AsyncStd</code></a> will implement the <a href="iface/trait.TokioIo.html" title="trait async_executors::iface::TokioIo"><code>TokioIo</code></a> trait.</li>
+<li><code>glommio</code>           : Turns on the executor from the <a href="https://docs.rs/glommio"><em>glommio</em></a> crate. Single threaded, Linux 5.8+ only. Supports <code>!Send</code> tasks.</li>
+<li><code>tokio_ct</code>          : Tokio Current thread, enables a single threaded runtime from the <a href="https://docs.rs/tokio"><em>tokio</em></a> crate. Supports <code>!Send</code> tasks.</li>
+<li><code>tokio_tp</code>          : Tokio threadpool, enables a threadpool runtime from the <a href="https://docs.rs/tokio"><em>tokio</em></a> crate.</li>
+<li><code>tokio_timer</code>       : Will enable the <code>time</code> feature on <em>tokio</em> and call <code>enable_time()</code> on any tokio runtimes you create. For tokio runtimes, this takes precedence over the <code>timer</code> feature.</li>
+<li><code>tokio_io</code>          : Will enable the <code>net</code> and <code>process</code> features on <em>tokio</em> and call <code>enable_reactor()</code> on any tokio runtimes you create. [<code>TokioCt</code>] and [<code>TokioTp</code>] will implement the <a href="iface/trait.TokioIo.html" title="trait async_executors::iface::TokioIo"><code>TokioIo</code></a> trait.</li>
+<li><code>localpool</code>         : Enables the single threaded executor from <a href="http://docs.rs/futures-executor"><em>futures-executor</em></a>. Supports <code>!Send</code> tasks. <code>LocalPool</code> and <code>LocalSpawner</code> will be re-exported from this crate and have our traits implemented.</li>
+<li><code>threadpool</code>        : Enables the treadpool executor from <a href="http://docs.rs/futures-executor"><em>futures-executor</em></a>. <code>ThreadPool</code> will be re-exported from this crate and have our traits implemented.</li>
+<li><code>bindgen</code>           : Enables the single threaded executor from <a href="https://docs.rs/wasm-bindgen-futures"><em>wasm-bindgen-futures</em></a>. Wasm only. Supports <code>!Send</code> tasks.</li>
+</ul>
+<h3 id="security"><a href="#security">Security</a></h3>
+<p>The crate itself uses <code>#[ forbid(unsafe_code) ]</code>.</p>
+<p>Our dependencies use unsafe.</p>
+<h3 id="performance"><a href="#performance">Performance</a></h3>
+<p>Most wrappers are very thin but the <code>Spawn</code> and <code>LocalSpawn</code> traits do imply boxing the future. With executors boxing futures
+to put them in a queue you probably get 2 heap allocations per spawn.</p>
+<p><code>JoinHandle</code> uses the native <code>JoinHandle</code> types from <em>tokio</em> and <em>async-std</em> to avoid the overhead from <code>RemoteHandle</code>, but for <em>async-std</em>, wrap the future in <code>Abortable</code> to create consistent behavior across all executors. The <code>JoinHandle</code> provided cancels it’s future on drop unless you call <code>detach</code> on it.</p>
+<p><code>SpawnHandle</code> and <code>LocalSpawnHandle</code> require boxing the future twice, just like <code>Spawn</code> and <code>LocalSpawn</code>.</p>
+<p>Existing benchmarks for all executors can be found in <a href="https://github.com/najamelan/executor_benchmarks">executor_benchmarks</a>.</p>
+<h3 id="usage"><a href="#usage">Usage</a></h3><h4 id="for-api-providers"><a href="#for-api-providers">For API providers</a></h4>
+<p>When writing a library that needs to spawn, you probably shouldn’t lock your clients into one framework or another. It’s usually not appropriate to setup your own thread pool for spawning futures. It belongs to the application developer to decide where futures are spawned and it might not be appreciated if libraries bring in extra dependencies on a framework.</p>
+<p>In order to get round this you can take an executor in as a parameter from client code and spawn your futures on the provided executor. Currently the only two traits that are kind of widely available for this are <code>Spawn</code> and <code>LocalSpawn</code> from the <em>futures</em> library. Unfortunately, other executor providers do not implement these traits. So by publishing an API that relies on these traits, you would have been restricting the clients to use the executors from <em>futures</em>, or start implementing their own wrappers that implement the traits.</p>
+<p><em>Async_executors</em> has wrappers providing impls on various executors, namely <em>tokio</em>, <em>async_std</em>, <em>wasm_bindgen</em>, … As such you can just use the trait bounds and refer your users to this crate if they want to use any of the supported executors.</p>
+<p>All wrappers also implement <code>Clone</code>, <code>Debug</code> and the zero sized ones also <code>Copy</code>. You can express you will need to clone in your API: <code>impl Spawn + Clone</code>.</p>
+<p>Note that you should never use <code>block_on</code> inside async contexts. Depending on the executor, this might hang or panic. Some backends we use like <em>tokio</em> and <code>RemoteHandle</code> from <em>futures</em> use <code>catch_unwind</code>, so try to keep futures unwind safe.</p>
+<h5 id="spawning-with-handles"><a href="#spawning-with-handles">Spawning with handles</a></h5>
+<p>You can use the <code>SpawnHandle</code> and <code>LocalSpawnHandle</code> traits as bounds for obtaining join handles.</p>
+<h6 id="example"><a href="#example">Example</a></h6>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use
+</span>{
+  async_executors :: { JoinHandle, SpawnHandle, SpawnHandleExt       } ,
+  std             :: { sync::Arc                                     } ,
+  futures         :: { FutureExt, executor::{ ThreadPool, block_on } } ,
+};
+
+
+<span class="comment">// Example of a library function that needs an executor. Just use impl Trait.
+//
+</span><span class="kw">fn </span>needs_exec( exec: <span class="kw">impl </span>SpawnHandle&lt;()&gt; )
+{
+   <span class="kw">let </span>handle = exec.spawn_handle( <span class="kw">async </span>{} );
+}
+
+
+<span class="comment">// A type that needs to hold on to an executor during it&#39;s lifetime. Here it
+// must be heap allocated.
+//
+</span><span class="kw">struct </span>SomeObj{ exec: Arc&lt; <span class="kw">dyn </span>SpawnHandle&lt;u8&gt; &gt; }
+
+
+<span class="kw">impl </span>SomeObj
+{
+   <span class="kw">pub fn </span>new( exec: Arc&lt; <span class="kw">dyn </span>SpawnHandle&lt;u8&gt; &gt; ) -&gt; SomeObj
+   {
+      SomeObj{ exec }
+   }
+
+   <span class="kw">fn </span>run( <span class="kw-2">&amp;</span><span class="self">self </span>) -&gt; JoinHandle&lt;u8&gt;
+   {
+      <span class="self">self</span>.exec.spawn_handle( <span class="kw">async</span>{ <span class="number">5 </span>} ).expect( <span class="string">&quot;spawn&quot; </span>)
+   }
+}
+
+
+<span class="kw">fn </span>main()
+{
+  <span class="kw">let </span>exec = ThreadPool::new().expect( <span class="string">&quot;build threadpool&quot; </span>);
+  <span class="kw">let </span>obj  = SomeObj::new( Arc::new(exec) );
+
+  <span class="kw">let </span>x = block_on( obj.run() );
+
+  <span class="macro">assert_eq!</span>( x, <span class="number">5 </span>);
+}</code></pre></div>
+<p>As you can see from the above example, the output of the future is a type parameter on <code>SpawnHandle</code>. This is necessary because putting it on the method would make the trait no longer object safe, which means it couldn’t be stored unless as a type parameter.</p>
+<p>The best way to define a combination of abilities you need is by making your own trait alias (here shown with a macro from the <a href="https://docs.rs/trait-set/">trait_set</a> crate, but you can write it out yourself with a blanket implementation if you want):</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>async_executors::<span class="kw-2">*</span>;
+
+<span class="macro">trait_set::trait_set!
+</span>{
+   <span class="kw">pub trait </span>LibExec = SpawnHandle&lt;()&gt; + SpawnHandle&lt;u8&gt; + Timer + YieldNow + Clone;
+}
+
+<span class="kw">pub fn </span>lib_function( _exec: <span class="kw">impl </span>LibExec ) {}
+</code></pre></div>
+<p>All implementers of <code>SpawnHandle</code> must support any output type. Thus adding more <code>SpawnHandle</code> bounds to <code>LibExec</code> should not be a breaking change.</p>
+<h4 id="for-api-consumers"><a href="#for-api-consumers">For API consumers</a></h4>
+<p>You can basically pass the wrapper types provided in <em>async_executors</em> to API’s that take any of the following. Traits are also implemented for <code>Rc</code>, <code>Arc</code>, <code>&amp;</code>, <code>&amp;mut</code>, <code>Box</code> and <code>Instrumented</code> and <code>WithDispatch</code> from <em>tracing-futures</em> wrappers:</p>
+<ul>
+<li><code>impl Spawn</code></li>
+<li><code>impl LocalSpawn</code></li>
+<li><code>impl SpawnHandle&lt;T&gt;</code></li>
+<li><code>impl LocalSpawnHandle&lt;T&gt;</code></li>
+<li><code>impl SpawnBlocking</code></li>
+<li><code>impl YieldNow</code></li>
+<li><code>impl Timer</code></li>
+<li><code>impl TokioIo</code></li>
+</ul>
+<p>All wrappers also implement <code>Clone</code>, <code>Debug</code> and the zero sized ones also <code>Copy</code>.</p>
+<p>Some executors are a bit special, so make sure to check the API docs for the one you intend to use. Some also provide extra methods like <code>block_on</code> which will call a framework specific <code>block_on</code> rather than the one from <em>futures</em>.</p>
+<h5 id="example-1"><a href="#example-1">Example</a></h5>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use
+</span>{
+  async_executors :: { AsyncStd, TokioTpBuilder, SpawnHandle } ,
+  std             :: { convert::TryFrom                      } ,
+};
+
+<span class="kw">fn </span>needs_exec( exec: <span class="kw">impl </span>SpawnHandle&lt;()&gt; + SpawnHandle&lt;String&gt; ){};
+
+<span class="comment">// AsyncStd is zero sized, so it&#39;s easy to instantiate.
+//
+</span>needs_exec( AsyncStd );
+
+<span class="comment">// We need a builder type for tokio, as we guarantee by the type of TokioTp that it
+// will be a threadpool.
+//
+</span><span class="kw">let </span>tp = TokioTpBuilder::new().build().expect( <span class="string">&quot;build threadpool&quot; </span>);
+
+needs_exec( tp );</code></pre></div>
+<p>For more examples, check out the <a href="https://github.com/najamelan/async_executors/tree/master/examples">examples directory</a>. If you want to get a more polished API for adhering to structured concurrency, check out <a href="https://crates.io/crates/async_nursery"><em>async_nursery</em></a>.</p>
+<h3 id="api"><a href="#api">API</a></h3>
+<p>API documentation can be found on <a href="https://docs.rs/async_executors">docs.rs</a>.</p>
+<h3 id="contributing"><a href="#contributing">Contributing</a></h3>
+<p>Please check out the <a href="https://github.com/najamelan/async_executors/blob/master/CONTRIBUTING.md">contribution guidelines</a>.</p>
+<h4 id="testing"><a href="#testing">Testing</a></h4>
+<p>Run <code>ci/test.bash</code> and <code>ci/wasm.bash</code> to run all tests.</p>
+<h4 id="code-of-conduct"><a href="#code-of-conduct">Code of conduct</a></h4>
+<p>Any of the behaviors described in <a href="https://github.com/stumpsyn/policies/blob/master/citizen_code_of_conduct.md#4-unacceptable-behavior">point 4 “Unacceptable Behavior” of the Citizens Code of Conduct</a> are not welcome here and might get you banned. If anyone including maintainers and moderators of the project fail to respect these/your limits, you are entitled to call them out.</p>
+<h3 id="license"><a href="#license">License</a></h3>
+<p><a href="https://unlicense.org/">Unlicence</a></p>
+</div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name"><code>pub use <a class="mod" href="exec/index.html" title="mod async_executors::exec">exec</a>::*;</code></div></li><li><div class="item-name"><code>pub use <a class="mod" href="iface/index.html" title="mod async_executors::iface">iface</a>::*;</code></div></li></ul><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="exec/index.html" title="mod async_executors::exec">exec</a></div><div class="desc docblock-short">The executor implementations.</div></li><li><div class="item-name"><a class="mod" href="iface/index.html" title="mod async_executors::iface">iface</a></div><div class="desc docblock-short">The traits exposed by this crate.</div></li></ul></section></div></main></body></html>

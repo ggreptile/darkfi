@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["MAX_ASN1_TIMESTAMP","MIN_ASN1_TIMESTAMP"],"enum":["Error","Restrictions","SignatureScheme"],"fn":["days_from_ymd","parse_algorithmid","parse_certificate","seconds_from_hms"],"struct":["ASN1Time","DataAlgorithmSignature","ExtensionIterator","SequenceIterator","SubjectPublicKeyInfo","X509Certificate"]};

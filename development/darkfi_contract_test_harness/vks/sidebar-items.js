@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["PKS_HASH","VKS_HASH"],"fn":["inject","pks_path","read_or_gen_vks_and_pks"],"type":["Pks","Vks"]};
